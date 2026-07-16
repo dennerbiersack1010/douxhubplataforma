@@ -35,13 +35,11 @@ O projeto foi inicializado do zero com a seguinte estrutura e configurações b�
 
 ## Etapa 2: Introdução Audiovisual (Concluída em 16/07/2026)
 
-Implementação do fluxo de introdução de marca em tela cheia na rota inicial (`/`) antes do login:
-- **Componentes do Cliente:**
-  - `components/brand-intro/brand-intro.tsx`: Player de vídeo em tela cheia com autoplay estrito. Se a reprodução com som for bloqueada pelo navegador, ele altera o vídeo para silencioso (`muted = true`) e retoma a reprodução automaticamente, sem telas de interação, cliques ou botões de pular.
-  - `components/brand-intro/intro-gate.tsx`: Controle de sessão via `sessionStorage` (chave `doux_intro_seen`), detecção de preferências de redução de movimento (`prefers-reduced-motion`) e inicialização silenciosa em tela preta para evitar flashes visuais.
-- **Roteamento:**
-  - A rota raiz `/` renderiza o `IntroGate` para usuários não-autenticados, garantindo que o vídeo seja exibido apenas uma vez por sessão do navegador (via sessionStorage) e depois conduza o usuário diretamente para `/login`.
-  - Usuários autenticados continuam sendo redirecionados diretamente ao `/dashboard` a partir do servidor.
+Implementação do fluxo mínimo e automático de introdução de marca em tela cheia na rota inicial (`/`) antes do login:
+- **Fluxo e Roteamento:**
+  - A página raiz `app/page.tsx` executa como um Client Component que exibe o vídeo `/intro/doux-intro.mp4` em tela cheia, com fundo preto e sem qualquer interface sobreposta (textos ou botões).
+  - O vídeo possui os atributos `autoPlay`, `muted` (para viabilizar o autoplay sem interação nas diretrizes dos navegadores modernos) e `playsInline`.
+  - Ao término da reprodução (`onEnded`) ou em caso de erro de carregamento (`onError`), o usuário é redirecionado imediatamente para a rota `/login`.
 
 ## Observações Importantes (Status de Design e Negócio)
 
