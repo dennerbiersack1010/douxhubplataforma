@@ -71,6 +71,7 @@ export default function AuthenticatedLayout({
 
   // Fechar menu mobile ao mudar de página
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileMenuOpen(false)
   }, [pathname])
 
