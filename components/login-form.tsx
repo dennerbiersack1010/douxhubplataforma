@@ -70,8 +70,16 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
 
   return (
     <div className="relative w-full h-screen max-h-screen flex flex-col justify-between p-6 md:p-14 text-white select-none overflow-hidden font-sans">
+      {/* Background Image */}
+      <img
+        src="/intro/doux-background-login.png"
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover z-[-2]"
+        draggable="false"
+      />
+
       {/* Overlay escura sobre todo o background para o tom escuro premium do mockup */}
-      <div className="absolute inset-0 bg-black/45 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-black/30 pointer-events-none z-[-1]" />
 
       {/* Conteúdo Principal da Interface */}
       <div className="relative z-10 w-full my-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-h-[620px] md:max-h-[580px]">
@@ -83,7 +91,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             <img
               src="/intro/doux-logo.png"
               alt="DouxHub"
-              className="h-12 md:h-[60px] w-auto object-contain -ml-2.5"
+              className="h-14 md:h-20 w-auto object-contain -ml-2.5"
               draggable="false"
             />
           </div>
@@ -106,7 +114,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             
             {/* Cabeçalho */}
             <div>
-              <span className="text-zinc-400 font-light text-[13px] tracking-wide block">
+              <span className="text-zinc-300 font-light text-[13px] tracking-wide block">
                 Bem-vindo à
               </span>
               <h1 className="text-[34px] font-semibold tracking-wide text-white leading-tight">
@@ -125,7 +133,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 flex-grow flex flex-col justify-center">
               {/* Campo E-mail */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-light text-zinc-400">
+                <label className="block text-xs font-light text-zinc-300">
                   E-mail
                 </label>
                 <div className="relative">
@@ -147,7 +155,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
 
               {/* Campo Senha */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-light text-zinc-400">
+                <label className="block text-xs font-light text-zinc-300">
                   Senha
                 </label>
                 <div className="relative">
@@ -180,7 +188,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
 
               {/* Lembrar acesso & Esqueci minha senha */}
               <div className="flex justify-between items-center text-xs pt-1">
-                <label className="flex items-center space-x-2 text-zinc-400 cursor-pointer select-none">
+                <label className="flex items-center space-x-2 text-zinc-300 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     {...register('remember')}
@@ -214,14 +222,9 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
               </button>
             </form>
 
-            {/* Divisória 'ou' */}
-            <div className="relative flex items-center justify-center my-4 text-[10px] uppercase tracking-widest text-zinc-600 w-full before:absolute before:left-0 before:right-0 before:h-[1px] before:bg-zinc-800/40 before:z-0 select-none">
-              <span className="px-3 bg-[#0a0a0c] relative z-10 rounded">ou</span>
-            </div>
-
             {/* Proteção de Dados */}
-            <div className="flex items-start gap-2.5 text-[10px] text-zinc-500 font-light leading-relaxed">
-              <Lock className="w-4.5 h-4.5 text-zinc-600 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2.5 text-[10px] text-zinc-300 font-light leading-relaxed mt-4">
+              <Lock className="w-4.5 h-4.5 text-zinc-400 shrink-0 mt-0.5" />
               <span>
                 Seus dados estão protegidos com segurança de nível clínico e empresarial.
               </span>
@@ -231,8 +234,8 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         </div>
       </div>
 
-      {/* Rodapé da Página */}
-      <footer className="relative z-10 w-full text-center text-[10px] text-zinc-500 font-light pt-4 md:pt-0">
+      {/* Rodapé da Página na base absoluta */}
+      <footer className="absolute bottom-6 left-0 right-0 text-center z-10 w-full text-[10px] text-zinc-500 font-light">
         <span>© {new Date().getFullYear()} DouxHub. Todos os direitos reservados.</span>
       </footer>
     </div>
