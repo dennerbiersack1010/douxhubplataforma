@@ -69,59 +69,62 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
   }
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col justify-between p-6 md:p-12 text-white select-none overflow-x-hidden">
-      {/* Overlay escura para mobile para contraste de leitura */}
-      <div className="absolute inset-0 bg-black/35 md:bg-black/10 pointer-events-none z-0" />
+    <div className="relative w-full h-screen max-h-screen flex flex-col justify-between p-6 md:p-14 text-white select-none overflow-hidden font-sans">
+      {/* Overlay escura sobre todo o background para o tom escuro premium do mockup */}
+      <div className="absolute inset-0 bg-black/45 pointer-events-none z-0" />
 
-      {/* Conteúdo Principal (Grid no Desktop, Flex-col no Mobile) */}
-      <div className="relative z-10 w-full my-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch pt-4 md:pt-0">
+      {/* Conteúdo Principal da Interface */}
+      <div className="relative z-10 w-full my-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-h-[620px] md:max-h-[580px]">
         
-        {/* Coluna Esquerda: Logo e Slogan com Linha Dourada */}
-        <div className="flex flex-col justify-between items-start text-left py-2 md:py-6 min-h-[180px] md:min-h-[480px]">
-          {/* Logo Oficial da DouxHub */}
+        {/* Lado Esquerdo: Logo no topo, Slogan na base */}
+        <div className="flex flex-col justify-between items-start text-left h-full py-4 min-h-[160px] md:min-h-[480px]">
+          {/* Logo DouxHub */}
           <div className="animate-fade-in duration-700">
             <img
               src="/intro/doux-logo.png"
-              alt="DouxHub Logo"
-              className="h-10 md:h-[48px] w-auto object-contain -ml-2"
+              alt="DouxHub"
+              className="h-12 md:h-[60px] w-auto object-contain -ml-2.5"
               draggable="false"
             />
           </div>
           
           {/* Slogan */}
-          <div className="mt-auto max-w-sm pt-8 md:pt-0 animate-fade-in duration-1000">
-            <h2 className="text-xl md:text-2xl font-light tracking-wide leading-relaxed text-zinc-300">
+          <div className="mt-auto max-w-sm pt-6 md:pt-0 animate-fade-in duration-1000">
+            <h2 className="text-xl md:text-[25px] font-light tracking-wide leading-relaxed text-zinc-300">
               A operação da sua clínica,
               <br />
               em um <span className="font-semibold text-white">único</span> lugar.
             </h2>
-            {/* Linha Dourada/Bronze Decorativa */}
+            {/* Linha horizontal dourada/bronze abaixo do texto */}
             <div className="w-12 h-[2px] bg-[#c4a988] mt-4" />
           </div>
         </div>
 
-        {/* Coluna Direita: Formulário Translúcido Premium */}
-        <div className="w-full flex items-center justify-center md:justify-end animate-fade-in duration-700">
-          <div className="w-full max-w-[420px] p-8 md:p-10 bg-black/35 border border-zinc-800/40 rounded-2xl backdrop-blur-md transition-all duration-300">
-            {/* Cabeçalho do Formulário */}
-            <div className="mb-8">
-              <span className="text-xs font-light text-zinc-400 tracking-wider">
+        {/* Lado Direito: Card de Login Translúcido */}
+        <div className="w-full h-full flex items-center justify-center md:justify-end">
+          <div className="w-full max-w-[420px] h-full max-h-[500px] md:max-h-[520px] p-8 md:p-10 bg-black/35 border border-zinc-800/40 rounded-3xl backdrop-blur-md flex flex-col justify-between transition-all duration-300 animate-fade-in duration-700">
+            
+            {/* Cabeçalho */}
+            <div>
+              <span className="text-zinc-400 font-light text-[13px] tracking-wide block">
                 Bem-vindo à
               </span>
-              <h1 className="text-3xl font-semibold tracking-wide text-white mt-0.5">
+              <h1 className="text-[34px] font-semibold tracking-wide text-white leading-tight">
                 Doux
               </h1>
             </div>
 
+            {/* Mensagem de Erro */}
             {error && (
-              <div className="mb-6 p-3.5 bg-red-950/20 border border-red-900/40 text-red-400 rounded-lg text-xs leading-relaxed">
+              <div className="my-2 p-3 bg-red-950/20 border border-red-900/40 text-red-400 rounded-lg text-xs leading-relaxed">
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Formulário */}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 flex-grow flex flex-col justify-center">
               {/* Campo E-mail */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="block text-xs font-light text-zinc-400">
                   E-mail
                 </label>
@@ -129,11 +132,11 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   <input
                     type="email"
                     {...register('email')}
-                    className="w-full px-4 py-3 pr-10 bg-transparent border border-zinc-800/70 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
+                    className="w-full px-4 py-3 pr-10 bg-transparent border border-zinc-800/80 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
                     placeholder="Digite seu e-mail"
                     disabled={loading}
                   />
-                  <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600 pointer-events-none" />
+                  <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-600 pointer-events-none" />
                 </div>
                 {errors.email && (
                   <p className="text-red-400 text-[10px] mt-1">
@@ -143,7 +146,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
               </div>
 
               {/* Campo Senha */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="block text-xs font-light text-zinc-400">
                   Senha
                 </label>
@@ -151,7 +154,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     {...register('password')}
-                    className="w-full px-4 py-3 pr-10 bg-transparent border border-zinc-800/70 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
+                    className="w-full px-4 py-3 pr-10 bg-transparent border border-zinc-800/80 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
                     placeholder="Digite sua senha"
                     disabled={loading}
                   />
@@ -194,11 +197,11 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                 </Link>
               </div>
 
-              {/* Botão de Entrar */}
+              {/* Botão Entrar */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-[#e4e4e7] hover:bg-zinc-200 disabled:opacity-50 text-zinc-950 font-medium rounded-lg text-sm transition-all duration-300 cursor-pointer flex justify-center items-center gap-2 group"
+                className="w-full py-3 bg-[#e4e4e7] hover:bg-zinc-200 disabled:opacity-50 text-zinc-950 font-medium rounded-lg text-sm transition-all duration-300 cursor-pointer flex justify-center items-center gap-2 group mt-2"
               >
                 {loading ? (
                   <div className="w-4 h-4 border-2 border-zinc-800 border-t-transparent rounded-full animate-spin" />
@@ -209,26 +212,27 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   </>
                 )}
               </button>
-
-              {/* Divisória 'ou' */}
-              <div className="relative flex items-center justify-center my-6 text-[10px] uppercase tracking-widest text-zinc-600 w-full before:absolute before:left-0 before:right-0 before:h-[1px] before:bg-zinc-800/40 before:z-0 select-none">
-                <span className="px-3 bg-[#0d0d0f] md:bg-[#121215] relative z-10 rounded">ou</span>
-              </div>
-
-              {/* Mensagem de Proteção de Dados */}
-              <div className="flex items-start gap-2.5 text-[10px] text-zinc-500 font-light leading-relaxed">
-                <Lock className="w-4 h-4 text-zinc-600 shrink-0 mt-0.5" />
-                <span>
-                  Seus dados estão protegidos com segurança de nível clínico e empresarial.
-                </span>
-              </div>
             </form>
+
+            {/* Divisória 'ou' */}
+            <div className="relative flex items-center justify-center my-4 text-[10px] uppercase tracking-widest text-zinc-600 w-full before:absolute before:left-0 before:right-0 before:h-[1px] before:bg-zinc-800/40 before:z-0 select-none">
+              <span className="px-3 bg-[#0a0a0c] relative z-10 rounded">ou</span>
+            </div>
+
+            {/* Proteção de Dados */}
+            <div className="flex items-start gap-2.5 text-[10px] text-zinc-500 font-light leading-relaxed">
+              <Lock className="w-4.5 h-4.5 text-zinc-600 shrink-0 mt-0.5" />
+              <span>
+                Seus dados estão protegidos com segurança de nível clínico e empresarial.
+              </span>
+            </div>
+
           </div>
         </div>
       </div>
 
-      {/* Rodapé Centralizado */}
-      <footer className="relative z-10 w-full text-center text-[10px] text-zinc-500 font-light pt-8 md:pt-0">
+      {/* Rodapé da Página */}
+      <footer className="relative z-10 w-full text-center text-[10px] text-zinc-500 font-light pt-4 md:pt-0">
         <span>© {new Date().getFullYear()} DouxHub. Todos os direitos reservados.</span>
       </footer>
     </div>
