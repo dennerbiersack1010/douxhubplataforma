@@ -18,6 +18,7 @@ export default function HomePage() {
     >
       <video
         autoPlay
+        muted
         playsInline
         preload="auto"
         onEnded={() => router.replace("/login")}
