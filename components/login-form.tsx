@@ -91,7 +91,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             <img
               src="/intro/doux-logo.png"
               alt="DouxHub"
-              className="h-14 md:h-20 w-auto object-contain -ml-2.5"
+              className="h-9 md:h-12 w-auto object-contain -ml-2.5"
               draggable="false"
             />
           </div>
