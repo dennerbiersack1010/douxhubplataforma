@@ -46,18 +46,19 @@ Implementação do fluxo mínimo e automático de introdução de marca em tela 
 Implementação do fluxo definitivo e alinhado do login com a imagem de referência do usuário:
 - **Suporte à Fonte Raleway:**
   - A fonte `Raleway` foi configurada como fonte principal do projeto em `app/layout.tsx` e remapeada para a classe `font-sans` em `app/globals.css`.
-- **Frequência de Intro por SessionStorage (`app/page.tsx`):**
-  - No primeiro acesso à plataforma (`/`), o vídeo de introdução `/intro/doux-intro.mp4` é exibido em tela cheia com autoplay silencioso.
-  - Ao terminar, grava a chave `doux_intro_seen = 'true'` no `sessionStorage` e redireciona instantaneamente para `/login` sem qualquer pausa artificial ou atrasos de animação.
-  - Em acessos subsequentes na mesma sessão, o redirecionamento para `/login` ocorre de imediato no cliente, ignorando a exibição do vídeo.
+- **Transição Física Local Instantânea (`app/page.tsx`):**
+  - No primeiro acesso, o vídeo de introdução `/intro/doux-intro.mp4` é reproduzido em tela cheia sobreposto à tela de login (que já fica montada e carregada por baixo).
+  - Escutando o evento `timeupdate` (120ms antes do final do vídeo), o player de vídeo é ocultado de imediato (corte físico instantâneo e sem atrasos de carregamento de página) e a URL do navegador é atualizada de forma transparente para `/login` via `window.history.replaceState`.
+  - Controle de visualização única em `sessionStorage` para pular o vídeo e exibir o login de imediato em visitas subsequentes.
 - **Design de Login Fiel ao Mockup (`components/login-form.tsx`):**
-  - Fundo escurecido premium com overlay escura cobrindo a tela toda.
-  - Logo cromada prateada oficial (`/intro/doux-logo.png`) exibida em tamanho ampliado no canto superior esquerdo.
+  - Fundo claro e nítido com overlay escura sutil de 30% (`bg-black/30`).
+  - Logo oficial da marca (`/intro/doux-logo.png`) recortada via script PIL para remover margens transparentes vazias e exibida em tamanho ampliado no topo esquerdo.
   - Slogan *"A operação da sua clínica, em um único lugar."* (com "único" em negrito) acompanhado da linha horizontal dourada decorativa.
-  - Card de login alto à direita com efeito glassmorphism escuro (`backdrop-blur-md bg-black/35`), título "Bem-vindo à Doux", inputs transparentes elegantes com ícones `Mail` e `Eye`/`EyeOff`, botão "Entrar" cinza claro com a seta para a direita (`ArrowRight`), divisória discreta e rodapé de segurança com ícone de cadeado.
-  - Interface responsiva sem rolagem vertical, ajustada perfeitamente na viewport (mobile reposiciona o formulário na base com overlay preta).
+  - Card de login alto à direita com efeito glassmorphism escuro (`backdrop-blur-md bg-black/35`), título "Bem-vindo à Doux", inputs transparentes elegantes com ícones `Mail` e `Eye`/`EyeOff`, botão "Entrar" cinza claro com a seta para a direita (`ArrowRight`) e rodapé de segurança com ícone de cadeado.
+  - Rótulos e textos descritivos ajustados para um cinza bem claro (`text-zinc-300`) e divisória "ou" removida.
+  - Interface responsiva sem rolagem vertical, ajustada na viewport (mobile reposiciona o formulário na base com overlay preta).
 - **Tratamento de Build e Resiliência:**
-  - Configurados placeholders padrão para as variáveis do Supabase nos arquivos de inicialização, permitindo que o build estático e o prerender passem com sucesso em ambientes de CI/CD (Vercel) e offline.
+  - Configurados placeholders padrão para as variáveis do Supabase nos arquivos de inicialização, permitindo que o build estático e o prerender passsem com sucesso em ambientes de CI/CD (Vercel) e offline.
 
 ## Observações Importantes (Status de Design e Negócio)
 
