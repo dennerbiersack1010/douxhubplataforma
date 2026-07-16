@@ -43,17 +43,19 @@ Implementação do fluxo mínimo e automático de introdução de marca em tela 
 
 ## Etapa 3: Transição Suave e Tela de Login Premium (Concluída em 16/07/2026)
 
-Implementação do fluxo definitivo de transição contínua sem flash e da tela de Login premium:
-- **Fluxo de Transição Suave (`app/page.tsx`):**
-  - O vídeo de introdução `/intro/doux-intro.mp4` é executado na rota `/`.
-  - A imagem estática do último frame `/intro/doux-background-login.png` é pré-carregada em memória.
-  - Ao término do vídeo, este sofre um fade-out suave de 800ms revelando a imagem estática de fundo perfeitamente alinhada por baixo, seguida pelo fade-in do formulário de login. Todo o fluxo ocorre sem recarregamentos ou piscadas de tela.
-- **Design de Login Premium e Unificado (`components/login-form.tsx`):**
-  - Design sofisticado, minimalista e editorial com fundo escuro.
-  - Logo oficial da marca `/intro/doux-logo.png` no canto superior esquerdo e slogan com linha dourada decorativa no lado inferior esquerdo.
-  - Formulário à direita com efeito glassmorphism translúcido sutil (`backdrop-blur-md bg-black/35`), campos com ícones funcionais, toggle para mostrar/ocultar senha, checkbox "Lembrar acesso" e texto de proteção de dados com ícone de cadeado.
-  - Layout totalmente responsivo (mobile adapta o formulário para a parte inferior e adiciona camada de contraste de leitura).
-  - Reaproveitado na rota de login direto (`app/login/page.tsx`) que abre a tela de login estática imediatamente.
+Implementação do fluxo definitivo e alinhado do login com a imagem de referência do usuário:
+- **Suporte à Fonte Raleway:**
+  - A fonte `Raleway` foi configurada como fonte principal do projeto em `app/layout.tsx` e remapeada para a classe `font-sans` em `app/globals.css`.
+- **Frequência de Intro por SessionStorage (`app/page.tsx`):**
+  - No primeiro acesso à plataforma (`/`), o vídeo de introdução `/intro/doux-intro.mp4` é exibido em tela cheia com autoplay silencioso.
+  - Ao terminar, grava a chave `doux_intro_seen = 'true'` no `sessionStorage` e redireciona instantaneamente para `/login` sem qualquer pausa artificial ou atrasos de animação.
+  - Em acessos subsequentes na mesma sessão, o redirecionamento para `/login` ocorre de imediato no cliente, ignorando a exibição do vídeo.
+- **Design de Login Fiel ao Mockup (`components/login-form.tsx`):**
+  - Fundo escurecido premium com overlay escura cobrindo a tela toda.
+  - Logo cromada prateada oficial (`/intro/doux-logo.png`) exibida em tamanho ampliado no canto superior esquerdo.
+  - Slogan *"A operação da sua clínica, em um único lugar."* (com "único" em negrito) acompanhado da linha horizontal dourada decorativa.
+  - Card de login alto à direita com efeito glassmorphism escuro (`backdrop-blur-md bg-black/35`), título "Bem-vindo à Doux", inputs transparentes elegantes com ícones `Mail` e `Eye`/`EyeOff`, botão "Entrar" cinza claro com a seta para a direita (`ArrowRight`), divisória discreta e rodapé de segurança com ícone de cadeado.
+  - Interface responsiva sem rolagem vertical, ajustada perfeitamente na viewport (mobile reposiciona o formulário na base com overlay preta).
 - **Tratamento de Build e Resiliência:**
   - Configurados placeholders padrão para as variáveis do Supabase nos arquivos de inicialização, permitindo que o build estático e o prerender passem com sucesso em ambientes de CI/CD (Vercel) e offline.
 
