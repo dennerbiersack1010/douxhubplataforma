@@ -2,4 +2,4 @@
 
 A próxima etapa prioritária do desenvolvimento é:
 
-- **Definir o Design System inicial e criar a referência visual aprovada da tela de Login.**
+- **Definir e implementar a tela de recuperação de senha seguindo o mesmo Design System do Login.**
