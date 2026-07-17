@@ -21,7 +21,7 @@ const PUBLIC_PATHS = new Set([
 /**
  * Prefixos públicos (e.g. /auth/callback?code=...)
  */
-const PUBLIC_PREFIXES = ['/auth/']
+const PUBLIC_PREFIXES = ['/auth/', '/api/cleanup-users']
 
 /**
  * Rotas de contexto: já são protegidas (requerem sessão),
