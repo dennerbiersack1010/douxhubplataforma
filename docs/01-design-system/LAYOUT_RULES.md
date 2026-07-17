@@ -1,3 +1,15 @@
+---
+title: Regras de Layout
+document_id: DS-002
+version: 0.1.0
+status: Em desenvolvimento
+last_updated: 2026-07-16
+owner: DouxHub
+related_documents:
+  - DESIGN_SYSTEM.md
+  - RESPONSIVE_RULES.md
+---
+
 # Regras de Layout (Layout Rules)
 
 1. **Estrutura Técnica do Painel:**

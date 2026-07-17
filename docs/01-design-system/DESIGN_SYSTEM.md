@@ -1,3 +1,22 @@
+---
+title: Design System da DouxHub
+document_id: DS-001
+version: 0.3.0
+status: Em desenvolvimento
+last_updated: 2026-07-16
+owner: DouxHub
+related_documents:
+  - TOKENS.md
+  - TYPOGRAPHY.md
+  - COLORS.md
+  - SPACING.md
+  - COMPONENTS.md
+  - LAYOUT_RULES.md
+  - RESPONSIVE_RULES.md
+  - MOTION.md
+  - ACCESSIBILITY.md
+---
+
 # Design System - DouxHub
 
 Este documento define os princípios visuais e a base de design da marca **DouxHub**.

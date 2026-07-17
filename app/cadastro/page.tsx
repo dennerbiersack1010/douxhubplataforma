@@ -1,12 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
+import { ArrowRight, Eye, EyeOff, Lock, Mail, UserRound } from 'lucide-react'
+import AuthShell, {
+  authButtonClassName,
+  authInputClassName,
+  authLinkClassName,
+} from '@/components/auth-shell'
 
 const cadastroSchema = zod.object({
   fullName: zod.string().min(2, 'Nome completo deve ter pelo menos 2 caracteres'),
@@ -17,10 +22,10 @@ const cadastroSchema = zod.object({
 type CadastroData = zod.infer<typeof cadastroSchema>
 
 export default function CadastroPage() {
-  const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const supabase = createClient()
 
   const {
@@ -46,11 +51,16 @@ export default function CadastroPage() {
       })
 
       if (signUpError) {
-        setError(signUpError.message)
+        const isNetworkError = /failed to fetch|fetch failed|network/i.test(signUpError.message)
+        setError(
+          isNetworkError
+            ? 'Não foi possível conectar ao serviço de cadastro. Tente novamente em instantes.'
+            : signUpError.message
+        )
       } else {
         setSuccess(true)
       }
-    } catch (err) {
+    } catch {
       setError('Erro interno do servidor. Tente novamente mais tarde.')
     } finally {
       setLoading(false)
@@ -58,91 +68,111 @@ export default function CadastroPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white p-4">
-      <div className="w-full max-w-md p-6 bg-zinc-900 border border-zinc-800 rounded-lg">
-        {/* Banner técnico temporário */}
-        <div className="mb-6 p-3 bg-yellow-950/40 border border-yellow-800 text-yellow-500 rounded text-xs text-center">
-          ⚠️ <strong>TEMPLATE VISUAL TEMPORÁRIO</strong><br />
-          Esta tela possui apenas estrutura técnica funcional de autenticação.
-          Será substituída pelo layout oficial após aprovação do design.
+    <AuthShell
+      title="Criar conta"
+      description="Cadastre seus dados para começar a usar a DouxHub."
+    >
+      {error && (
+        <div className="mb-4 rounded-lg border border-red-900/40 bg-red-950/20 p-3 text-xs leading-relaxed text-red-400">
+          {error}
         </div>
+      )}
 
-        <h1 className="text-2xl font-bold text-center mb-6">Criar Conta no DouxHub</h1>
-
-        {error && (
-          <div className="mb-4 p-3 bg-red-950/40 border border-red-800 text-red-400 rounded text-sm">
-            {error}
+      {success ? (
+        <div className="space-y-5 text-center">
+          <div className="rounded-lg border border-emerald-800/50 bg-emerald-950/25 p-4 text-sm leading-relaxed text-emerald-300">
+            Cadastro realizado com sucesso. Verifique seu e-mail para confirmar a conta.
           </div>
-        )}
-
-        {success ? (
-          <div className="text-center space-y-4">
-            <div className="p-3 bg-green-950/40 border border-green-800 text-green-400 rounded text-sm">
-              Cadastro realizado com sucesso! Verifique seu e-mail para confirmar a conta.
-            </div>
-            <Link href="/login" className="inline-block px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded text-sm font-medium transition-colors">
-              Ir para o Login
-            </Link>
-          </div>
-        ) : (
+          <Link href="/login" className={authButtonClassName}>
+            <span>Ir para o Login</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      ) : (
+        <>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1">Nome Completo</label>
-              <input
-                type="text"
-                {...register('fullName')}
-                className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-violet-500 text-white text-sm"
-                placeholder="Seu nome completo"
-              />
+            <div className="space-y-1.5">
+              <label className="block text-xs font-light text-zinc-300">Nome completo</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  {...register('fullName')}
+                  className={authInputClassName}
+                  placeholder="Digite seu nome completo"
+                  disabled={loading}
+                />
+                <UserRound className="pointer-events-none absolute right-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-zinc-600" />
+              </div>
               {errors.fullName && (
-                <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>
+                <p className="mt-1 text-[10px] text-red-400">{errors.fullName.message}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1">E-mail</label>
-              <input
-                type="email"
-                {...register('email')}
-                className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-violet-500 text-white text-sm"
-                placeholder="seuemail@exemplo.com"
-              />
+            <div className="space-y-1.5">
+              <label className="block text-xs font-light text-zinc-300">E-mail</label>
+              <div className="relative">
+                <input
+                  type="email"
+                  {...register('email')}
+                  className={authInputClassName}
+                  placeholder="Digite seu e-mail"
+                  disabled={loading}
+                />
+                <Mail className="pointer-events-none absolute right-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-zinc-600" />
+              </div>
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                <p className="mt-1 text-[10px] text-red-400">{errors.email.message}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1">Senha</label>
-              <input
-                type="password"
-                {...register('password')}
-                className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-violet-500 text-white text-sm"
-                placeholder="••••••"
-              />
+            <div className="space-y-1.5">
+              <label className="block text-xs font-light text-zinc-300">Senha</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password')}
+                  className={authInputClassName}
+                  placeholder="Crie uma senha"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((current) => !current)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-600 transition-colors hover:text-zinc-900 focus:outline-none"
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  disabled={loading}
+                >
+                  {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+                </button>
+              </div>
               {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                <p className="mt-1 text-[10px] text-red-400">{errors.password.message}</p>
               )}
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-2 bg-violet-600 hover:bg-violet-700 disabled:bg-violet-800 disabled:opacity-50 text-white rounded font-medium text-sm transition-colors"
-            >
-              {loading ? 'Criando conta...' : 'Cadastrar'}
+            <button type="submit" disabled={loading} className={authButtonClassName}>
+              {loading ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-800 border-t-transparent" />
+              ) : (
+                <>
+                  <span>Criar minha conta</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </>
+              )}
             </button>
           </form>
-        )}
 
-        {!success && (
-          <div className="mt-6 text-center text-xs text-zinc-400">
-            <Link href="/login" className="hover:text-white transition-colors">
-              Já tem uma conta? Entrar
-            </Link>
+          <div className="mt-4 text-center text-xs text-zinc-300">
+            <span className="font-light">Já tem uma conta? </span>
+            <Link href="/login" className={authLinkClassName}>Entrar</Link>
           </div>
-        )}
-      </div>
-    </div>
+
+          <div className="mt-5 flex items-start gap-2.5 text-[10px] font-light leading-relaxed text-zinc-300">
+            <Lock className="mt-0.5 h-4.5 w-4.5 shrink-0 text-zinc-400" />
+            <span>Seus dados estão protegidos com segurança de nível clínico e empresarial.</span>
+          </div>
+        </>
+      )}
+    </AuthShell>
   )
 }

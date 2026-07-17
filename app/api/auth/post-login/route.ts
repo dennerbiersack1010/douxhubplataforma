@@ -1,0 +1,47 @@
+import { NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import {
+  ACTIVE_MEMBERSHIP_COOKIE,
+  activateMembership,
+  listActiveMemberships,
+  resolveNoActiveMembershipRedirect,
+} from '@/lib/clinic-context'
+
+export async function POST() {
+  const supabase = await createClient()
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+  if (userError || !user) {
+    return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  }
+
+  try {
+    const memberships = await listActiveMemberships(supabase, user.id)
+
+    if (memberships.length === 0) {
+      const redirectTo = await resolveNoActiveMembershipRedirect(supabase, user.id)
+      const response = NextResponse.json({ redirectTo })
+      response.cookies.delete(ACTIVE_MEMBERSHIP_COOKIE)
+      return response
+    }
+
+    if (memberships.length > 1) {
+      const response = NextResponse.json({ redirectTo: '/selecionar-perfil' })
+      response.cookies.delete(ACTIVE_MEMBERSHIP_COOKIE)
+      return response
+    }
+
+    await activateMembership(supabase, memberships[0].id)
+    const response = NextResponse.json({ redirectTo: '/dashboard' })
+    response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, memberships[0].id, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 60 * 12,
+    })
+    return response
+  } catch {
+    return NextResponse.json({ error: 'membership_resolution_failed' }, { status: 503 })
+  }
+}

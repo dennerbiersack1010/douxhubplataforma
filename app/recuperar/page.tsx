@@ -1,23 +1,33 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { ArrowRight, CheckCircle2, Mail } from 'lucide-react'
+import AuthShell, {
+  authButtonClassName,
+  authInputClassName,
+  authLinkClassName,
+} from '@/components/auth-shell'
 import { createClient } from '@/lib/supabase/client'
-import Link from 'next/link'
 
 const recuperarSchema = zod.object({
-  email: zod.string().email('E-mail inválido'),
+  email: zod
+    .string()
+    .trim()
+    .min(1, 'Informe seu e-mail')
+    .email('Informe um e-mail válido'),
 })
 
 type RecuperarData = zod.infer<typeof recuperarSchema>
 
 export default function RecuperarPage() {
+  const supabase = useMemo(() => createClient(), [])
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
-  const supabase = createClient()
 
   const {
     register,
@@ -25,88 +35,111 @@ export default function RecuperarPage() {
     formState: { errors },
   } = useForm<RecuperarData>({
     resolver: zodResolver(recuperarSchema),
+    defaultValues: { email: '' },
   })
 
   const onSubmit = async (data: RecuperarData) => {
+    if (loading || success) return
+
     setLoading(true)
     setError(null)
+
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(data.email, {
-        redirectTo: `${window.location.origin}/redefinir`,
-      })
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+        data.email,
+        { redirectTo: `${window.location.origin}/redefinir` }
+      )
 
       if (resetError) {
-        setError(resetError.message)
-      } else {
-        setSuccess(true)
+        setError('Não foi possível enviar o link agora. Aguarde um instante e tente novamente.')
+        return
       }
-    } catch (err) {
-      setError('Erro interno do servidor. Tente novamente mais tarde.')
+
+      setSuccess(true)
+    } catch {
+      setError('Não foi possível enviar o link agora. Aguarde um instante e tente novamente.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white p-4">
-      <div className="w-full max-w-md p-6 bg-zinc-900 border border-zinc-800 rounded-lg">
-        {/* Banner técnico temporário */}
-        <div className="mb-6 p-3 bg-yellow-950/40 border border-yellow-800 text-yellow-500 rounded text-xs text-center">
-          ⚠️ <strong>TEMPLATE VISUAL TEMPORÁRIO</strong><br />
-          Esta tela possui apenas estrutura técnica funcional de autenticação.
-          Será substituída pelo layout oficial após aprovação do design.
+    <AuthShell
+      title="Recuperar acesso"
+      description="Informe seu e-mail para receber o link de redefinição de senha."
+      compact
+    >
+      {success ? (
+        <div className="space-y-6 text-center" role="status" aria-live="polite">
+          <div className="flex justify-center">
+            <CheckCircle2 className="w-8 h-8 text-zinc-200" aria-hidden="true" />
+          </div>
+          <p className="text-sm leading-relaxed text-zinc-200">
+            Enviamos um link de recuperação para o seu e-mail.
+          </p>
+          <p className="text-xs font-light leading-relaxed text-zinc-400">
+            Verifique também as pastas de spam e lixo eletrônico.
+          </p>
+          <Link href="/login" className={authLinkClassName}>
+            Voltar para o login
+          </Link>
         </div>
-
-        <h1 className="text-2xl font-bold text-center mb-6">Recuperar Senha</h1>
-
-        {error && (
-          <div className="mb-4 p-3 bg-red-950/40 border border-red-800 text-red-400 rounded text-sm">
-            {error}
-          </div>
-        )}
-
-        {success ? (
-          <div className="text-center space-y-4">
-            <div className="p-3 bg-green-950/40 border border-green-800 text-green-400 rounded text-sm">
-              E-mail de recuperação enviado com sucesso! Verifique sua caixa de entrada.
-            </div>
-            <Link href="/login" className="inline-block px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded text-sm font-medium transition-colors">
-              Voltar para o Login
-            </Link>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-1">E-mail</label>
-              <input
-                type="email"
-                {...register('email')}
-                className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded focus:outline-none focus:border-violet-500 text-white text-sm"
-                placeholder="seuemail@exemplo.com"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-2 bg-violet-600 hover:bg-violet-700 disabled:bg-violet-800 disabled:opacity-50 text-white rounded font-medium text-sm transition-colors"
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+          {error && (
+            <div
+              className="p-3 bg-red-950/25 border border-red-900/40 text-red-300 rounded-lg text-xs leading-relaxed"
+              role="alert"
             >
-              {loading ? 'Enviando...' : 'Enviar link de recuperação'}
-            </button>
-          </form>
-        )}
+              {error}
+            </div>
+          )}
 
-        {!success && (
-          <div className="mt-6 text-center text-xs text-zinc-400">
-            <Link href="/login" className="hover:text-white transition-colors">
-              Voltar para o Login
+          <div className="space-y-1.5">
+            <label htmlFor="recovery-email" className="block text-xs font-light text-zinc-300">
+              E-mail
+            </label>
+            <div className="relative">
+              <input
+                id="recovery-email"
+                type="email"
+                autoComplete="email"
+                {...register('email')}
+                className={authInputClassName}
+                placeholder="Digite seu e-mail"
+                disabled={loading}
+                aria-invalid={Boolean(errors.email)}
+              />
+              <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-zinc-600 pointer-events-none" />
+            </div>
+            {errors.email && (
+              <p className="text-red-400 text-[10px] mt-1" role="alert">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <button type="submit" disabled={loading} className={authButtonClassName}>
+            {loading ? (
+              <>
+                <span className="w-4 h-4 border-2 border-zinc-800 border-t-transparent rounded-full animate-spin" />
+                <span>Enviando...</span>
+              </>
+            ) : (
+              <>
+                <span>Enviar link</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </>
+            )}
+          </button>
+
+          <div className="text-center text-xs pt-1">
+            <Link href="/login" className={authLinkClassName}>
+              Voltar para o login
             </Link>
           </div>
-        )}
-      </div>
-    </div>
+        </form>
+      )}
+    </AuthShell>
   )
 }

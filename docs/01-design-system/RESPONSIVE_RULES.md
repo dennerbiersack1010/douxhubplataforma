@@ -1,3 +1,15 @@
+---
+title: Regras de Responsividade
+document_id: DS-003
+version: 0.1.0
+status: Em desenvolvimento
+last_updated: 2026-07-16
+owner: DouxHub
+related_documents:
+  - DESIGN_SYSTEM.md
+  - LAYOUT_RULES.md
+---
+
 # Regras de Responsividade (Responsive Rules)
 
 1. **Visualização Mobile:**

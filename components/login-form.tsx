@@ -58,7 +58,18 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         if (onLoginSuccess) {
           onLoginSuccess()
         }
-        router.push('/dashboard')
+
+        const contextResponse = await fetch('/api/auth/post-login', {
+          method: 'POST',
+        })
+
+        if (!contextResponse.ok) {
+          setError('Não foi possível carregar seus vínculos de acesso. Tente novamente.')
+          return
+        }
+
+        const context = await contextResponse.json() as { redirectTo?: string }
+        router.push(context.redirectTo || '/sem-clinica')
         router.refresh()
       }
     } catch {
@@ -78,8 +89,10 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         draggable="false"
       />
 
-      {/* Overlay escura sobre todo o background para o tom escuro premium do mockup */}
-      <div className="absolute inset-0 bg-black/30 pointer-events-none z-[-1]" />
+      {/* A foto permanece clara; degradês amplos preservam a leitura sem criar manchas. */}
+      <div className="absolute inset-0 bg-black/[0.06] pointer-events-none z-[-1]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.38)_0%,rgba(0,0,0,0.18)_30%,rgba(0,0,0,0.04)_58%,rgba(0,0,0,0.08)_100%)] pointer-events-none z-[-1]" />
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/25 to-transparent pointer-events-none z-[-1]" />
 
       {/* Conteúdo Principal da Interface */}
       <div className="relative z-10 w-full my-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-h-[620px] md:max-h-[580px]">
@@ -91,7 +104,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             <img
               src="/intro/doux-logo.png"
               alt="DouxHub"
-              className="h-9 md:h-12 w-auto object-contain -ml-2.5"
+              className="w-[210px] h-[52px] md:w-[260px] md:h-[64px] object-cover object-[center_49%] -ml-7 md:-ml-[35px]"
               draggable="false"
             />
           </div>
@@ -140,7 +153,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   <input
                     type="email"
                     {...register('email')}
-                    className="w-full px-4 py-3 pr-10 bg-transparent border border-zinc-800/80 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
+                    className="w-full px-4 py-3 pr-10 bg-white/90 border border-white/70 rounded-lg text-sm text-zinc-900 placeholder-zinc-500 focus:outline-none focus:border-white focus:bg-white transition-colors"
                     placeholder="Digite seu e-mail"
                     disabled={loading}
                   />
@@ -162,7 +175,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     {...register('password')}
-                    className="w-full px-4 py-3 pr-10 bg-transparent border border-zinc-800/80 rounded-lg text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors"
+                    className="w-full px-4 py-3 pr-10 bg-white/90 border border-white/70 rounded-lg text-sm text-zinc-900 placeholder-zinc-500 focus:outline-none focus:border-white focus:bg-white transition-colors"
                     placeholder="Digite sua senha"
                     disabled={loading}
                   />
@@ -199,7 +212,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                 </label>
                 <Link
                   href="/recuperar"
-                  className="text-zinc-300 hover:text-white transition-colors font-light underline decoration-zinc-700 underline-offset-4"
+                    className="text-zinc-300 hover:text-white transition-colors font-light underline decoration-zinc-400/70 decoration-[1px] underline-offset-4"
                 >
                   Esqueci minha senha
                 </Link>
@@ -220,6 +233,17 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
                   </>
                 )}
               </button>
+
+              {/* Ação secundária para quem ainda não possui acesso */}
+              <div className="flex items-center justify-center gap-2 pt-1 text-[11px] text-zinc-300">
+                <span className="font-light">Ainda não tem uma conta?</span>
+                <Link
+                  href="/cadastro"
+                  className="rounded-md border border-white/25 px-2.5 py-1 font-medium text-white transition-colors hover:border-white/45 hover:bg-white/10"
+                >
+                  Criar minha conta
+                </Link>
+              </div>
             </form>
 
             {/* Proteção de Dados */}
@@ -235,7 +259,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       </div>
 
       {/* Rodapé da Página na base absoluta */}
-      <footer className="absolute bottom-6 left-0 right-0 text-center z-10 w-full text-[10px] text-zinc-500 font-light">
+      <footer className="absolute bottom-6 left-0 right-0 text-center z-10 w-full text-[10px] text-zinc-300 font-light">
         <span>© {new Date().getFullYear()} DouxHub. Todos os direitos reservados.</span>
       </footer>
     </div>
