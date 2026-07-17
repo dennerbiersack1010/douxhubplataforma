@@ -51,12 +51,19 @@ export default function CadastroPage() {
       })
 
       if (signUpError) {
-        const isNetworkError = /failed to fetch|fetch failed|network/i.test(signUpError.message)
-        setError(
-          isNetworkError
-            ? 'Não foi possível conectar ao serviço de cadastro. Tente novamente em instantes.'
-            : signUpError.message
-        )
+        // Detectar erro de email já cadastrado
+        if (
+          signUpError.message.includes('already registered') ||
+          signUpError.message.includes('duplicate') ||
+          signUpError.message.includes('already exists') ||
+          signUpError.message.includes('User already registered')
+        ) {
+          setError('Este e-mail já está cadastrado. Tente fazer login ou use outro e-mail.')
+        } else if (/failed to fetch|fetch failed|network/i.test(signUpError.message)) {
+          setError('Não foi possível conectar ao serviço de cadastro. Tente novamente em instantes.')
+        } else {
+          setError(signUpError.message)
+        }
       } else {
         setSuccess(true)
       }
