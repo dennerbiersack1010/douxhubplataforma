@@ -57,6 +57,8 @@ export async function GET(request: NextRequest) {
     }
 
     const redirectUrl = new URL(redirectPath, request.nextUrl.origin)
+    // Adiciona flag para middleware não redirecionar daqui
+    redirectUrl.searchParams.set('fromAuth', 'true')
     return NextResponse.redirect(redirectUrl)
   } catch (error) {
     console.error('Unexpected auth callback error:', error)

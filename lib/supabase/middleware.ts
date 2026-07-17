@@ -87,6 +87,9 @@ export async function updateSession(request: NextRequest) {
   const publicPath = isPublic(pathname)
   const contextPath = isContextPath(pathname)
   const authOnlyPath = isAuthOnlyPath(pathname)
+  
+  // Flag para ignorar redirecionamento pós-callback de autenticação
+  const fromAuth = request.nextUrl.searchParams.get('fromAuth') === 'true'
 
   // 1. Sem sessão acessando rota protegida → redireciona para /login
   if (!user && !publicPath) {
@@ -97,7 +100,8 @@ export async function updateSession(request: NextRequest) {
   }
 
   // 2. Com sessão acessando rota só-pública (login/cadastro/recuperar) → redireciona
-  if (user && authOnlyPath) {
+  // MAS: não redireciona se vem de callback de autenticação (fromAuth=true)
+  if (user && authOnlyPath && !fromAuth) {
     const url = request.nextUrl.clone()
     url.pathname = '/selecionar-perfil'
     return NextResponse.redirect(url)
