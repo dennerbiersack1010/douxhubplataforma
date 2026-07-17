@@ -66,7 +66,18 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       })
 
       if (!contextResponse.ok) {
-        setError('Não foi possível carregar seus vínculos de acesso. Tente novamente.')
+        let errorMessage = 'Não foi possível carregar seus vínculos de acesso. Tente novamente.'
+        try {
+          const errorData = await contextResponse.json() as { error?: string }
+          if (errorData.error === 'unauthorized') {
+            errorMessage = 'Sua sessão expirou. Faça login novamente.'
+          } else if (errorData.error === 'membership_resolution_failed') {
+            errorMessage = 'Erro ao verificar seus acessos. Contate o suporte se o problema persistir.'
+          }
+        } catch {
+          // Ignorar erro ao parsear JSON
+        }
+        setError(errorMessage)
         return
       }
 
