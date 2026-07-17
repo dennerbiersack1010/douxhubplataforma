@@ -54,26 +54,28 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
         } else {
           setError(signInError.message)
         }
-      } else {
-        if (onLoginSuccess) {
-          onLoginSuccess()
-        }
-
-        const contextResponse = await fetch('/api/auth/post-login', {
-          method: 'POST',
-        })
-
-        if (!contextResponse.ok) {
-          setError('Não foi possível carregar seus vínculos de acesso. Tente novamente.')
-          return
-        }
-
-        const context = await contextResponse.json() as { redirectTo?: string }
-        router.push(context.redirectTo || '/sem-clinica')
-        router.refresh()
+        return
       }
-    } catch {
-      setError('Erro interno do servidor. Tente novamente mais tarde.')
+
+      if (onLoginSuccess) {
+        onLoginSuccess()
+      }
+
+      const contextResponse = await fetch('/api/auth/post-login', {
+        method: 'POST',
+      })
+
+      if (!contextResponse.ok) {
+        setError('Não foi possível carregar seus vínculos de acesso. Tente novamente.')
+        return
+      }
+
+      const context = await contextResponse.json() as { redirectTo?: string }
+      router.push(context.redirectTo || '/sem-clinica')
+      router.refresh()
+    } catch (error) {
+      console.error('Login error:', error)
+      setError('Erro ao conectar com o servidor. Verifique sua conexão e tente novamente.')
     } finally {
       setLoading(false)
     }

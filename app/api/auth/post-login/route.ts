@@ -41,7 +41,8 @@ export async function POST() {
       maxAge: 60 * 60 * 12,
     })
     return response
-  } catch {
+  } catch (error) {
+    console.error('Post-login error:', error)
     return NextResponse.json({ error: 'membership_resolution_failed' }, { status: 503 })
   }
 }

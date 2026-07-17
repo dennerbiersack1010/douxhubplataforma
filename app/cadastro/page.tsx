@@ -60,8 +60,9 @@ export default function CadastroPage() {
       } else {
         setSuccess(true)
       }
-    } catch {
-      setError('Erro interno do servidor. Tente novamente mais tarde.')
+    } catch (error) {
+      console.error('Signup error:', error)
+      setError('Erro ao conectar com o servidor. Verifique sua conexão e tente novamente.')
     } finally {
       setLoading(false)
     }
