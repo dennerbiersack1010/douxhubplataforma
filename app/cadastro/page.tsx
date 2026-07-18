@@ -40,7 +40,7 @@ export default function CadastroPage() {
     setLoading(true)
     setError(null)
     try {
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -51,22 +51,32 @@ export default function CadastroPage() {
       })
 
       if (signUpError) {
-        // Detectar erro de email já cadastrado
         if (
           signUpError.message.includes('already registered') ||
           signUpError.message.includes('duplicate') ||
           signUpError.message.includes('already exists') ||
           signUpError.message.includes('User already registered')
         ) {
-          setError('Este e-mail já está cadastrado. Tente fazer login ou use outro e-mail.')
+          setError('Este e-mail já está cadastrado. Acesse a tela de Login ou use outro e-mail.')
         } else if (/failed to fetch|fetch failed|network/i.test(signUpError.message)) {
           setError('Não foi possível conectar ao serviço de cadastro. Tente novamente em instantes.')
         } else {
           setError(signUpError.message)
         }
-      } else {
-        setSuccess(true)
+        return
       }
+
+      /**
+       * Quando o e-mail já existe, o Supabase não retorna um erro explícito
+       * (proteção contra enumeração de e-mails). Em vez disso, retorna um
+       * usuário com `identities` vazio. Detectamos isso aqui.
+       */
+      if (signUpData.user && signUpData.user.identities?.length === 0) {
+        setError('Este e-mail já está cadastrado. Acesse a tela de Login ou use outro e-mail.')
+        return
+      }
+
+      setSuccess(true)
     } catch (error) {
       console.error('Signup error:', error)
       setError('Erro ao conectar com o servidor. Verifique sua conexão e tente novamente.')

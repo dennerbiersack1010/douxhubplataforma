@@ -21,7 +21,7 @@ const PUBLIC_PATHS = new Set([
 /**
  * Prefixos públicos (e.g. /auth/callback?code=...)
  */
-const PUBLIC_PREFIXES = ['/auth/', '/api/cleanup-users']
+const PUBLIC_PREFIXES = ['/auth/']
 
 /**
  * Rotas de contexto: já são protegidas (requerem sessão),
@@ -87,6 +87,16 @@ export async function updateSession(request: NextRequest) {
   const publicPath = isPublic(pathname)
   const contextPath = isContextPath(pathname)
   const authOnlyPath = isAuthOnlyPath(pathname)
+
+  /**
+   * Rotas de API gerenciam autenticação internamente.
+   * Não aplicar redirects de contexto — retornar apenas com sessão atualizada.
+   * Sem isso, /api/auth/post-login seria redirecionado para /selecionar-perfil
+   * quando o usuário ainda não tiver contexto ativo, causando erro no login.
+   */
+  if (pathname.startsWith('/api/')) {
+    return supabaseResponse
+  }
   
   // Flag para ignorar redirecionamento pós-callback de autenticação
   const fromAuth = request.nextUrl.searchParams.get('fromAuth') === 'true'
