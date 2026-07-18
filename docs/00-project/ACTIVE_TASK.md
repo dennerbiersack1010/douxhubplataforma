@@ -1,7 +1,7 @@
 # Active Task
 
 document_id: TASK-001
-last_updated: 2026-07-17
+last_updated: 2026-07-18
 status: Em investigação
 
 ---
@@ -139,47 +139,42 @@ Nomes apenas — nunca valores:
 
 ## Estado do Login
 
-Formulário implementado. Fluxo: signInWithPassword → /api/auth/post-login → redirect.
-Bug reportado mas não reproduzido com detalhamento após as últimas correções.
+✅ **Corrigido em 2026-07-18.** Causa raiz: middleware redirecionava `/api/auth/post-login` para HTML em vez de deixar a rota de API responder. Fix: early return para `/api/` no middleware.
 
 ## Estado da autenticação
 
-Middleware reescrito. Layout autenticado com validação server-side. Build passando.
-Testes em produção **pendentes**.
+✅ **Corrigido em 2026-07-18.** `auth/callback/route.ts` reescrito para propagar cookies de sessão diretamente no redirect response (antes os cookies eram perdidos e o usuário chegava ao login sem sessão).
 
 ## Estado do cadastro
 
-Funcional. E-mail de confirmação entregue via Resend/SMTP.
+✅ Funcional. Detecção de e-mail duplicado via `identities.length === 0`. E-mail de confirmação entregue via Resend/SMTP.
 
 ## Estado da recuperação de senha
 
-Funcional. E-mail de recuperação entregue via Resend/SMTP (last_event: delivered).
+✅ Funcional. E-mail entregue via Resend/SMTP (last_event: delivered).
 
 ## Estado do Resend
 
-✅ Ativo. Domínio `auth.douxhub.space` verificado. API Key SMTP com `sending_access`.
+✅ Ativo. Domínio `auth.douxhub.space` verificado. Rate limit 100/h.
 
 ## Estado do SMTP do Supabase
 
-✅ Ativo. Host `smtp.resend.com`, porta 465, rate limit 100/h.
-Site URL: `https://douxhub.space`.
+✅ Ativo. Host `smtp.resend.com:465`. Site URL `https://douxhub.space`.
 
 ## Estado do deploy
 
-🔴 Pendente. Correções desta sessão ainda não foram publicadas na Vercel.
-Último push conhecido: commit `4aea10e` (improve: adicionar logging detalhado no cleanup).
+✅ **Em produção.** Deployment `dpl_AF3FHyXE5fT4PpX2ixur57sN8LPD` (commit `50663a5`) promovido para `douxhub.space` em 2026-07-18 02:45.
 
-## Último commit
+Nota: o auto-deploy do GitHub parou de funcionar após 22:15 de 17/07. Cada push precisa de deploy manual via API Vercel ou reconexão do GitHub app no painel.
 
-`58c5cc6` — `fix: protecao de rotas, validacao server-side e correcao de selecionar-perfil`
-> Nota: este commit foi feito no repositório local com remote diferente (master sem origin).
-> O repositório oficial usa `origin/main` em `https://github.com/dennerbiersack1010/douxhubplataforma.git`.
-> As correções desta sessão precisam ser enviadas para origin/main.
+## Último commit em produção
+
+`50663a5` — `fix: auth callback session cookies and login error handling`
+Deployment Vercel: `dpl_AF3FHyXE5fT4PpX2ixur57sN8LPD` | Estado: READY | Target: production
 
 ## Próximo checkpoint
 
-Após push para origin/main:
-- Aguardar deploy Vercel.
-- Testar em aba anônima: /dashboard, /agenda → deve redirecionar para /login.
-- Testar login com credencial válida → deve redirecionar para /selecionar-perfil ou /dashboard.
-- Descrever exatamente o bug de login que persiste.
+- Testar cadastro do zero em aba anônima em `douxhub.space`
+- Confirmar e-mail e fazer login
+- Verificar redirecionamento para `/configurar-clinica` ou `/selecionar-perfil`
+- Se funcionar: fluxo de autenticação está completo
