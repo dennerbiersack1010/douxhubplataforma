@@ -51,6 +51,8 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       if (signInError) {
         if (signInError.message.includes('Invalid login credentials')) {
           setError('E-mail ou senha incorretos.')
+        } else if (signInError.message.includes('Email not confirmed')) {
+          setError('E-mail ainda não confirmado. Verifique sua caixa de entrada.')
         } else {
           setError(signInError.message)
         }
@@ -63,7 +65,21 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
 
       const contextResponse = await fetch('/api/auth/post-login', {
         method: 'POST',
+        headers: { 'Accept': 'application/json' },
       })
+
+      const contentType = contextResponse.headers.get('content-type') ?? ''
+
+      // Resposta não é JSON: provavelmente recebemos HTML (redirect do middleware)
+      if (!contentType.includes('application/json')) {
+        console.error('[login] post-login retornou não-JSON:', {
+          status: contextResponse.status,
+          contentType,
+          url: contextResponse.url,
+        })
+        setError('Erro interno ao processar login. Tente novamente.')
+        return
+      }
 
       if (!contextResponse.ok) {
         let errorMessage = 'Não foi possível carregar seus vínculos de acesso. Tente novamente.'
@@ -75,17 +91,17 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
             errorMessage = 'Erro ao verificar seus acessos. Contate o suporte se o problema persistir.'
           }
         } catch {
-          // Ignorar erro ao parsear JSON
+          // ignorar erro ao parsear JSON
         }
         setError(errorMessage)
         return
       }
 
       const context = await contextResponse.json() as { redirectTo?: string }
-      router.push(context.redirectTo || '/sem-clinica')
+      router.push(context.redirectTo || '/configurar-clinica')
       router.refresh()
     } catch (error) {
-      console.error('Login error:', error)
+      console.error('[login] erro inesperado:', error)
       setError('Erro ao conectar com o servidor. Verifique sua conexão e tente novamente.')
     } finally {
       setLoading(false)
