@@ -1,9 +1,9 @@
 ---
 title: Fluxos do Módulo de Autenticação
 document_id: MOD-AUTH-002
-version: 0.8.0
-status: Implementado
-last_updated: 2026-07-16
+version: 0.9.0
+status: Validado
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -25,10 +25,11 @@ related_documents:
 ## Pós-login
 
 1. O Supabase valida as credenciais.
-2. O servidor consulta vínculos ativos sujeitos às regras de segurança.
-3. Sem qualquer vínculo, direciona para `/configurar-clinica`; com vínculos apenas inativos, direciona para `/sem-clinica`.
-4. Com um vínculo, seleciona o contexto e direciona ao Dashboard.
-5. Com múltiplos vínculos, direciona para `/selecionar-perfil`.
+2. A API chama `resolve_post_login_context()` uma única vez; a própria função valida `auth.uid()`, vínculos, clínica e unidade.
+3. Sem qualquer vínculo, direciona para `/configurar-clinica`; com vínculos apenas inativos, limpa o contexto e direciona para `/sem-clinica`.
+4. Com um vínculo, ativa contexto, atualiza último acesso, audita e direciona ao Dashboard na mesma operação.
+5. Com múltiplos vínculos, limpa o contexto anterior e direciona para `/selecionar-perfil`.
+6. O cliente executa somente `router.replace`, sem a atualização redundante que anteriormente iniciava uma segunda navegação.
 
 ## Fluxos alternativos
 

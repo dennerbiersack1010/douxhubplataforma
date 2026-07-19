@@ -40,6 +40,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
   })
 
   const onSubmit = async (data: LoginData) => {
+    let navigationStarted = false
     setLoading(true)
     setError(null)
     try {
@@ -98,13 +99,13 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
       }
 
       const context = await contextResponse.json() as { redirectTo?: string }
-      router.push(context.redirectTo || '/configurar-clinica')
-      router.refresh()
+      navigationStarted = true
+      router.replace(context.redirectTo || '/configurar-clinica')
     } catch (error) {
       console.error('[login] erro inesperado:', error)
       setError('Erro ao conectar com o servidor. Verifique sua conexão e tente novamente.')
     } finally {
-      setLoading(false)
+      if (!navigationStarted) setLoading(false)
     }
   }
 

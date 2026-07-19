@@ -1,9 +1,9 @@
 ---
 title: Módulo de Autenticação
 document_id: MOD-AUTH-001
-version: 0.9.0
+version: 1.0.0
 status: Implementado
-last_updated: 2026-07-16
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - FLOWS.md
@@ -29,6 +29,12 @@ Atende usuários novos, usuários existentes e convidados por uma clínica. Poss
 ## Dependências e integrações
 
 O módulo depende do Supabase Auth, das variáveis públicas válidas do projeto Supabase e da base multiempresa aplicada. O frontend não utiliza service role.
+
+## Resolução pós-login otimizada
+
+O destino após a autenticação é resolvido por `resolve_post_login_context()` em uma única chamada ao banco. A função usa `auth.uid()` como autoridade, conta somente vínculos válidos, limpa contextos incompatíveis e ativa o vínculo único na mesma transação. O endpoint retorna `Server-Timing` e respostas privadas sem cache.
+
+As camadas de proteção do Proxy e dos layouts usam `getClaims()` para verificar o JSON Web Token (JWT), conforme a recomendação atual do Supabase para proteção server-side. O método evita a consulta obrigatória ao Auth em cada camada quando a chave assimétrica e o conjunto de chaves em cache estão disponíveis.
 
 ## Limites e status
 

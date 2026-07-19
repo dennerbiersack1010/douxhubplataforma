@@ -1,9 +1,9 @@
 ---
 title: Testes da Autenticação
 document_id: MOD-AUTH-006
-version: 0.3.0
+version: 0.4.0
 status: Em desenvolvimento
-last_updated: 2026-07-16
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -38,6 +38,18 @@ related_documents:
 - isolamento de leitura e escrita entre clínicas;
 - alteração de função, ativação, desativação, contexto ativo e auditoria.
 
+`005_post_login_resolution.sql` foi aprovado no Supabase oficial em 19/07/2026 com `post_login_resolution_ok`. O contrato validou sessão anônima recusada e os quatro destinos: nenhuma associação, somente associação inativa, uma associação ativa e múltiplas associações. Também confirmou ativação e limpeza coerente do contexto.
+
+## Validação de desempenho estrutural
+
+- resolução de vínculos reduzida de até três chamadas ao banco para uma função transacional;
+- validação redundante do usuário removida do endpoint de pós-login;
+- `router.push` seguido de `router.refresh` substituído por uma única navegação;
+- Proxy e layouts migrados de `getUser()` remoto para `getClaims()` verificado;
+- `Server-Timing` adicionado à API para medição no ambiente publicado.
+
+A medição autenticada no domínio oficial será registrada após o deployment desta alteração.
+
 ## Pendentes de validação remota
 
 - confirmação por e-mail (depende de SMTP personalizado Resend configurado no Supabase);
@@ -51,4 +63,3 @@ O módulo não pode ser considerado integralmente validado enquanto os cenários
 ## Plano de testes de e-mail
 
 Consultar `docs/08-integrations/resend/TESTS.md` para o plano detalhado dos testes de envio real, incluindo pré-requisitos, cenários obrigatórios, verificações de segurança e tabela de resultados.
-

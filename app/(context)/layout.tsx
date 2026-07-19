@@ -13,11 +13,9 @@ export default async function ContextLayout({
   children: React.ReactNode
 }) {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: claimsData } = await supabase.auth.getClaims()
 
-  if (!user) {
+  if (!claimsData?.claims?.sub) {
     redirect('/login')
   }
 

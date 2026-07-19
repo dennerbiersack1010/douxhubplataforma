@@ -1,77 +1,56 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import {
-  ACTIVE_MEMBERSHIP_COOKIE,
-  activateMembership,
-  listActiveMemberships,
-  resolveNoActiveMembershipRedirect,
-} from '@/lib/clinic-context'
+import { ACTIVE_MEMBERSHIP_COOKIE } from '@/lib/clinic-context'
+
+type PostLoginResolution = {
+  redirect_to: string
+  membership_id: string | null
+  active_membership_count: number
+}
+
+function postLoginResponse(body: unknown, status: number, startedAt: number) {
+  const response = NextResponse.json(body, { status })
+  response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+  response.headers.set('Server-Timing', `post-login;dur=${(performance.now() - startedAt).toFixed(1)}`)
+  return response
+}
 
 export async function POST() {
+  const startedAt = performance.now()
   const supabase = await createClient()
-  
-  console.log('[POST-LOGIN] Starting post-login flow')
-  
-  const { data: { user }, error: userError } = await supabase.auth.getUser()
-
-  if (userError || !user) {
-    console.error('[POST-LOGIN] ❌ No user found:', userError)
-    return NextResponse.json(
-      { error: 'unauthorized', message: 'User session not found' },
-      { status: 401 }
-    )
-  }
-
-  console.log(`[POST-LOGIN] ✓ User authenticated: ${user.id} (${user.email})`)
 
   try {
-    console.log('[POST-LOGIN] Fetching active memberships...')
-    const memberships = await listActiveMemberships(supabase, user.id)
-    console.log(`[POST-LOGIN] ✓ Found ${memberships.length} active membership(s)`)
-
-    if (memberships.length === 0) {
-      console.log('[POST-LOGIN] No active memberships, checking if any exist...')
-      const redirectTo = await resolveNoActiveMembershipRedirect(supabase, user.id)
-      console.log(`[POST-LOGIN] ✓ Redirecting to ${redirectTo}`)
-      const response = NextResponse.json({ redirectTo })
-      response.cookies.delete(ACTIVE_MEMBERSHIP_COOKIE)
-      return response
+    const { data, error } = await supabase.rpc('resolve_post_login_context')
+    if (error) {
+      if (error.message.includes('authentication_required')) {
+        return postLoginResponse({ error: 'unauthorized' }, 401, startedAt)
+      }
+      throw error
     }
 
-    if (memberships.length > 1) {
-      console.log(`[POST-LOGIN] Multiple memberships found: ${memberships.map(m => m.id).join(', ')}`)
-      console.log('[POST-LOGIN] ✓ Redirecting to /selecionar-perfil')
-      const response = NextResponse.json({ redirectTo: '/selecionar-perfil' })
-      response.cookies.delete(ACTIVE_MEMBERSHIP_COOKIE)
-      return response
-    }
+    const resolution = (Array.isArray(data) ? data[0] : data) as PostLoginResolution | null
+    if (!resolution?.redirect_to) throw new Error('invalid_post_login_resolution')
 
-    const membershipId = memberships[0].id
-    console.log(`[POST-LOGIN] Activating single membership: ${membershipId}`)
-    await activateMembership(supabase, membershipId)
-    console.log(`[POST-LOGIN] ✓ Membership activated, redirecting to /dashboard`)
-    
-    const response = NextResponse.json({ redirectTo: '/dashboard' })
-    response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, membershipId, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      maxAge: 60 * 60 * 12,
-    })
+    const response = postLoginResponse({
+      redirectTo: resolution.redirect_to,
+      activeMembershipCount: resolution.active_membership_count,
+    }, 200, startedAt)
+
+    if (resolution.membership_id) {
+      response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, resolution.membership_id, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        maxAge: 60 * 60 * 12,
+      })
+    } else {
+      response.cookies.delete(ACTIVE_MEMBERSHIP_COOKIE)
+    }
     return response
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
-    console.error('[POST-LOGIN] ❌ Error during membership resolution:', errorMessage)
-    console.error('[POST-LOGIN] ❌ Full error:', error)
-    
-    return NextResponse.json(
-      {
-        error: 'membership_resolution_failed',
-        message: errorMessage,
-        timestamp: new Date().toISOString(),
-      },
-      { status: 503 }
-    )
+    console.error('[POST-LOGIN] membership resolution failed:', errorMessage)
+    return postLoginResponse({ error: 'membership_resolution_failed' }, 503, startedAt)
   }
 }

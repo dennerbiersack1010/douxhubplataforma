@@ -1,9 +1,9 @@
 ---
 title: Tela de Login
 document_id: SCR-LOGIN-001
-version: 1.1.0
+version: 1.2.0
 status: Em produção
-last_updated: 2026-07-16
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - ../intro/SCREEN.md
@@ -37,6 +37,8 @@ A ação de cadastro usa contorno claro, dimensão reduzida e menor ênfase que 
 - carregando: envio bloqueado e indicador no botão principal;
 - erro de autenticação ou contexto: aviso no painel;
 - sucesso: redirecionamento conforme vínculos ativos.
+
+O indicador permanece ativo durante a resolução do contexto e é encerrado pela navegação seguinte. O fluxo não dispara mais uma atualização adicional da rota após o redirecionamento.
 
 ## Responsividade e acessibilidade
 

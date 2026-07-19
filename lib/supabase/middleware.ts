@@ -77,12 +77,11 @@ export async function updateSession(request: NextRequest) {
   })
 
   /**
-   * IMPORTANTE: não executar lógica entre createServerClient e getUser().
+   * IMPORTANTE: não executar lógica entre createServerClient e getClaims().
    * Conforme documentação oficial do @supabase/ssr.
    */
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: claimsData } = await supabase.auth.getClaims()
+  const hasVerifiedSession = Boolean(claimsData?.claims?.sub)
 
   const publicPath = isPublic(pathname)
   const contextPath = isContextPath(pathname)
@@ -102,7 +101,7 @@ export async function updateSession(request: NextRequest) {
   const fromAuth = request.nextUrl.searchParams.get('fromAuth') === 'true'
 
   // 1. Sem sessão acessando rota protegida → redireciona para /login
-  if (!user && !publicPath) {
+  if (!hasVerifiedSession && !publicPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('next', pathname)
@@ -111,7 +110,7 @@ export async function updateSession(request: NextRequest) {
 
   // 2. Com sessão acessando rota só-pública (login/cadastro/recuperar) → redireciona
   // MAS: não redireciona se vem de callback de autenticação (fromAuth=true)
-  if (user && authOnlyPath && !fromAuth) {
+  if (hasVerifiedSession && authOnlyPath && !fromAuth) {
     const url = request.nextUrl.clone()
     url.pathname = '/selecionar-perfil'
     return NextResponse.redirect(url)
@@ -122,7 +121,7 @@ export async function updateSession(request: NextRequest) {
     request.cookies.get(ACTIVE_MEMBERSHIP_COOKIE)?.value
   )
 
-  if (user && !publicPath && !contextPath && !hasActiveContext) {
+  if (hasVerifiedSession && !publicPath && !contextPath && !hasActiveContext) {
     const url = request.nextUrl.clone()
     url.pathname = '/selecionar-perfil'
     return NextResponse.redirect(url)
