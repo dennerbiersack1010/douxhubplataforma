@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.15.0
+version: 0.16.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,6 +15,12 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 19/07/2026
+
+### Identidade global — favicon
+
+- Substituído o favicon padrão pelo ícone oficial da DouxHub em `app/icon.png`.
+- Removido o ativo anterior `app/favicon.ico` para impedir concorrência entre ícones nos navegadores.
+- Preservadas todas as rotas, interfaces e regras funcionais existentes.
 
 ### Onboarding — conclusão transacional
 

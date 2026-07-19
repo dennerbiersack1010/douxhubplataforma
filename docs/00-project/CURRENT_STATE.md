@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.18.0
+version: 0.19.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -12,6 +12,12 @@ related_documents:
 ---
 
 # Estado Atual (Current State)
+
+## Identidade global — favicon oficial (19/07/2026)
+
+- O favicon padrão anterior foi substituído pelo ícone oficial fornecido pela DouxHub.
+- O arquivo original foi preservado em `app/icon.png`, usando a convenção nativa de metadados do Next.js para gerar o ícone exibido em abas, favoritos e atalhos compatíveis.
+- A alteração é exclusivamente de identidade global e não modifica Login, onboarding, rotas ou regras de negócio.
 
 ## Etapa 2 — Ciclo 4: conclusão transacional do onboarding (Validado em 19/07/2026)
 

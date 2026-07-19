@@ -5,6 +5,18 @@ last_updated: 2026-07-19
 
 ---
 
+## 2026-07-19 — Sessão: favicon oficial
+
+| Ação | Resultado |
+|---|---|
+| Validação do ícone fornecido | Aprovada; PNG quadrado com transparência |
+| Inclusão em `app/icon.png` | Concluída |
+| Remoção do favicon padrão anterior | Concluída; recuperável pelo histórico Git |
+| Impacto funcional | Nenhum; alteração restrita à identidade global |
+| GitHub, Vercel e domínio | Pendentes do fechamento desta alteração |
+
+Próxima ação: validar o build, publicar e conferir o favicon no domínio oficial antes de iniciar a Etapa 3.
+
 ## 2026-07-19 — Sessão: Etapa 2, Ciclo 4 do onboarding
 
 | Ação | Resultado |
