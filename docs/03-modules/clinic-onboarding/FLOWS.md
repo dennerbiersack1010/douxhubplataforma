@@ -1,7 +1,7 @@
 ---
 title: Fluxos do Onboarding
 document_id: MOD-ONBOARD-003
-version: 0.1.0
+version: 0.2.0
 status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
@@ -22,11 +22,13 @@ related_documents:
 
 ## Salvar etapa
 
-1. A futura API validará os campos da etapa com schema específico.
+1. A API valida os campos da etapa com schema Zod específico.
 2. A função segura confirma propriedade, estado e ordem.
 3. O bloco da etapa é substituído integralmente.
 4. A etapa entra em `completed_steps`, `current_step` avança e `revision` aumenta.
 5. Recarregar a página retoma o mesmo estado.
+
+O `PATCH /api/clinic-onboarding` envia ao banco somente o objeto já validado e normalizado. Etapas à frente do progresso atual continuam bloqueadas pela função PostgreSQL.
 
 ## Cancelar
 
@@ -38,4 +40,3 @@ related_documents:
 ## Concluir
 
 Planejado para ciclo posterior. A conclusão deverá validar todas as etapas, criar clínica e unidade uma única vez, configurar a proprietária, funções e perfil inicial, registrar auditoria e marcar o mesmo rascunho como `completed` na mesma transação quando possível.
-

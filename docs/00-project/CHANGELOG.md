@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.11.0
+version: 0.12.0
 status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
@@ -24,6 +24,15 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Adicionado teste transacional de contrato, idempotência, isolamento e cancelamento.
 - Criada documentação específica do módulo em `docs/03-modules/clinic-onboarding/`.
 - Aplicação e execução no Supabase de produção permanecem pendentes e não foram registradas como validadas.
+
+### Onboarding — API e validação
+
+- Adicionados schemas server-side para identificação, clínica, unidade, funcionamento e preparação da equipe.
+- Adicionadas validações de CNPJ, CEP, fuso, horários, limites operacionais e preferências.
+- Adicionada `/api/clinic-onboarding` para consultar, iniciar/retomar, salvar e cancelar o próprio rascunho.
+- Contas com vínculo ativo são recusadas pelo fluxo de onboarding inicial.
+- Respostas da API são privadas, sem cache e usam erros públicos estáveis.
+- Smoke test dos schemas, TypeScript, ESLint e build aprovados.
 
 ### Documentação
 

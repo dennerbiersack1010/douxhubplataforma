@@ -1,7 +1,7 @@
 ---
 title: Estados do Onboarding
 document_id: MOD-ONBOARD-004
-version: 0.1.0
+version: 0.2.0
 status: Definido
 last_updated: 2026-07-18
 owner: DouxHub
@@ -24,3 +24,10 @@ related_documents:
 
 Somente os estados de persistência e cancelamento possuem fundação de banco nesta versão. A interface ainda não foi implementada.
 
+## Estados da API
+
+- **Não autorizado:** sessão ausente ou inválida recebe `401`.
+- **Não disponível para a conta:** vínculo ativo recebe `409`.
+- **Dados inválidos:** envelope inválido recebe `400`; campos da etapa recebem `422` com caminhos e códigos seguros.
+- **Fora de ordem:** recebe `409` sem alterar o rascunho.
+- **Indisponível:** dependência de banco ausente ou falha operacional recebe `503`.

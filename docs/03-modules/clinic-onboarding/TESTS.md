@@ -1,8 +1,8 @@
 ---
 title: Testes do Onboarding
 document_id: MOD-ONBOARD-005
-version: 0.1.0
-status: Planejado
+version: 0.2.0
+status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
@@ -28,7 +28,9 @@ related_documents:
 
 ## Estado da validação
 
-O arquivo de teste está implementado, mas ainda não foi executado em PostgreSQL porque esta cópia de trabalho não possui Supabase CLI, PostgreSQL local ou configuração de banco remoto. O status permanece `Planejado` até execução real.
+O arquivo de teste está implementado, mas ainda não foi executado em PostgreSQL porque esta cópia de trabalho não possui Supabase CLI, PostgreSQL local ou configuração de banco remoto. O módulo de testes permanece `Em desenvolvimento` até a execução real do contrato de banco.
+
+Os schemas foram exercitados localmente com casos válidos para as cinco etapas e casos inválidos de CNPJ, fuso horário e intervalo de funcionamento. O teste retornou `clinic_onboarding_schema_smoke_ok`. TypeScript, ESLint e build também foram executados com sucesso; permanecem quatro avisos preexistentes sobre `<img>`.
 
 ## Testes futuros
 
@@ -40,4 +42,3 @@ O arquivo de teste está implementado, mas ainda não foi executado em PostgreSQ
 - sessão anônima;
 - cancelamento confirmado;
 - fluxo completo no domínio publicado.
-

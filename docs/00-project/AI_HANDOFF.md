@@ -115,8 +115,15 @@ Testes SQL em: `supabase/tests/`
 - Migração: `20260718120000_clinic_onboarding_progress.sql`.
 - Teste: `003_clinic_onboarding_progress.sql`.
 - A migração ainda não foi aplicada e o teste ainda não foi executado no Supabase de produção.
-- Não existe API por etapa, interface guiada ou conclusão transacional nova.
+- Não existe interface guiada ou conclusão transacional nova; a API por etapa foi implementada no ciclo seguinte.
 - Próximo ciclo: schemas Zod e API server-side para o rascunho; validar novamente antes de criar telas.
+
+Atualização do Ciclo 2:
+
+- Schemas e API foram implementados em `lib/clinic-onboarding.ts` e `app/api/clinic-onboarding/route.ts`.
+- A nova rota passou no build e ainda não é consumida pela interface.
+- A migração continua pendente no Supabase; não testar a API em produção antes de aplicá-la.
+- Próximo ciclo: interface técnica guiada, retomada e confirmação de cancelamento; conclusão transacional fica para ciclo separado.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 

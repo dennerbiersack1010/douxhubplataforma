@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.14.0
+version: 0.15.0
 status: Implementado
 last_updated: 2026-07-18
 owner: DouxHub
@@ -228,4 +228,13 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - Documentação do módulo criada em `docs/03-modules/clinic-onboarding/`.
 - Validação da aplicação: integridade documental aprovada, TypeScript aprovado, ESLint sem erros e build aprovado com 34 páginas.
 - Estado remoto: **migração e teste ainda não aplicados nem executados no Supabase de produção**.
-- Interface, API validada por etapa e conclusão transacional ainda não implementadas.
+- Interface e conclusão transacional ainda não implementadas.
+
+### API e validação do rascunho
+
+- Criados schemas Zod estritos em `lib/clinic-onboarding.ts` para as cinco etapas de dados.
+- Criada `/api/clinic-onboarding` com consulta, início/retomada, gravação e cancelamento.
+- A API exige sessão, recusa contas com vínculo ativo e retorna respostas privadas sem cache.
+- O payload validado é normalizado antes da chamada às funções do banco.
+- Smoke test de schemas, TypeScript, ESLint e build foram aprovados; o build contém 35 rotas/páginas.
+- A API ainda não possui consumidor na interface e depende da migração pendente no Supabase.

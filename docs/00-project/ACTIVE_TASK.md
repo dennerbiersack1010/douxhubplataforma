@@ -181,6 +181,47 @@ Não há erro de aplicação. O teste SQL não foi executado porque a cópia ofi
 
 Criar o ciclo 2 da Etapa 2: schemas Zod e API server-side para iniciar/retomar, consultar, salvar e cancelar o rascunho, sem implementar ainda a conclusão transacional ou o visual definitivo.
 
+## Etapa 2 — ciclo 2: validação e API do rascunho
+
+### Problema isolado
+
+A fundação de banco aceita objetos JSON porque ainda não existe uma camada server-side que valide campos, formatos e limites específicos de cada etapa. Também não existe endpoint autenticado para a futura interface consultar e alterar o próprio rascunho.
+
+### Unidade lógica deste ciclo
+
+- schemas Zod independentes para as etapas 1 a 5;
+- validação de CNPJ, endereço, fuso, horários, dias e preferências;
+- API autenticada para consultar, iniciar/retomar, salvar e cancelar;
+- bloqueio do onboarding inicial para contas que já possuem vínculo ativo;
+- respostas sem cache e erros públicos estáveis;
+- nenhuma alteração na interface ou na conclusão transacional.
+
+### Resultado do ciclo
+
+- Schemas estritos implementados para as etapas 1 a 5.
+- Validação de CNPJ com dígitos verificadores implementada.
+- Endereços, fuso IANA, horários, políticas, pagamentos e preferências possuem limites server-side.
+- API `GET`, `POST`, `PATCH` e `DELETE` implementada em `/api/clinic-onboarding`.
+- Sessão e ausência de vínculo ativo são verificadas antes de qualquer operação.
+- Respostas são privadas, sem cache e sem mensagens internas do banco.
+- A interface e a conclusão transacional permanecem inalteradas.
+
+### Último teste executado
+
+`npm run build`
+
+### Resultado do último teste
+
+Build aprovado com 35 rotas/páginas e Proxy ativo. TypeScript aprovado. ESLint sem erros e com quatro avisos preexistentes. Smoke test dos cinco schemas aprovado com `clinic_onboarding_schema_smoke_ok`.
+
+### Último erro encontrado
+
+A primeira tentativa isolada do TypeScript não conseguiu gravar `tsconfig.tsbuildinfo` por restrição do ambiente; a execução autorizada passou sem erros. Não é erro do produto. O teste PostgreSQL continua pendente pela ausência de conexão/CLI.
+
+### Próxima ação exata
+
+Ciclo 3 da Etapa 2: substituir o formulário curto por uma interface técnica guiada que consuma a API, retome o progresso e confirme cancelamento, sem implementar ainda o visual definitivo ou a conclusão transacional.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

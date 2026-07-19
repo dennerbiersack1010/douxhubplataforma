@@ -40,6 +40,22 @@ Próxima ação: projetar a persistência e a migração aditiva do onboarding g
 
 Próxima ação: implementar schemas e API server-side do rascunho antes da interface e da conclusão transacional.
 
+### Etapa 2 — ciclo 2: validação e API
+
+| Ação | Resultado |
+|---|---|
+| Schemas Zod das cinco etapas | Implementados |
+| CNPJ, CEP, fuso e horários | Validados server-side |
+| API autenticada do rascunho | Implementada |
+| Bloqueio para conta com vínculo ativo | Implementado |
+| Smoke test dos schemas | Aprovado |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript | Aprovado |
+| Build | Aprovado; 35 rotas/páginas e Proxy ativo |
+| Teste PostgreSQL | Pendente por ausência de conexão/CLI |
+
+Próxima ação: interface técnica guiada e retomável, preservando a exigência de referência antes do visual definitivo.
+
 ## 2026-07-17 — Sessão: Configuração SMTP e correção de segurança de rotas
 
 ### SMTP / Resend
