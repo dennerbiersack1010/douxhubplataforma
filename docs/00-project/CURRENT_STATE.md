@@ -22,7 +22,9 @@ related_documents:
 - A migração `20260719120000_complete_clinic_onboarding.sql` foi aplicada no Supabase oficial pelo SQL Editor.
 - O contrato `004_clinic_onboarding_completion.sql` foi aprovado com `clinic_onboarding_completion_ok`, incluindo atomicidade, auditoria, repetição, isolamento entre contas, recusa de rascunho incompleto e rollback dos dados fictícios.
 - ESLint, TypeScript e build de produção foram aprovados; o lint mantém somente quatro avisos preexistentes sobre imagens públicas.
-- A publicação desta entrega no domínio oficial ainda será registrada após o checkpoint no GitHub.
+- O commit funcional `feefa06` foi enviado para `origin/main` e publicado no deployment `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7`, estado `READY`, target `production`.
+- Os aliases `douxhub.space` e `douxhubplataforma.vercel.app` apontam para a entrega. O Login foi conferido, `/configurar-clinica` redirecionou visitante anônimo para `/login?next=%2Fconfigurar-clinica` e a API do onboarding respondeu `401 Unauthorized` com `Cache-Control: private, no-store, max-age=0` sem sessão.
+- O fluxo manual autenticado completo no domínio publicado permanece pendente por exigir uma conta de teste confirmada e dados reais preenchidos na interface.
 
 ## Etapa 1: Fundação Técnica e Estrutura Inicial (Implementada em 16/07/2026)
 

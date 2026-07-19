@@ -267,7 +267,7 @@ Iniciar o Ciclo 4 da Etapa 2: definir e testar a conclusão transacional e idemp
 
 ### Próxima ação exata
 
-Publicar este ciclo no GitHub e na Vercel, verificar `douxhub.space` e então iniciar a Etapa 3, Ciclo 1: migração aditiva e testes para usuários da clínica, atribuições de função e perfis de acesso.
+O ciclo foi publicado no commit `feefa06` e no deployment `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7` (`READY`). O domínio oficial aprovou Login, proteção da rota de onboarding e recusa anônima da API. A próxima ação é iniciar a Etapa 3, Ciclo 1: migração aditiva e testes para usuários da clínica, atribuições de função e perfis de acesso.
 
 ---
 

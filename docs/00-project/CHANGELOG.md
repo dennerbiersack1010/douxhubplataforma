@@ -26,6 +26,8 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - A primeira execução detectou referência ambígua no caminho idempotente; a consulta foi qualificada, reaplicada e aprovada.
 - Migração aplicada no Supabase oficial e teste aprovado com `clinic_onboarding_completion_ok`; dados artificiais foram desfeitos por `rollback`.
 - TypeScript, ESLint e build de produção aprovados com 35 rotas/páginas.
+- Commit funcional `feefa06` enviado para `origin/main` e publicado pela Vercel no deployment `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7`, estado `READY`.
+- Domínio oficial conferido: Login disponível, onboarding protegido com redirecionamento anônimo e API recusando sessão ausente sem cache.
 
 ### Onboarding — persistência
 

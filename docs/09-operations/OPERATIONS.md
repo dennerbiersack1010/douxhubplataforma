@@ -1,7 +1,7 @@
 ---
 title: Operações da Plataforma
 document_id: OPS-001
-version: 0.3.0
+version: 0.4.0
 status: Em desenvolvimento
 last_updated: 2026-07-17
 owner: DouxHub
@@ -17,7 +17,9 @@ related_documents:
 
 A aplicação web é publicada na Vercel e utiliza um projeto Supabase dedicado na região de São Paulo. O ambiente Production possui somente as variáveis públicas necessárias à aplicação; valores de chaves, senhas e tokens não devem ser copiados para a documentação. Builds de produção executam compilação do Next.js e verificação TypeScript.
 
-O endereço próprio `douxhub.space` está associado ao projeto da plataforma. O DNS é administrado pela Hostinger. `auth.douxhub.space` está reservado ao Resend e permanece pendente de verificação DNS antes da ativação do SMTP no Supabase.
+O endereço próprio `douxhub.space` está associado ao projeto da plataforma. O DNS é administrado pela Hostinger. `auth.douxhub.space` está verificado no Resend e o SMTP personalizado está ativo no Supabase.
+
+O auto-deploy do GitHub não é considerado confiável no estado atual. Após cada push funcional, a publicação deve ser executada manualmente no projeto Vercel vinculado, acompanhada até `READY`, e os aliases e testes do domínio devem ser registrados. A entrega do Ciclo 4 do onboarding foi publicada no deployment `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7`.
 
 ## Rotina mínima de publicação
 

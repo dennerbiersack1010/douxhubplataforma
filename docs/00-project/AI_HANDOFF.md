@@ -144,7 +144,10 @@ Atualização do Ciclo 4:
 - `PUT /api/clinic-onboarding` e a etapa 6 da interface concluem o fluxo, ativam o vínculo e seguem para `/dashboard`.
 - A migração foi aplicada no Supabase oficial pelo SQL Editor; não inserir histórico artificial da CLI.
 - `004_clinic_onboarding_completion.sql` foi aprovado com `clinic_onboarding_completion_ok` após corrigir uma referência ambígua detectada na primeira execução.
-- O próximo ciclo começa somente após o fechamento de GitHub, Vercel e domínio desta entrega.
+- Commit funcional: `feefa06`, enviado para `origin/main`.
+- Deployment: `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7`, estado `READY`, target `production`, com alias `douxhub.space`.
+- Verificação pública aprovada para Login, proteção de `/configurar-clinica` e `401` sem cache na API sem sessão.
+- O próximo ciclo é a Etapa 3, Ciclo 1.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
@@ -152,11 +155,11 @@ O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. 
 
 ## Próxima ação para a IA que continuar
 
-1. Confirmar o fechamento operacional do Ciclo 4 no GitHub, Vercel e domínio oficial.
-2. Ler o modelo conceitual em `docs/03-modules/clinic-access/`.
-3. Projetar a migração aditiva de usuários da clínica, atribuições de função e perfis de acesso.
-4. Criar primeiro os testes de compatibilidade, RLS e isolamento.
-5. Manter Login, onboarding concluído, visual definitivo e módulos de negócio fora do ciclo.
+1. Ler o modelo conceitual em `docs/03-modules/clinic-access/`.
+2. Projetar a migração aditiva de usuários da clínica, atribuições de função e perfis de acesso.
+3. Criar primeiro os testes de compatibilidade, RLS e isolamento.
+4. Preservar o Login, o onboarding concluído e os vínculos atuais.
+5. Manter visual definitivo e módulos de negócio fora do ciclo.
 
 ---
 

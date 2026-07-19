@@ -19,7 +19,9 @@ last_updated: 2026-07-19
 | ESLint | 0 erros; 4 avisos preexistentes |
 | TypeScript | Aprovado |
 | Build de produção | Aprovado; 35 rotas/páginas e Proxy ativo |
-| GitHub e Vercel | Pendentes do fechamento operacional deste ciclo |
+| GitHub | Commit funcional `feefa06` enviado para `origin/main` |
+| Vercel | `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7`, produção, `READY` |
+| Domínio oficial | Login aprovado; rota protegida redireciona ao Login; API retorna `401` sem sessão e sem cache |
 
 Próxima etapa após a publicação: Etapa 3, Ciclo 1, fundação aditiva de usuários da clínica, funções e perfis de acesso.
 
