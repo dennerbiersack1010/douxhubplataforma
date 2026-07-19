@@ -161,6 +161,13 @@ Atualização do Ciclo 4:
 - Login autenticado medido em 3,81 s no caminho frio e 1,26 s após logout; fixture removida integralmente.
 - Próximo ciclo: catálogo e matriz de permissões; não migrar seleção de perfil antes do portão de equivalência.
 
+### Etapa 3, Ciclo 2
+
+- `20260719200000_clinic_permissions_foundation.sql` foi aplicada no Supabase oficial.
+- Catálogo, matriz por função, exceções por perfil e cálculo efetivo foram implementados sem alterar a autoridade de `clinic_memberships`.
+- `007_clinic_permissions_foundation.sql` foi aprovado com `clinic_permissions_foundation_ok` e rollback integral.
+- Próximo ciclo: leitura e equivalência dos novos perfis; não migrar `user_active_contexts`, rotas ou menus antes do portão documentado.
+
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---

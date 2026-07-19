@@ -1,7 +1,7 @@
 ---
 title: Segurança Multiempresa e Permissões Iniciais
 document_id: SEC-001
-version: 0.8.0
+version: 0.9.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -83,7 +83,7 @@ O `app/(authenticated)/layout.tsx` é um Server Component que valida a sessão n
 
 ### Camada 3 — Banco de dados (RLS)
 
-As tabelas vigentes e as cinco tabelas da fundação da Etapa 3 possuem Row Level Security habilitado. Políticas revalidadas em 19/07/2026:
+As tabelas vigentes, as cinco tabelas do Ciclo 1 e as três tabelas do Ciclo 2 possuem Row Level Security habilitado. Políticas revalidadas em 19/07/2026:
 - Nenhuma tabela com política para o role `anon`.
 - Todas as operações restritas ao role `authenticated`.
 - Isolamento multiclínica garantido pelas condições das políticas (filtragem por `user_id` e `clinic_id`).
@@ -93,6 +93,10 @@ As tabelas vigentes e as cinco tabelas da fundação da Etapa 3 possuem Row Leve
 `clinic_users`, `clinic_roles`, `clinic_user_role_assignments`, `clinic_user_units` e `access_profiles` preservam a fronteira de `clinic_id` com chaves estrangeiras compostas. Usuários autenticados possuem somente leitura e enxergam registros próprios ou gerenciáveis pelo contrato atual. O teste `006_clinic_access_profiles_foundation.sql` aprovou isolamento, ausência de escrita direta e sincronização retrocompatível.
 
 A seleção de perfil ainda deverá adotar a nova entidade e validar permissões efetivas no servidor e no RLS. Permissões de interface nunca substituirão essas verificações.
+
+## Fundação de permissões da Etapa 3
+
+`permission_catalog`, `clinic_role_permissions` e `access_profile_permission_overrides` preservam catálogo global estável e fronteiras por clínica e perfil. Usuários autenticados possuem somente leitura. O cálculo efetivo aceita apenas perfil ativo da própria conta, valida clínica, função, unidade e atribuições e aplica negação explícita antes de concessões. O teste `007_clinic_permissions_foundation.sql` aprovou isolamento, escopos, conflito e ausência de escrita direta.
 
 - modo suporte e perfis globais do DouxHub Control;
 - arquitetura local-first, sincronização, conflitos e proteção do banco local;

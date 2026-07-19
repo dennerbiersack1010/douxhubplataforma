@@ -1,7 +1,7 @@
 ---
 title: Modelo de Dados de Acesso às Clínicas
 document_id: MOD-CLINIC-003
-version: 0.3.0
+version: 0.4.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -29,6 +29,9 @@ related_documents:
 - `clinic_user_role_assignments`: atribuições múltiplas de função por usuário da clínica.
 - `clinic_user_units`: associações múltiplas de unidade por usuário da clínica.
 - `access_profiles`: opções rastreáveis de função e escopo de clínica ou unidade.
+- `permission_catalog`: chaves estáveis, descrições, escopos, sensibilidade e personalização permitida.
+- `clinic_role_permissions`: concessões de permissão e escopo pertencentes a uma função da clínica.
+- `access_profile_permission_overrides`: concessões ou negações explícitas pertencentes a um perfil.
 
 ## Relacionamentos e integridade
 
@@ -51,7 +54,8 @@ Todas as tabelas expostas possuem RLS. Consultas são limitadas ao próprio usu�
 - `20260716234500_fix_invitation_expiration_ambiguity.sql`: correção de resolução do campo de validade.
 - `20260716235000_fix_invitation_crypto_search_path.sql`: disponibilização segura da extensão criptográfica às funções de convite.
 - `20260719190000_clinic_access_profiles_foundation.sql`: tabelas aditivas, funções por clínica, sincronização dos vínculos atuais, RLS e leitura segura.
+- `20260719200000_clinic_permissions_foundation.sql`: catálogo, matriz por função, exceções por perfil, cálculo efetivo e RLS.
 
 ## Modelo-alvo definido
 
-Usuários da clínica, funções por clínica, atribuições, múltiplas unidades e perfis já possuem fundação persistida. Permissões efetivas, exceções, profissionais e adoção pelas rotas permanecem planejados. As tabelas atuais não foram substituídas.
+Usuários da clínica, funções, atribuições, múltiplas unidades, perfis, permissões efetivas e exceções possuem fundação persistida. Profissionais, APIs administrativas e adoção pelas rotas permanecem planejados. As tabelas atuais não foram substituídas.

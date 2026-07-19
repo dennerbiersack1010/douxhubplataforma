@@ -1,7 +1,7 @@
 ---
 title: Alterações do Módulo de Acesso às Clínicas
 document_id: MOD-CLINIC-008
-version: 0.3.0
+version: 0.4.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -11,6 +11,21 @@ related_documents:
 ---
 
 # Alterações do Módulo de Acesso às Clínicas
+
+## [0.4.0] - 19/07/2026
+
+### Implementado
+
+- catálogo estável de permissões e escopos;
+- matriz de concessões por função da clínica;
+- concessões e negações personalizáveis por perfil;
+- cálculo seguro de permissões efetivas com negação prevalente;
+- RLS e leitura sem escrita direta para usuários autenticados.
+
+### Validado
+
+- contrato `007_clinic_permissions_foundation.sql` aprovado com rollback integral;
+- isolamento, escopo, funções futuras sem concessões e retrocompatibilidade com o contexto vigente.
 
 ## [0.3.0] - 19/07/2026
 

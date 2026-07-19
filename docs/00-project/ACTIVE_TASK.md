@@ -291,6 +291,20 @@ O ciclo foi publicado no commit `feefa06` e no deployment `dpl_DVEs9VDxi2Tb4vhii
 
 O Ciclo 1 foi publicado no commit `38ee817` e validado no domínio. A próxima ação é iniciar o Ciclo 2 da Etapa 3: catálogo de permissões, matriz por função e exceções de perfil, ainda sem migrar a seleção de contexto.
 
+## Etapa 3 — ciclo 2: catálogo e matriz de permissões
+
+### Resultado
+
+- catálogo com dez chaves estáveis e escopos aprovados implementado;
+- matriz inicial por função da clínica persistida sem concessões às funções futuras;
+- concessões e negações personalizáveis por perfil implementadas;
+- cálculo efetivo restrito ao próprio perfil ativo e com negação prevalente;
+- RLS, ausência de escrita direta, isolamento e rollback validados com `clinic_permissions_foundation_ok`.
+
+### Próxima ação exata
+
+Executar o Ciclo 3 da Etapa 3: camada de leitura e testes de equivalência entre `clinic_memberships` e os novos perfis, sem trocar ainda `user_active_contexts`, rotas, menus ou autorização vigente.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

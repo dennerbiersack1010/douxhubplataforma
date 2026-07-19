@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.20.0
+version: 0.21.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -12,6 +12,19 @@ related_documents:
 ---
 
 # Estado Atual (Current State)
+
+## Etapa 3 — Ciclo 2: catálogo e matriz de permissões (Validada em 19/07/2026)
+
+- A migração `20260719200000_clinic_permissions_foundation.sql` criou o catálogo estável, a matriz por função da clínica e as exceções explícitas por perfil.
+- Dez permissões compatíveis com as capacidades já existentes usam chaves `recurso.acao` e escopos `own`, `unit` ou `clinic`.
+- A matriz inicial preserva proprietária, administradora e colaborador; funções futuras continuam sem concessões.
+- Concessões e negações de perfil são limitadas a permissões personalizáveis e a escopos aprovados no catálogo.
+- `get_effective_access_profile_permissions()` e `access_profile_has_permission()` validam conta, clínica, função, unidade, atribuições e estados ativos antes de calcular o resultado.
+- Negação explícita prevalece sobre função e concessão personalizada; restrições estruturais e Row Level Security (RLS) permanecem superiores à matriz.
+- As três tabelas novas possuem RLS e leitura limitada; `authenticated` não recebeu escrita direta.
+- O contrato `007_clinic_permissions_foundation.sql` retornou `clinic_permissions_foundation_ok`, incluindo isolamento, escopo, concessão, negação prevalente e rollback integral.
+- ESLint, TypeScript e build de produção foram aprovados; permanecem somente quatro avisos preexistentes sobre imagens públicas.
+- `clinic_memberships`, `user_active_contexts`, rotas e menus continuam sendo a autoridade operacional vigente até um portão posterior de equivalência.
 
 ## Otimização do Login (Validada no Supabase em 19/07/2026)
 

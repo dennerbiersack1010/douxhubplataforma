@@ -1,7 +1,7 @@
 ---
 title: Acesso e Administração Inicial de Clínicas
 document_id: MOD-CLINIC-001
-version: 0.3.0
+version: 0.4.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -47,4 +47,6 @@ A lógica, as migrações e os testes de banco estão implementados e validados.
 
 O Ciclo 1 da Etapa 3 implementou `clinic_users`, `clinic_roles`, `clinic_user_role_assignments`, `clinic_user_units` e `access_profiles`. Cada vínculo atual é convertido de forma rastreável e continua sincronizado por gatilho. `clinic_memberships` permanece como contrato vigente da aplicação; a leitura e o contexto ainda não migraram para as novas tabelas.
 
-Funções globais são copiadas como modelos pertencentes a cada clínica sem criar contas ou colaboradores fictícios. Múltiplas funções e unidades já são representáveis. Catálogo de permissões, matriz de função, exceções de perfil, profissionais e adoção do novo contexto ficam para ciclos posteriores.
+Funções globais são copiadas como modelos pertencentes a cada clínica sem criar contas ou colaboradores fictícios. Múltiplas funções e unidades já são representáveis.
+
+O Ciclo 2 adicionou `permission_catalog`, `clinic_role_permissions` e `access_profile_permission_overrides`, além do cálculo seguro de permissões efetivas. A aplicação ainda não usa essa matriz para autorizar rotas ou montar menus; profissionais e adoção do novo contexto ficam para ciclos posteriores.

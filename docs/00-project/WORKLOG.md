@@ -5,6 +5,22 @@ last_updated: 2026-07-19
 
 ---
 
+## 2026-07-19 — Sessão: Etapa 3, Ciclo 2
+
+| Ação | Resultado |
+|---|---|
+| Catálogo de permissões | Dez chaves estáveis com escopos aprovados |
+| Matriz por função | Proprietária, administradora e colaborador preenchidos; funções futuras sem concessões |
+| Exceções por perfil | Concessão e negação personalizáveis com validação de escopo |
+| Cálculo efetivo | Perfil próprio ativo, validações estruturais e negação prevalente |
+| Migração no Supabase | Aplicada no projeto oficial pelo SQL Editor |
+| Teste `007_clinic_permissions_foundation.sql` | Aprovado com `clinic_permissions_foundation_ok` e rollback integral |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript e build | Aprovados; 35 rotas/páginas e Proxy ativo |
+| Autoridade operacional | `clinic_memberships` e `user_active_contexts` preservados |
+
+Próxima ação: Etapa 3, Ciclo 3, equivalência entre vínculos vigentes e os novos perfis antes de qualquer migração de contexto.
+
 ## 2026-07-19 — Sessão: desempenho do Login e Etapa 3, Ciclo 1
 
 | Ação | Resultado |

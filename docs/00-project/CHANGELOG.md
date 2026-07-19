@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.17.0
+version: 0.18.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,6 +15,16 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 19/07/2026
+
+### Etapa 3 — Ciclo 2
+
+- Adicionado catálogo com dez chaves estáveis de permissão e escopos `own`, `unit` e `clinic`.
+- Adicionada matriz rastreável por função da clínica, sem conceder capacidades às funções futuras inativas.
+- Adicionadas exceções explícitas de perfil com concessão ou negação, limitadas a permissões e escopos personalizáveis.
+- Adicionado cálculo seguro de permissões efetivas com validação do perfil e precedência obrigatória da negação.
+- Adicionadas RLS e leitura sem escrita direta para as três tabelas novas.
+- Migração aplicada no Supabase oficial e contrato `007_clinic_permissions_foundation.sql` aprovado com `clinic_permissions_foundation_ok` e rollback integral.
+- ESLint, TypeScript e build aprovados; `clinic_memberships` e o contexto atual permaneceram inalterados.
 
 ### Login — redução do caminho crítico
 
