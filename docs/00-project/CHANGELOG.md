@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.13.0
+version: 0.14.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -36,6 +36,17 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Respostas da API são privadas, sem cache e usam erros públicos estáveis.
 - Smoke test dos schemas, TypeScript, ESLint e build aprovados.
 
+### Onboarding — interface técnica guiada
+
+- Substituído o formulário curto de `/configurar-clinica` por cinco etapas de dados e uma sexta etapa de preparação.
+- Adicionadas consulta, criação idempotente e retomada automática do rascunho.
+- Adicionada navegação para revisar etapas já alcançadas, mantendo etapas futuras bloqueadas.
+- Adicionados estados de carregamento, gravação, erro, confirmação e rascunho cancelado.
+- Cancelamento passou a exigir confirmação em duas ações e preserva o registro histórico.
+- A etapa de preparação informa explicitamente que a conclusão transacional permanece pendente.
+- Criada documentação da tela em `docs/02-screens/configurar-clinica/SCREEN.md`.
+- Build aprovado com 35 rotas/páginas; ESLint sem erros e sem avisos novos.
+
 ### Documentação
 
 - Registrada a tarefa de reestruturação da fundação da plataforma, preservando integralmente o histórico de autenticação.
@@ -48,7 +59,8 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 
 ### Estado
 
-- Alteração exclusivamente documental; banco, RLS, autenticação, Login e deploy permanecem inalterados.
+- Login, autenticação, SMTP e interfaces públicas aprovadas permanecem inalterados.
+- Onboarding evoluiu documentalmente, no banco, na API e na interface técnica; a conclusão transacional permanece planejada.
 - Integridade documental, TypeScript e build aprovados; ESLint sem erros e com quatro avisos preexistentes.
 
 ## [Unreleased] - 17/07/2026

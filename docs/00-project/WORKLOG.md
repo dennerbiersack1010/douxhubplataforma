@@ -23,6 +23,25 @@ last_updated: 2026-07-19
 
 Próxima ação: iniciar o Ciclo 3 da Etapa 2 com a interface técnica guiada, retomada do rascunho e confirmação de cancelamento.
 
+### Etapa 2 — ciclo 3: interface técnica guiada
+
+| Ação | Resultado |
+|---|---|
+| Substituição do formulário curto | Concluída |
+| Cinco etapas de dados e sexta etapa de preparação | Implementadas |
+| Consulta e início idempotente do rascunho | Implementados |
+| Retomada do passo atual e dados salvos | Implementada |
+| Revisão de etapas anteriores | Implementada |
+| Bloqueio visual de etapas futuras | Implementado; banco permanece autoridade |
+| Confirmação em duas ações para cancelamento | Implementada |
+| Estado de rascunho cancelado e novo início | Implementado |
+| Risco de bloqueio no modo estrito do React | Identificado na revisão e corrigido |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript e build | Aprovados; 35 rotas/páginas e Proxy ativo |
+| Teste manual autenticado | Pendente |
+
+Próxima ação: Ciclo 4, conclusão transacional e idempotente da clínica, unidade, proprietária, contexto e auditoria.
+
 ## 2026-07-18 — Sessão: reestruturação da fundação
 
 | Ação | Resultado |

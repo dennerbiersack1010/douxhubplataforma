@@ -1,9 +1,9 @@
 ---
 title: Fluxos do Onboarding
 document_id: MOD-ONBOARD-003
-version: 0.2.0
+version: 0.3.0
 status: Em desenvolvimento
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -20,6 +20,8 @@ related_documents:
 3. Chamadas concorrentes retornam o mesmo rascunho ativo.
 4. A aplicação abre `current_step` e preenche os dados já salvos.
 
+A interface executa a consulta ao abrir `/configurar-clinica` e inicia o rascunho automaticamente somente quando `GET` não encontra progresso ativo. O início permanece seguro em chamadas concorrentes porque a função do banco é idempotente.
+
 ## Salvar etapa
 
 1. A API valida os campos da etapa com schema Zod específico.
@@ -28,14 +30,22 @@ related_documents:
 4. A etapa entra em `completed_steps`, `current_step` avança e `revision` aumenta.
 5. Recarregar a página retoma o mesmo estado.
 
+Etapas salvas permanecem disponíveis para revisão. A interface não habilita etapas acima de `current_step`, e a validação do banco continua protegendo a ordem mesmo que o cliente seja contornado.
+
 O `PATCH /api/clinic-onboarding` envia ao banco somente o objeto já validado e normalizado. Etapas à frente do progresso atual continuam bloqueadas pela função PostgreSQL.
 
 ## Cancelar
 
-1. A interface futura pede confirmação explícita.
+1. A interface pede confirmação explícita em duas ações.
 2. A função valida que o rascunho ativo pertence ao usuário.
 3. O estado muda para `cancelled`; nenhum dado é apagado.
 4. Um novo início pode criar outro rascunho.
+
+Após o cancelamento, a tela não reutiliza o registro cancelado e oferece uma ação separada para iniciar um novo onboarding.
+
+## Preparar conclusão
+
+Ao salvar a quinta etapa, `current_step` avança para 6. A tela informa que os dados estão preparados e permite revisar as etapas anteriores. Nenhuma clínica, unidade, função ou vínculo é criado nesse estado.
 
 ## Concluir
 

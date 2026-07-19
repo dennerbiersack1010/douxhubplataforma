@@ -1,8 +1,8 @@
 ---
 title: Testes do Onboarding
 document_id: MOD-ONBOARD-005
-version: 0.3.0
-status: Validado
+version: 0.4.0
+status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
@@ -33,6 +33,15 @@ O contrato foi executado no Supabase oficial em 19/07/2026, após a aplicação 
 A primeira execução falhou porque três chamadas usavam literais `integer` para o parâmetro `smallint` de `save_clinic_onboarding_step`. O teste foi corrigido com conversões explícitas `::smallint`; a migração e as funções não precisaram de alteração. A execução aprovada terminou com `rollback`, removendo os dois usuários e todos os rascunhos artificiais.
 
 Os schemas foram exercitados localmente com casos válidos para as cinco etapas e casos inválidos de CNPJ, fuso horário e intervalo de funcionamento. O teste retornou `clinic_onboarding_schema_smoke_ok`. TypeScript, ESLint e build também foram executados com sucesso; permanecem quatro avisos preexistentes sobre `<img>`.
+
+## Validação do Ciclo 3
+
+- ESLint aprovado sem erros e sem avisos novos;
+- TypeScript aprovado pelo build do Next.js;
+- build de produção aprovado com 35 rotas/páginas e Proxy ativo;
+- revisão estática dos estados de carregamento, gravação, retomada, preparação e cancelamento;
+- risco de bloqueio pelo modo estrito do React identificado na revisão e removido antes do checkpoint;
+- teste manual autenticado, refresh real e chamadas da interface contra produção permanecem pendentes.
 
 ## Testes futuros
 

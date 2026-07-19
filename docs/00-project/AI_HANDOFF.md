@@ -129,6 +129,15 @@ Atualização do Ciclo 2:
 - Integridade documental, TypeScript e ESLint foram aprovados; o lint mantém quatro avisos preexistentes sobre `<img>`.
 - Próximo ciclo: interface técnica guiada, retomada e confirmação de cancelamento; conclusão transacional fica para ciclo separado.
 
+Atualização do Ciclo 3:
+
+- `/configurar-clinica` agora usa uma interface técnica guiada com cinco etapas de dados e uma sexta etapa de preparação.
+- A tela consulta, inicia/retoma, salva e cancela pela API já validada.
+- Etapas salvas podem ser revisadas; etapas futuras ficam desabilitadas.
+- O cancelamento exige confirmação em duas ações e oferece novo início após preservar o histórico.
+- O build passou com 35 rotas/páginas; não houve teste manual autenticado.
+- A conclusão transacional continua fora da interface e é a próxima unidade lógica.
+
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---
@@ -136,10 +145,10 @@ O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. 
 ## Próxima ação para a IA que continuar
 
 1. Ler `docs/03-modules/clinic-onboarding/` e preservar os contratos validados.
-2. Implementar uma interface técnica guiada que consuma `/api/clinic-onboarding`.
-3. Retomar o rascunho no refresh e exibir o passo atual sem duplicar progresso.
-4. Exigir confirmação antes de cancelar o rascunho.
-5. Manter a conclusão transacional, o visual definitivo e mudanças no Login fora deste ciclo.
+2. Definir o contrato da conclusão transacional antes de alterar banco ou API.
+3. Garantir idempotência para clínica, unidade, vínculo, contexto e auditoria.
+4. Criar teste SQL de conclusão, repetição e isolamento.
+5. Manter o visual definitivo e mudanças no Login fora do ciclo.
 
 ---
 

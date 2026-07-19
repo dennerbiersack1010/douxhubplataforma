@@ -230,9 +230,29 @@ Na primeira execução remota, o teste chamou `save_clinic_onboarding_step` com 
 - Integridade documental aprovada com 61 documentos e 61 identificadores únicos.
 - TypeScript aprovado; ESLint sem erros e com quatro avisos preexistentes sobre `<img>`.
 
+## Etapa 2 — ciclo 3: interface técnica guiada
+
+### Resultado do ciclo
+
+- O formulário curto de `/configurar-clinica` foi substituído por uma jornada técnica de seis etapas.
+- As cinco etapas de dados consomem `PATCH /api/clinic-onboarding` e a sexta delimita a preparação para conclusão.
+- A tela consulta o rascunho existente e inicia outro somente quando necessário.
+- O passo atual, os dados e a revisão são retomados a partir da resposta do servidor.
+- Etapas anteriores podem ser revisadas e etapas futuras ficam desabilitadas.
+- O cancelamento exige duas ações, preserva o histórico e permite iniciar novo rascunho.
+- O modo estrito do React foi considerado; o início idempotente suporta carregamentos concorrentes sem prender a interface.
+- O visual permanece explicitamente técnico e temporário.
+
+### Validação
+
+- ESLint: 0 erros e quatro avisos preexistentes sobre `<img>`.
+- TypeScript: aprovado durante o build.
+- Build: aprovado com 35 rotas/páginas e Proxy ativo.
+- Teste manual autenticado e refresh real: pendentes.
+
 ### Próxima ação exata
 
-Iniciar o Ciclo 3 da Etapa 2: substituir o formulário curto por uma interface técnica guiada que consuma `/api/clinic-onboarding`, retome o progresso salvo e exija confirmação antes do cancelamento. A conclusão transacional da clínica continuará em um ciclo separado.
+Iniciar o Ciclo 4 da Etapa 2: definir e testar a conclusão transacional e idempotente que cria clínica, primeira unidade, vínculo de proprietária, função, contexto e auditoria, e marca o rascunho como concluído sem duplicidade.
 
 ---
 

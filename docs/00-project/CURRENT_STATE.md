@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.16.0
+version: 0.17.0
 status: Implementado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -240,4 +240,16 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - A API exige sessão, recusa contas com vínculo ativo e retorna respostas privadas sem cache.
 - O payload validado é normalizado antes da chamada às funções do banco.
 - Smoke test de schemas, TypeScript, ESLint e build foram aprovados; o build contém 35 rotas/páginas.
-- A API ainda não possui consumidor na interface; a dependência de banco foi validada e o Ciclo 3 está liberado.
+- A API é consumida pela interface técnica guiada de `/configurar-clinica`.
+
+### Interface técnica guiada
+
+- O formulário curto foi substituído por cinco formulários de dados e uma sexta etapa de preparação.
+- A tela consulta o rascunho ativo e inicia um novo somente quando necessário.
+- O passo atual e os dados salvos são retomados após nova abertura da rota.
+- Etapas anteriores podem ser revisadas; etapas futuras permanecem desabilitadas.
+- Cada gravação atualiza a revisão exibida com a resposta do servidor.
+- O cancelamento exige confirmação em duas ações, preserva o histórico e permite iniciar outro rascunho.
+- A etapa 6 não cria clínica, unidade, vínculo ou função; a conclusão transacional permanece pendente.
+- O visual é técnico e temporário, sem mudança no Design System.
+- ESLint e build de produção foram aprovados; o build contém 35 rotas/páginas e o lint mantém quatro avisos preexistentes.

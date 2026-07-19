@@ -1,9 +1,9 @@
 ---
 title: Estados do Onboarding
 document_id: MOD-ONBOARD-004
-version: 0.2.0
-status: Definido
-last_updated: 2026-07-18
+version: 0.3.0
+status: Implementado
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -22,7 +22,17 @@ related_documents:
 - **Concluído:** clínica e unidade foram associadas ao rascunho finalizado.
 - **Indisponível:** falha remota não deve ser apresentada como sucesso.
 
-Somente os estados de persistência e cancelamento possuem fundação de banco nesta versão. A interface ainda não foi implementada.
+Os estados de persistência, retomada, navegação, erro, preparação e cancelamento possuem interface técnica implementada. O estado `Concluído` continua planejado para a operação transacional de criação da clínica.
+
+## Estados da interface
+
+- **Carregamento inicial:** consulta o rascunho antes de liberar os formulários.
+- **Etapa futura:** controle visível e desabilitado até o avanço do servidor.
+- **Etapa revisável:** etapa já alcançada pode ser aberta e salva novamente.
+- **Salvando:** bloqueia navegação, novo envio e cancelamento concorrente.
+- **Preparado:** etapa 6 informa o limite do ciclo e oferece revisão.
+- **Confirmação de cancelamento:** exige voltar ou confirmar explicitamente.
+- **Rascunho cancelado:** informa preservação do histórico e oferece novo início.
 
 ## Estados da API
 

@@ -1,9 +1,9 @@
 ---
 title: API do Rascunho de Onboarding
 document_id: MOD-ONBOARD-006
-version: 0.1.0
+version: 0.2.0
 status: Implementado
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -51,7 +51,10 @@ O e-mail da proprietária vem da sessão autenticada e não é aceito como autor
 
 Detalhes internos do banco e valores de variáveis não são devolvidos ao cliente.
 
+## Consumidor atual
+
+A interface técnica de `/configurar-clinica` consome os quatro métodos. O carregamento tenta `GET` antes de `POST`, cada formulário usa `PATCH` e o cancelamento confirmado usa `DELETE`.
+
 ## Dependência de implantação
 
-A API depende da migração `20260718120000_clinic_onboarding_progress.sql`. Enquanto a migração não estiver aplicada, a rota permanece sem consumidor na interface e responderá indisponibilidade sem afetar o fluxo atual de `/configurar-clinica`.
-
+A migração `20260718120000_clinic_onboarding_progress.sql` foi aplicada e validada no Supabase oficial. A interface ainda deve preservar o tratamento de indisponibilidade para falhas operacionais.
