@@ -1,8 +1,8 @@
 ---
 title: Funções e Permissões das Clínicas
 document_id: MOD-CLINIC-012
-version: 0.1.0
-status: Definido
+version: 0.2.0
+status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
@@ -55,5 +55,4 @@ Cada permissão deve possuir uma chave estável no formato `recurso.acao`, por e
 
 ## Estado de implementação
 
-O banco atual possui somente o catálogo global `roles` e regras fixas para `clinic_owner`, `clinic_admin` e `clinic_employee`. Funções por clínica, catálogo de permissões e atribuições múltiplas estão planejados.
-
+As funções por clínica e as atribuições múltiplas foram implementadas em `clinic_roles` e `clinic_user_role_assignments`. Os modelos globais são copiados sem criar contas fictícias. O catálogo de permissões, a matriz de função, exceções por perfil e APIs administrativas permanecem planejados para o Ciclo 2.

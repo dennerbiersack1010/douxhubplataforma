@@ -1,8 +1,8 @@
 ---
 title: Usuários da Clínica
 document_id: MOD-CLINIC-010
-version: 0.1.0
-status: Definido
+version: 0.2.0
+status: Validado
 last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
@@ -37,5 +37,4 @@ Usuário da clínica é a relação entre uma pessoa autenticável e uma clínic
 
 ## Estado de implementação
 
-Planejado. Hoje `clinic_memberships` concentra usuário da clínica, função e unidade. A separação será feita por migração aditiva e retrocompatível.
-
+A fundação foi implementada em `clinic_users`. Cada `clinic_membership` vigente cria ou atualiza um usuário da clínica rastreável pelo campo `source_membership_id`. A aplicação ainda usa o vínculo legado como autoridade operacional até os próximos ciclos.

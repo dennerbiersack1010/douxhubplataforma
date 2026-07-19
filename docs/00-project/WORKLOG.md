@@ -5,6 +5,23 @@ last_updated: 2026-07-19
 
 ---
 
+## 2026-07-19 — Sessão: desempenho do Login e Etapa 3, Ciclo 1
+
+| Ação | Resultado |
+|---|---|
+| Auditoria do caminho crítico do Login | Identificadas chamadas sequenciais e navegação duplicada |
+| Função única de resolução pós-login | Implementada e aplicada no Supabase oficial |
+| Teste `005_post_login_resolution.sql` | Aprovado com `post_login_resolution_ok` |
+| `getClaims()` no Proxy e layouts | Implementado conforme recomendação atual do Supabase |
+| Migração aditiva da Etapa 3 | Aplicada com cinco novas tabelas, sincronização e RLS |
+| Teste `006_clinic_access_profiles_foundation.sql` | Aprovado com `clinic_access_profiles_foundation_ok` |
+| Dados artificiais | Desfeitos pelos `rollback` dos contratos |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript e build | Aprovados; 35 rotas/páginas e Proxy ativo |
+| GitHub, Vercel e teste autenticado publicado | Pendentes do fechamento operacional |
+
+Próxima ação após a publicação: Etapa 3, Ciclo 2, catálogo e matriz de permissões.
+
 ## 2026-07-19 — Sessão: favicon oficial
 
 | Ação | Resultado |

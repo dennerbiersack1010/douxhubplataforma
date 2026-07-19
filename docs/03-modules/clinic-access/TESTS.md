@@ -1,9 +1,9 @@
 ---
 title: Testes do Acesso às Clínicas
 document_id: MOD-CLINIC-007
-version: 0.1.0
+version: 0.2.0
 status: Validado
-last_updated: 2026-07-16
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -17,8 +17,11 @@ related_documents:
 
 - `001_multi_tenant_contract.sql`: aprovado com `multi_tenant_contract_ok`.
 - `002_clinic_access_flows.sql`: aprovado com `clinic_access_flows_ok` e rollback integral dos dados fictícios.
+- `006_clinic_access_profiles_foundation.sql`: aprovado com `clinic_access_profiles_foundation_ok` e rollback integral.
 
 A suíte funcional cobre usuário sem clínica, uma clínica, múltiplas clínicas, primeira clínica e unidade, proprietário, administrador convidando colaborador, convites válido, expirado, revogado, duplicado e reutilizado, destinatário incorreto, alteração de função, desativação e reativação, proteção do proprietário, restrições do administrador, bloqueio do colaborador, isolamento de leitura e escrita entre clínicas, contexto ativo e auditoria.
+
+O contrato da Etapa 3 confirma cinco tabelas com RLS, ausência de escrita direta para `authenticated`, cópia das funções por clínica, backfill e sincronização dos vínculos atuais, múltiplas funções, múltiplas unidades, perfil de acesso rastreável, isolamento entre clínicas e propagação de inativação.
 
 ## Aplicação
 

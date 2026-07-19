@@ -1,9 +1,9 @@
 ---
 title: Segurança Multiempresa e Permissões Iniciais
 document_id: SEC-001
-version: 0.7.0
-status: Implementado
-last_updated: 2026-07-18
+version: 0.8.0
+status: Validado
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - ../03-modules/authentication/MODULE.md
@@ -75,7 +75,7 @@ O sistema de proteção de rotas foi corrigido e opera em três camadas independ
 
 ### Camada 1 — Proxy (borda)
 
-O `proxy.ts` intercepta todas as requisições antes de chegarem ao React. A função `updateSession()` em `lib/supabase/middleware.ts` valida a sessão via `supabase.auth.getUser()` e redireciona para `/login` quando não há usuário válido. Não usa presença de cookie como atalho.
+O `proxy.ts` intercepta todas as requisições antes de chegarem ao React. A função `updateSession()` em `lib/supabase/middleware.ts` valida o JWT via `supabase.auth.getClaims()` e redireciona para `/login` quando não há identidade verificada. Não usa presença de cookie como atalho.
 
 ### Camada 2 — Layout server-side
 
@@ -83,14 +83,16 @@ O `app/(authenticated)/layout.tsx` é um Server Component que valida a sessão n
 
 ### Camada 3 — Banco de dados (RLS)
 
-Todas as 8 tabelas do schema `public` possuem Row Level Security habilitado. Políticas auditadas em 17/07/2026:
+As tabelas vigentes e as cinco tabelas da fundação da Etapa 3 possuem Row Level Security habilitado. Políticas revalidadas em 19/07/2026:
 - Nenhuma tabela com política para o role `anon`.
 - Todas as operações restritas ao role `authenticated`.
 - Isolamento multiclínica garantido pelas condições das políticas (filtragem por `user_id` e `clinic_id`).
 
-## Cobertura futura não implementada
+## Fundação da Etapa 3
 
-O modelo conceitual definido em 18/07/2026 exige que perfis de acesso, atribuições de função, associações de unidade e profissionais preservem a fronteira de `clinic_id`. A seleção de perfil deverá validar propriedade, estado, função e unidade no servidor e no RLS. Permissões de interface nunca substituirão essas verificações. Essa cobertura está definida e ainda não implementada.
+`clinic_users`, `clinic_roles`, `clinic_user_role_assignments`, `clinic_user_units` e `access_profiles` preservam a fronteira de `clinic_id` com chaves estrangeiras compostas. Usuários autenticados possuem somente leitura e enxergam registros próprios ou gerenciáveis pelo contrato atual. O teste `006_clinic_access_profiles_foundation.sql` aprovou isolamento, ausência de escrita direta e sincronização retrocompatível.
+
+A seleção de perfil ainda deverá adotar a nova entidade e validar permissões efetivas no servidor e no RLS. Permissões de interface nunca substituirão essas verificações.
 
 - modo suporte e perfis globais do DouxHub Control;
 - arquitetura local-first, sincronização, conflitos e proteção do banco local;

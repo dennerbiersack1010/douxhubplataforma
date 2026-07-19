@@ -1,8 +1,8 @@
 ---
 title: Unidades e Vínculos Operacionais
 document_id: MOD-CLINIC-014
-version: 0.1.0
-status: Definido
+version: 0.2.0
+status: Validado
 last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
@@ -33,5 +33,4 @@ O vínculo operacional conecta o usuário da clínica às unidades e funções a
 
 ## Transição do modelo atual
 
-O `clinic_membership` atual será tratado como registro de compatibilidade durante a migração. Seu `unit_id` originará uma associação de unidade e seu `role_id` originará uma atribuição de função. A unicidade atual por usuário e clínica não será removida até que os novos vínculos tenham sido preenchidos, testados e adotados por todas as rotas.
-
+O `clinic_membership` atual permanece como registro de compatibilidade. Seu `unit_id` origina uma associação em `clinic_user_units`, seu `role_id` origina uma atribuição e ambos geram um perfil rastreável. Inserções e alterações são sincronizadas por gatilho. A unicidade e o uso operacional do vínculo atual não foram removidos.

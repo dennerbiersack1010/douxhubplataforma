@@ -1,9 +1,9 @@
 ---
 title: Alterações do Módulo de Acesso às Clínicas
 document_id: MOD-CLINIC-008
-version: 0.2.0
-status: Implementado
-last_updated: 2026-07-16
+version: 0.3.0
+status: Validado
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -11,6 +11,23 @@ related_documents:
 ---
 
 # Alterações do Módulo de Acesso às Clínicas
+
+## [0.3.0] - 19/07/2026
+
+### Implementado
+
+- usuários da clínica separados do vínculo legado;
+- funções copiadas e pertencentes à clínica;
+- atribuições múltiplas de função e unidade;
+- perfis de acesso com escopo de clínica ou unidade;
+- ponte automática e rastreável a partir de `clinic_memberships`;
+- RLS e leitura limitada ao próprio usuário ou gestores atuais.
+
+### Validado
+
+- contrato aprovado com `clinic_access_profiles_foundation_ok`;
+- retrocompatibilidade, cardinalidades, isolamento e inativação sincronizada;
+- nenhum usuário, senha ou colaborador fictício criado pelas funções padrão.
 
 ## [0.2.0] - 18/07/2026
 

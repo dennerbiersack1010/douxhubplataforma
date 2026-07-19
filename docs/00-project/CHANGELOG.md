@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.16.0
+version: 0.17.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,6 +15,23 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 19/07/2026
+
+### Login — redução do caminho crítico
+
+- Consolidada a resolução pós-login em `resolve_post_login_context()` com uma única chamada ao banco.
+- Removidas a validação remota duplicada do endpoint e a sequência `router.push` mais `router.refresh`.
+- Proxy e layouts passaram a usar `getClaims()` verificado.
+- Adicionados resposta sem cache e `Server-Timing` ao endpoint.
+- Contrato `005_post_login_resolution.sql` aprovado com `post_login_resolution_ok`.
+
+### Etapa 3 — Ciclo 1
+
+- Adicionadas tabelas de usuários da clínica, funções por clínica, atribuições, unidades e perfis de acesso.
+- Adicionada cópia automática dos modelos de função para cada clínica sem criação de pessoas fictícias.
+- Adicionada sincronização rastreável e retrocompatível a partir de `clinic_memberships`.
+- Múltiplas funções e unidades passaram a ser representáveis sem alterar a aplicação vigente.
+- Adicionadas RLS, chaves estrangeiras compostas e somente leitura para `authenticated`.
+- Contrato `006_clinic_access_profiles_foundation.sql` aprovado com `clinic_access_profiles_foundation_ok`.
 
 ### Identidade global — favicon
 

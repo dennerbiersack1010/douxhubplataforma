@@ -1,7 +1,7 @@
 ---
 title: Próxima Etapa Prioritária
 document_id: PRJ-003
-version: 0.7.0
+version: 0.8.0
 status: Planejado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -14,25 +14,25 @@ related_documents:
 
 A próxima etapa prioritária do desenvolvimento é:
 
-- **Iniciar a Etapa 3, Ciclo 1: fundação aditiva de usuários da clínica, funções atribuíveis e perfis de acesso.**
+- **Executar a Etapa 3, Ciclo 2: catálogo de permissões e matriz efetiva das funções por clínica.**
 
 ## Objetivo
 
-Evoluir o modelo atual, em que `clinic_memberships` concentra vínculo, unidade e uma única função, para a fundação documental já definida de usuários da clínica, múltiplas atribuições de função e perfis de acesso, sem quebrar vínculos existentes.
+Persistir chaves estáveis de permissão, escopos e a matriz concedida às funções por clínica, preparando exceções explícitas de perfil sem trocar ainda a autorização vigente da aplicação.
 
 ## Dependências
 
-- onboarding guiado concluído e validado no Supabase oficial;
-- modelo conceitual de conta, usuário da clínica, função, permissão, perfil e profissional documentado em `docs/03-modules/clinic-access/`;
-- transição obrigatoriamente aditiva e retrocompatível com `clinic_memberships`;
-- contrato e testes definidos antes de alterar interface ou autorização em produção;
-- nenhuma mudança visual definitiva sem referência aprovada.
+- fundação aditiva de usuários, funções, unidades e perfis aplicada e validada;
+- `clinic_memberships` preservado como autoridade operacional durante a transição;
+- chaves de permissão definidas antes de qualquer menu ou tela baseada nelas;
+- negação explícita obrigatoriamente superior à concessão personalizada;
+- nenhuma mudança visual definitiva ou migração da seleção de perfil neste ciclo.
 
 ## Critérios de conclusão
 
-- migração aditiva sem remover nem reinterpretar vínculos existentes;
-- entidades e cardinalidades do modelo conceitual representadas no banco;
-- retrocompatibilidade do Login, contexto ativo e onboarding comprovada;
-- RLS e funções seguras cobrindo isolamento, múltiplas funções e unidades;
-- testes transacionais de migração, compatibilidade e isolamento aprovados;
-- nenhuma interface definitiva ou módulo de negócio criado neste ciclo.
+- catálogo com chaves `recurso.acao`, descrição e escopos permitidos;
+- matriz de permissões por `clinic_role` com concessões rastreáveis;
+- estrutura de exceções de perfil com concessão ou negação explícita;
+- função segura para calcular permissões efetivas, preservando RLS estrutural;
+- testes de isolamento, conflito, negação prevalente e retrocompatibilidade;
+- aplicação ainda usando a autorização atual até portão posterior de equivalência.

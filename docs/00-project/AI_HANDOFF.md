@@ -42,11 +42,11 @@ app/
 
 1. Usuário preenche login-form.tsx → `supabase.auth.signInWithPassword()`
 2. Se sucesso → chama `POST /api/auth/post-login`
-3. post-login verifica memberships:
+3. post-login chama `resolve_post_login_context()` uma única vez:
    - 0 memberships → `resolveNoActiveMembershipRedirect()` → `/configurar-clinica` ou `/sem-clinica`
    - 1 membership → `activateMembership()` → define cookie `douxhub_active_membership` → `/dashboard`
    - 2+ memberships → `/selecionar-perfil`
-4. `router.push(redirectTo)` + `router.refresh()`
+4. `router.replace(redirectTo)` inicia uma única navegação.
 
 ---
 
@@ -54,14 +54,14 @@ app/
 
 **Camada 1 — proxy.ts** (Next.js 16, equivalente ao middleware.ts do Next.js 15):
 - Chama `updateSession()` de `lib/supabase/middleware.ts`
-- `updateSession()` usa `supabase.auth.getUser()` como única fonte de verdade
+- `updateSession()` usa `supabase.auth.getClaims()` para verificar o JWT
 - Sem sessão + rota não-pública → redirect `/login`
 - Com sessão + rota auth-only → redirect `/selecionar-perfil`
 - Com sessão + sem contexto ativo + rota não-contextual → redirect `/selecionar-perfil`
 
 **Camada 2 — layout.tsx** (Server Component):
 - `app/(authenticated)/layout.tsx` e `app/(context)/layout.tsx`
-- Ambos chamam `createClient()` + `getUser()` no servidor
+- Ambos chamam `createClient()` + `getClaims()` no servidor
 - Sem usuário → `redirect('/login')`
 
 ---
@@ -147,7 +147,16 @@ Atualização do Ciclo 4:
 - Commit funcional: `feefa06`, enviado para `origin/main`.
 - Deployment: `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7`, estado `READY`, target `production`, com alias `douxhub.space`.
 - Verificação pública aprovada para Login, proteção de `/configurar-clinica` e `401` sem cache na API sem sessão.
-- O próximo ciclo é a Etapa 3, Ciclo 1.
+- A Etapa 3, Ciclo 1 foi concluída no checkpoint atual.
+
+### Otimização do Login e Etapa 3, Ciclo 1
+
+- `20260719180000_optimize_post_login_resolution.sql` foi aplicada e aprovada com `post_login_resolution_ok`.
+- A resolução pós-login agora usa uma chamada ao banco e uma navegação; o endpoint publica `Server-Timing`.
+- `20260719190000_clinic_access_profiles_foundation.sql` foi aplicada no Supabase oficial.
+- Cinco tabelas novas representam usuários, funções, atribuições, unidades e perfis sem substituir `clinic_memberships`.
+- O teste `006_clinic_access_profiles_foundation.sql` foi aprovado com rollback.
+- Próximo ciclo: catálogo e matriz de permissões; não migrar seleção de perfil antes do portão de equivalência.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
@@ -155,11 +164,11 @@ O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. 
 
 ## Próxima ação para a IA que continuar
 
-1. Ler o modelo conceitual em `docs/03-modules/clinic-access/`.
-2. Projetar a migração aditiva de usuários da clínica, atribuições de função e perfis de acesso.
-3. Criar primeiro os testes de compatibilidade, RLS e isolamento.
-4. Preservar o Login, o onboarding concluído e os vínculos atuais.
-5. Manter visual definitivo e módulos de negócio fora do ciclo.
+1. Confirmar o fechamento operacional e a medição publicada do Login.
+2. Ler `PERMISSIONS.md` e `ROLES_AND_PERMISSIONS.md`.
+3. Projetar o catálogo e a matriz de permissões da Etapa 3, Ciclo 2.
+4. Preservar `clinic_memberships` e o contexto atual como autoridade.
+5. Manter visual definitivo, profissionais e módulos de negócio fora do ciclo.
 
 ---
 

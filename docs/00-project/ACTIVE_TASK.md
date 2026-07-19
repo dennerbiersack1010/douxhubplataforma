@@ -269,6 +269,28 @@ Iniciar o Ciclo 4 da Etapa 2: definir e testar a conclusão transacional e idemp
 
 O ciclo foi publicado no commit `feefa06` e no deployment `dpl_DVEs9VDxi2Tb4vhiiuMboftnwGX7` (`READY`). O domínio oficial aprovou Login, proteção da rota de onboarding e recusa anônima da API. A próxima ação é iniciar a Etapa 3, Ciclo 1: migração aditiva e testes para usuários da clínica, atribuições de função e perfis de acesso.
 
+## Correção de desempenho do Login
+
+- Gargalo isolado em chamadas remotas sequenciais e navegação duplicada.
+- Resolução consolidada em `resolve_post_login_context()` e protegida por `auth.uid()`.
+- `getClaims()` adotado no Proxy e nos layouts; `getUser()` permanece disponível apenas quando dados atuais da conta forem realmente necessários.
+- Contrato aprovado no Supabase oficial com `post_login_resolution_ok`.
+- Publicação e medição autenticada no domínio ainda pendentes neste checkpoint.
+
+## Etapa 3 — ciclo 1: fundação aditiva de acesso
+
+### Resultado
+
+- `clinic_users`, `clinic_roles`, `clinic_user_role_assignments`, `clinic_user_units` e `access_profiles` implementadas.
+- Modelos de função copiados por clínica sem usuários fictícios.
+- Vínculos atuais convertidos e sincronizados sem remoção ou troca de autoridade.
+- Múltiplas funções e unidades, RLS e isolamento validados.
+- Contrato aprovado com `clinic_access_profiles_foundation_ok`.
+
+### Próxima ação exata
+
+Publicar e medir o Login no domínio oficial. Depois iniciar o Ciclo 2 da Etapa 3: catálogo de permissões, matriz por função e exceções de perfil, ainda sem migrar a seleção de contexto.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

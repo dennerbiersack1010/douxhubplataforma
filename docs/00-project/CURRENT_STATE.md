@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.19.0
+version: 0.20.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -12,6 +12,27 @@ related_documents:
 ---
 
 # Estado Atual (Current State)
+
+## Otimização do Login (Validada no Supabase em 19/07/2026)
+
+- A causa estrutural da espera após a senha era a sequência de chamadas remotas: nova validação do usuário, listagem de vínculos, consulta adicional para vínculos inativos ou outra chamada para ativar contexto, seguida de `router.push` e `router.refresh`.
+- `resolve_post_login_context()` passou a validar `auth.uid()`, resolver o destino e ativar ou limpar o contexto em uma única chamada transacional.
+- O endpoint `/api/auth/post-login` não repete `getUser()`, não expõe detalhes internos, usa resposta sem cache e publica `Server-Timing`.
+- Proxy e layouts usam `getClaims()` verificado, recomendado pelo Supabase para proteção server-side e potencialmente atendido por chaves em cache.
+- O cliente executa somente `router.replace`; o indicador permanece até a navegação começar.
+- A migração `20260719180000_optimize_post_login_resolution.sql` foi aplicada e `005_post_login_resolution.sql` retornou `post_login_resolution_ok` no projeto oficial.
+- Build, TypeScript e ESLint foram aprovados; a medição autenticada no domínio será registrada após a publicação.
+
+## Etapa 3 — Ciclo 1: fundação de usuários, funções e perfis (Validada em 19/07/2026)
+
+- A migração aditiva `20260719190000_clinic_access_profiles_foundation.sql` criou `clinic_users`, `clinic_roles`, `clinic_user_role_assignments`, `clinic_user_units` e `access_profiles`.
+- Funções globais são copiadas para cada clínica sem criar contas, senhas ou colaboradores fictícios.
+- Vínculos atuais são convertidos e permanecem sincronizados por gatilho, com `source_membership_id` para rastreabilidade.
+- Múltiplas funções e unidades por usuário da clínica já são representáveis.
+- Chaves estrangeiras compostas e RLS preservam a fronteira da clínica; `authenticated` possui leitura, sem escrita direta nas tabelas novas.
+- `clinic_memberships` continua sendo o contrato vigente da aplicação e do contexto ativo; não houve migração de leitura nem remoção.
+- O contrato oficial retornou `clinic_access_profiles_foundation_ok` com rollback dos dados fictícios.
+- Catálogo de permissões, matriz de função, exceções de perfil, profissionais e adoção do novo contexto permanecem para ciclos posteriores.
 
 ## Identidade global — favicon oficial (19/07/2026)
 

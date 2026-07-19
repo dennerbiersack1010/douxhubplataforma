@@ -1,8 +1,8 @@
 ---
 title: Modelo Conceitual de Identidade e Acesso
 document_id: MOD-CLINIC-009
-version: 0.1.0
-status: Definido
+version: 0.2.0
+status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
@@ -73,3 +73,4 @@ A DouxHub separa autenticação, identidade, relação de trabalho, responsabili
 
 A evolução será aditiva. As tabelas atuais permanecem válidas enquanto novas estruturas forem criadas e preenchidas. Cada `clinic_membership` existente deverá originar, de forma idempotente, um usuário da clínica, uma atribuição de função, uma associação de unidade e um perfil de acesso. A aplicação só deixará de usar o vínculo atual como contexto depois de testes de equivalência, RLS e rollback lógico. Não haverá remoção ou alteração destrutiva nesta fase de definição.
 
+O Ciclo 1 iniciou essa transição pela ponte descrita. Usuários da clínica, funções, atribuições, unidades e perfis foram criados e preenchidos, mas permissões, profissionais e a troca da autoridade operacional ainda não foram implementados.
