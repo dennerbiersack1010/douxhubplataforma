@@ -336,6 +336,8 @@ Executar o Ciclo 4 da Etapa 3: adoção controlada do perfil validado no context
 - invalidação do contexto após mudança de estado, função ou unidade do vínculo;
 - migração aplicada no Supabase oficial e teste `009_active_access_profile_context.sql` aprovado com `active_access_profile_context_ok`;
 - ESLint, TypeScript e build de produção aprovados.
+- commits `527f7f7` e `2f5c4ec` enviados para `origin/main`;
+- deployment `dpl_G1tQyousDG4yaN5ieXCF6r6y6a8c` em produção, `READY`, com domínio e proteção anônima aprovados.
 
 ### Próxima ação exata
 

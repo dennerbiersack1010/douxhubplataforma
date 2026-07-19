@@ -27,6 +27,8 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Mudanças de estado, função ou unidade do vínculo passaram a invalidar o contexto ativo.
 - Migração aplicada no Supabase oficial e contrato `009_active_access_profile_context.sql` aprovado com `active_access_profile_context_ok` e rollback integral.
 - ESLint, TypeScript e build de produção aprovados.
+- Commits `527f7f7` e `2f5c4ec` enviados para `origin/main` e publicados no deployment `dpl_G1tQyousDG4yaN5ieXCF6r6y6a8c`, estado `READY`.
+- Domínio oficial aprovado para Login, proteção da seleção e respostas anônimas `401` sem cache nas APIs de perfil, contexto e pós-login.
 
 ### Etapa 3 — Ciclo 3
 

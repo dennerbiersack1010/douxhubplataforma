@@ -19,6 +19,9 @@ last_updated: 2026-07-19
 | Teste `009_active_access_profile_context.sql` | Aprovado com `active_access_profile_context_ok` e rollback integral |
 | ESLint | 0 erros; 4 avisos preexistentes |
 | TypeScript e build | Aprovados; 36 rotas/páginas e Proxy ativo |
+| GitHub | Commits `527f7f7` e `2f5c4ec` enviados para `origin/main` |
+| Vercel | `dpl_G1tQyousDG4yaN5ieXCF6r6y6a8c`, produção, `READY` |
+| Domínio oficial | Login, proteção da seleção e APIs anônimas `401` sem cache aprovados |
 
 Próxima ação: Etapa 3, Ciclo 5, autorização central server-side pelo perfil ativo e aplicação inicial na administração da clínica.
 

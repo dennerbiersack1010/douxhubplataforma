@@ -24,6 +24,8 @@ related_documents:
 - Mudança de estado, função ou unidade do vínculo invalida o contexto ativo e exige nova seleção.
 - O contrato `009_active_access_profile_context.sql` retornou `active_access_profile_context_ok`, cobrindo zero, um e múltiplos perfis, repetição, troca, isolamento, auditoria, revogação e rollback integral.
 - ESLint, TypeScript e build de produção foram aprovados; permanecem somente quatro avisos preexistentes sobre imagens públicas.
+- Os commits `527f7f7` e `2f5c4ec` foram enviados para `origin/main` e publicados no deployment `dpl_G1tQyousDG4yaN5ieXCF6r6y6a8c`, estado `READY`, target `production`.
+- Os aliases `douxhub.space` e `douxhubplataforma.vercel.app` apontam para a entrega. Login carregou, `/selecionar-perfil` redirecionou visitante anônimo para autenticação e as APIs de perfil, contexto e pós-login responderam `401`; todas as respostas sensíveis verificadas usam `private, no-store`.
 
 ## Etapa 3 — Ciclo 3: leitura segura e portão de equivalência (Validada em 19/07/2026)
 

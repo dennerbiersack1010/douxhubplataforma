@@ -27,6 +27,7 @@ related_documents:
 
 - contrato `009_active_access_profile_context.sql` aprovado com rollback integral;
 - zero, um e múltiplos perfis, repetição, troca, auditoria, isolamento e revogação.
+- produção `READY` no deployment `dpl_G1tQyousDG4yaN5ieXCF6r6y6a8c`, com proteção anônima e respostas sensíveis sem cache.
 
 ## [0.5.0] - 19/07/2026
 

@@ -193,6 +193,9 @@ Atualização do Ciclo 4:
 - Mudanças relevantes no vínculo removem o contexto ativo.
 - `009_active_access_profile_context.sql` foi aprovado com `active_access_profile_context_ok` e rollback integral.
 - ESLint, TypeScript e build foram aprovados.
+- Commits `527f7f7` e `2f5c4ec` enviados para `origin/main`.
+- Deployment `dpl_G1tQyousDG4yaN5ieXCF6r6y6a8c`, `READY`, produção, aliases `douxhub.space` e `douxhubplataforma.vercel.app`.
+- Produção aprovada para Login, proteção anônima da seleção e respostas `401` sem cache nas APIs sensíveis.
 - Próximo ciclo: autorização central pelo perfil ativo, começando pelas operações administrativas da clínica.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
