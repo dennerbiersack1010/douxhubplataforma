@@ -1,9 +1,9 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.15.0
+version: 0.16.0
 status: Implementado
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - PROJECT.md
@@ -217,7 +217,7 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - A validação documental, o ESLint, o TypeScript e o build de produção foram aprovados; o lint manteve quatro avisos preexistentes sobre imagens.
 - Estado: **Definido documentalmente; ainda não implementado no banco ou na aplicação.**
 
-## Onboarding guiado — fundação de persistência (Implementada no repositório — 18/07/2026)
+## Onboarding guiado — fundação de persistência (Validada no Supabase — 19/07/2026)
 
 - Criada a migração aditiva `20260718120000_clinic_onboarding_progress.sql`.
 - A tabela `clinic_onboarding_progress` preserva rascunhos das cinco etapas de dados e prepara a sexta etapa de conclusão.
@@ -227,7 +227,10 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - Criado `003_clinic_onboarding_progress.sql` para testar contrato, idempotência, persistência, ordem, isolamento e cancelamento com rollback.
 - Documentação do módulo criada em `docs/03-modules/clinic-onboarding/`.
 - Validação da aplicação: integridade documental aprovada, TypeScript aprovado, ESLint sem erros e build aprovado com 34 páginas.
-- Estado remoto: **migração e teste ainda não aplicados nem executados no Supabase de produção**.
+- Estado remoto: **migração aplicada e contrato aprovado no Supabase oficial** com `clinic_onboarding_progress_ok`.
+- A aplicação foi executada pelo SQL Editor; o histórico da Supabase CLI não foi alterado artificialmente e deverá ser reconciliado antes de um futuro fluxo por CLI.
+- A primeira execução do teste expôs apenas um problema de tipagem no próprio contrato; as chamadas foram corrigidas com `::smallint` e aprovadas na execução seguinte.
+- O teste executou com `rollback`, sem preservar usuários ou rascunhos artificiais.
 - Interface e conclusão transacional ainda não implementadas.
 
 ### API e validação do rascunho
@@ -237,4 +240,4 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - A API exige sessão, recusa contas com vínculo ativo e retorna respostas privadas sem cache.
 - O payload validado é normalizado antes da chamada às funções do banco.
 - Smoke test de schemas, TypeScript, ESLint e build foram aprovados; o build contém 35 rotas/páginas.
-- A API ainda não possui consumidor na interface e depende da migração pendente no Supabase.
+- A API ainda não possui consumidor na interface; a dependência de banco foi validada e o Ciclo 3 está liberado.

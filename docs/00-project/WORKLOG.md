@@ -1,9 +1,27 @@
 # Work Log
 
 document_id: WORKLOG-001
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 
 ---
+
+## 2026-07-19 — Sessão: validação remota da persistência do onboarding
+
+| Ação | Resultado |
+|---|---|
+| Confirmação do projeto DouxHub e Project Ref oficial | Aprovada |
+| Aplicação de `20260718120000_clinic_onboarding_progress.sql` | Concluída no Supabase de produção |
+| Primeira execução de `003_clinic_onboarding_progress.sql` | Falhou por literais `integer` em função `smallint` |
+| Correção das chamadas do teste com `::smallint` | Concluída em três cenários |
+| Segunda execução do teste transacional | Aprovada com `clinic_onboarding_progress_ok` |
+| Limpeza dos dados artificiais | Concluída pelo `rollback` do teste |
+| Integridade documental | Aprovada; 61 documentos e 61 identificadores únicos |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript | Aprovado |
+| Registro de migração | Aplicação manual pelo SQL Editor; histórico da CLI não alterado artificialmente |
+| Estado do portão antes da interface | Concluído |
+
+Próxima ação: iniciar o Ciclo 3 da Etapa 2 com a interface técnica guiada, retomada do rascunho e confirmação de cancelamento.
 
 ## 2026-07-18 — Sessão: reestruturação da fundação
 

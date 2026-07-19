@@ -1,9 +1,9 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.12.0
+version: 0.13.0
 status: Em desenvolvimento
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - CURRENT_STATE.md
@@ -14,7 +14,7 @@ related_documents:
 
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
-## [Unreleased] - 18/07/2026
+## [Unreleased] - 19/07/2026
 
 ### Onboarding — persistência
 
@@ -23,7 +23,9 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Adicionada RLS de leitura exclusiva do proprietário e removida escrita direta para usuários autenticados.
 - Adicionado teste transacional de contrato, idempotência, isolamento e cancelamento.
 - Criada documentação específica do módulo em `docs/03-modules/clinic-onboarding/`.
-- Aplicação e execução no Supabase de produção permanecem pendentes e não foram registradas como validadas.
+- Migração aplicada no Supabase oficial e teste transacional aprovado com `clinic_onboarding_progress_ok`.
+- Corrigidas as chamadas do teste para converter explicitamente os passos para `smallint`.
+- Dados artificiais da validação foram integralmente desfeitos pelo `rollback` do contrato.
 
 ### Onboarding — API e validação
 

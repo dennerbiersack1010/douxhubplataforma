@@ -1,7 +1,7 @@
 # Active Task
 
 document_id: TASK-002
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 status: Em desenvolvimento
 
 ---
@@ -216,15 +216,23 @@ Build aprovado com 35 rotas/páginas e Proxy ativo. TypeScript aprovado. ESLint 
 
 ### Último erro encontrado
 
-A primeira tentativa isolada do TypeScript não conseguiu gravar `tsconfig.tsbuildinfo` por restrição do ambiente; a execução autorizada passou sem erros. Não é erro do produto. O teste PostgreSQL continua pendente pela ausência de conexão/CLI.
+Na primeira execução remota, o teste chamou `save_clinic_onboarding_step` com literais `integer`, enquanto a função exige `smallint`. O teste foi corrigido com conversões explícitas nos três cenários e aprovado na execução seguinte. A migração não precisou de correção.
+
+### Portão de validação concluído em 19/07/2026
+
+- Projeto oficial confirmado no Supabase: DouxHub, Project Ref `ffailpkrmaxuqzbghsyi`, produção em `sa-east-1`.
+- Migração `20260718120000_clinic_onboarding_progress.sql` aplicada pelo SQL Editor com sucesso.
+- A aplicação pelo SQL Editor não foi registrada artificialmente na tabela de histórico da Supabase CLI; esse histórico deverá ser reconciliado antes de um futuro fluxo baseado em CLI.
+- Teste `003_clinic_onboarding_progress.sql` executado no banco oficial.
+- Resultado final: `clinic_onboarding_progress_ok`.
+- Os usuários e registros artificiais do teste foram desfeitos pelo `rollback` do próprio contrato.
+- O arquivo de teste foi ajustado para usar `smallint` explicitamente nas chamadas da função.
+- Integridade documental aprovada com 61 documentos e 61 identificadores únicos.
+- TypeScript aprovado; ESLint sem erros e com quatro avisos preexistentes sobre `<img>`.
 
 ### Próxima ação exata
 
-Portão de validação antes do Ciclo 3: aplicar `20260718120000_clinic_onboarding_progress.sql` no Supabase oficial e executar `003_clinic_onboarding_progress.sql`. Somente após resultado aprovado, substituir o formulário curto por uma interface técnica guiada que consuma a API, retome o progresso e confirme cancelamento.
-
-### Bloqueio operacional atual
-
-Esta cópia não possui Supabase CLI, PostgreSQL local, credencial de gestão ou conexão de banco. A migração não pode ser aplicada com segurança neste ambiente. A API nova permanece sem consumidor e o onboarding atual continua preservado.
+Iniciar o Ciclo 3 da Etapa 2: substituir o formulário curto por uma interface técnica guiada que consuma `/api/clinic-onboarding`, retome o progresso salvo e exija confirmação antes do cancelamento. A conclusão transacional da clínica continuará em um ciclo separado.
 
 ---
 

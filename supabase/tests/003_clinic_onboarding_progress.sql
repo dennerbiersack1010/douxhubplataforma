@@ -53,7 +53,7 @@ end;
 $$;
 
 select public.save_clinic_onboarding_step(
-  (select id from onboarding_test_state), 1,
+  (select id from onboarding_test_state), 1::smallint,
   '{"fullName":"Owner Onboarding A","phone":"11999990000"}'::jsonb
 );
 
@@ -71,7 +71,7 @@ begin
 
   begin
     perform public.save_clinic_onboarding_step(
-      (select id from onboarding_test_state), 3, '{"unitName":"Unidade indevida"}'::jsonb
+      (select id from onboarding_test_state), 3::smallint, '{"unitName":"Unidade indevida"}'::jsonb
     );
     raise exception 'out_of_order_step_allowed';
   exception when others then
@@ -91,7 +91,7 @@ begin
   end if;
   begin
     perform public.save_clinic_onboarding_step(
-      (select id from onboarding_test_state), 1, '{"fullName":"Intruso"}'::jsonb
+      (select id from onboarding_test_state), 1::smallint, '{"fullName":"Intruso"}'::jsonb
     );
     raise exception 'onboarding_cross_user_update_allowed';
   exception when others then

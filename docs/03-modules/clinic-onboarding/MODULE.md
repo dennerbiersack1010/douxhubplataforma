@@ -1,9 +1,9 @@
 ---
 title: Onboarding Inicial da Clínica
 document_id: MOD-ONBOARD-001
-version: 0.2.0
+version: 0.3.0
 status: Em desenvolvimento
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - DATA_MODEL.md
@@ -36,12 +36,13 @@ A migração `20260718120000_clinic_onboarding_progress.sql` implementa a funda�
 
 A rota `/api/clinic-onboarding` e os schemas em `lib/clinic-onboarding.ts` implementam a camada server-side para consultar, iniciar/retomar, validar, salvar e cancelar. A API rejeita contas com vínculo ativo, não usa cache e não expõe erros internos.
 
+A migração foi aplicada no Supabase oficial em 19/07/2026 e o contrato transacional foi aprovado com `clinic_onboarding_progress_ok`. A persistência, a ordem das etapas, o isolamento por usuário e o cancelamento estão validados no banco.
+
 ## Ainda não implementado
 
 - formulários das seis telas;
 - upload de foto e logotipo;
 - conclusão transacional da clínica e unidade;
 - criação de funções padrão e perfil de acesso;
-- aplicação e validação da nova migração no Supabase de produção.
 
 O visual definitivo depende de referência aprovada. Até lá, qualquer interface será explicitamente técnica e temporária.

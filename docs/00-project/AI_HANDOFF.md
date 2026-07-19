@@ -1,7 +1,7 @@
 # AI Handoff
 
 document_id: HANDOFF-001
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 purpose: Permitir que outra IA continue o trabalho sem depender desta conversa.
 
 ---
@@ -114,7 +114,9 @@ Testes SQL em: `supabase/tests/`
 - Ciclo 1 implementou no repositório a persistência retomável em `clinic_onboarding_progress`.
 - Migração: `20260718120000_clinic_onboarding_progress.sql`.
 - Teste: `003_clinic_onboarding_progress.sql`.
-- A migração ainda não foi aplicada e o teste ainda não foi executado no Supabase de produção.
+- A migração foi aplicada no Supabase oficial em 19/07/2026.
+- O teste foi aprovado com `clinic_onboarding_progress_ok`; seus dados artificiais foram revertidos.
+- A aplicação ocorreu pelo SQL Editor. Não inserir uma linha artificial no histórico de migrações; reconciliar o histórico antes de adotar Supabase CLI nesse projeto.
 - Não existe interface guiada ou conclusão transacional nova; a API por etapa foi implementada no ciclo seguinte.
 - Próximo ciclo: schemas Zod e API server-side para o rascunho; validar novamente antes de criar telas.
 
@@ -122,10 +124,10 @@ Atualização do Ciclo 2:
 
 - Schemas e API foram implementados em `lib/clinic-onboarding.ts` e `app/api/clinic-onboarding/route.ts`.
 - A nova rota passou no build e ainda não é consumida pela interface.
-- A migração continua pendente no Supabase; não testar a API em produção antes de aplicá-la.
-- Portão obrigatório: aplicar a migração oficial e executar o teste SQL antes de conectar a interface.
-- O ambiente atual não possui CLI ou credenciais de banco; não improvisar aplicação por chave pública.
-- Após aprovação do banco: interface técnica guiada, retomada e confirmação de cancelamento; conclusão transacional fica para ciclo separado.
+- O portão obrigatório do banco foi concluído no projeto `ffailpkrmaxuqzbghsyi`.
+- A primeira execução do teste revelou literais `integer` incompatíveis com o parâmetro `smallint`; as três chamadas foram corrigidas com conversão explícita e o teste passou na execução seguinte.
+- Integridade documental, TypeScript e ESLint foram aprovados; o lint mantém quatro avisos preexistentes sobre `<img>`.
+- Próximo ciclo: interface técnica guiada, retomada e confirmação de cancelamento; conclusão transacional fica para ciclo separado.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
@@ -133,11 +135,11 @@ O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. 
 
 ## Próxima ação para a IA que continuar
 
-1. Ler os documentos do modelo conceitual em `docs/03-modules/clinic-access/`.
-2. Projetar o contrato de persistência do onboarding guiado e retomável.
-3. Definir migração aditiva, idempotência, RLS e compatibilidade com `create_initial_clinic`.
-4. Criar testes de contrato antes de alterar a interface.
-5. Preservar o Login e o fluxo de sessão existentes.
+1. Ler `docs/03-modules/clinic-onboarding/` e preservar os contratos validados.
+2. Implementar uma interface técnica guiada que consuma `/api/clinic-onboarding`.
+3. Retomar o rascunho no refresh e exibir o passo atual sem duplicar progresso.
+4. Exigir confirmação antes de cancelar o rascunho.
+5. Manter a conclusão transacional, o visual definitivo e mudanças no Login fora deste ciclo.
 
 ---
 
