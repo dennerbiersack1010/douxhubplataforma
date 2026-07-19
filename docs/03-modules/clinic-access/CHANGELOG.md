@@ -1,7 +1,7 @@
 ---
 title: Alterações do Módulo de Acesso às Clínicas
 document_id: MOD-CLINIC-008
-version: 0.4.0
+version: 0.5.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -11,6 +11,21 @@ related_documents:
 ---
 
 # Alterações do Módulo de Acesso às Clínicas
+
+## [0.5.0] - 19/07/2026
+
+### Implementado
+
+- comparação rastreável entre vínculos vigentes e perfis sincronizados;
+- listagem segura dos perfis ativos e válidos da própria conta;
+- snapshot fail-closed com permissões efetivas e códigos explícitos de divergência;
+- contrato server-side `GET /api/access-profiles` sem mudança de contexto ou navegação.
+
+### Validado
+
+- contrato `008_access_profile_equivalence_gate.sql` aprovado com rollback integral;
+- zero, um e múltiplos perfis, isolamento, inativação e manipulação de identificadores;
+- autoridade de `clinic_memberships` e `user_active_contexts` preservada.
 
 ## [0.4.0] - 19/07/2026
 

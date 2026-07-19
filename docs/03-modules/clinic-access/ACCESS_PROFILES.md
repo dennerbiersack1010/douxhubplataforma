@@ -1,9 +1,9 @@
 ---
 title: Perfis de Acesso e Seleção de Contexto
 document_id: MOD-CLINIC-013
-version: 0.3.0
+version: 0.4.0
 status: Em desenvolvimento
-last_updated: 2026-07-18
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - CONCEPTUAL_MODEL.md
@@ -40,4 +40,6 @@ Perfil de acesso é uma opção autorizada exibida em “Quem está acessando?�
 
 A entidade `access_profiles` foi implementada e preenchida a partir dos vínculos atuais, com função, unidade opcional, escopo, estado e rastreabilidade. Exceções personalizáveis e o cálculo de permissões efetivas também estão persistidos e validados.
 
-`/selecionar-perfil` e `user_active_contexts` ainda usam `clinic_memberships`; a próxima etapa comprovará equivalência antes de qualquer adoção da nova entidade.
+O Ciclo 3 adicionou uma leitura segura dos perfis disponíveis e um snapshot de equivalência. Cada vínculo legado recebe diagnóstico explícito; perfis divergentes não são selecionáveis e bloqueiam a resposta da API com `409`.
+
+`/selecionar-perfil` e `user_active_contexts` ainda usam `clinic_memberships`. O Ciclo 4 poderá iniciar a adoção controlada somente quando o snapshot da conta estiver equivalente.

@@ -1,7 +1,7 @@
 ---
 title: Modelo Conceitual de Identidade e Acesso
 document_id: MOD-CLINIC-009
-version: 0.2.0
+version: 0.3.0
 status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
@@ -29,12 +29,12 @@ A DouxHub separa autenticação, identidade, relação de trabalho, responsabili
 | Pessoa | Manter identidade global da pessoa autenticada. | Parcialmente implementada em `user_profiles`. |
 | Clínica | Representar a empresa contratante e a fronteira principal de isolamento. | Implementada em `clinics`. |
 | Unidade | Representar um local físico ou operacional da clínica. | Implementada em `clinic_units`. |
-| Usuário da clínica | Representar a relação da pessoa com uma clínica, independentemente de função ou unidade. | Conceitualmente misturado em `clinic_memberships`; evolução planejada. |
-| Função | Agrupar responsabilidades e permissões dentro de uma clínica. | Catálogo global inicial em `roles`; modelo por clínica planejado. |
-| Perfil de acesso | Representar uma opção selecionável de clínica, unidade e função para a pessoa. | Hoje o vínculo é usado como perfil; entidade própria planejada. |
+| Usuário da clínica | Representar a relação da pessoa com uma clínica, independentemente de função ou unidade. | Implementado em `clinic_users`; vínculo legado ainda é a autoridade operacional. |
+| Função | Agrupar responsabilidades e permissões dentro de uma clínica. | Implementada por clínica em `clinic_roles`, com matriz persistida. |
+| Perfil de acesso | Representar uma opção selecionável de clínica, unidade e função para a pessoa. | Implementado e comparado ao vínculo; adoção pelo contexto ainda planejada. |
 | Profissional | Representar quem executa procedimentos e pode possuir agenda. | Não implementada. |
 | Vínculo | Associar usuário da clínica a funções, unidades, perfis e estados. | Implementação atual limitada a uma função e uma unidade. |
-| Permissão | Autorizar ação sobre módulo ou recurso em determinado escopo. | Não implementada como catálogo e matriz persistida. |
+| Permissão | Autorizar ação sobre módulo ou recurso em determinado escopo. | Catálogo, matriz, exceções e cálculo efetivo implementados. |
 
 ## Cardinalidades-alvo
 
@@ -73,4 +73,4 @@ A DouxHub separa autenticação, identidade, relação de trabalho, responsabili
 
 A evolução será aditiva. As tabelas atuais permanecem válidas enquanto novas estruturas forem criadas e preenchidas. Cada `clinic_membership` existente deverá originar, de forma idempotente, um usuário da clínica, uma atribuição de função, uma associação de unidade e um perfil de acesso. A aplicação só deixará de usar o vínculo atual como contexto depois de testes de equivalência, RLS e rollback lógico. Não haverá remoção ou alteração destrutiva nesta fase de definição.
 
-O Ciclo 1 iniciou essa transição pela ponte descrita. Usuários da clínica, funções, atribuições, unidades e perfis foram criados e preenchidos, mas permissões, profissionais e a troca da autoridade operacional ainda não foram implementados.
+Os Ciclos 1 a 3 criaram a ponte, as permissões e o portão de equivalência. O servidor já consegue provar ou recusar a correspondência de cada vínculo, mas profissionais e a troca da autoridade operacional ainda não foram implementados.

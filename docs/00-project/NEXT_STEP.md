@@ -1,7 +1,7 @@
 ---
 title: Próxima Etapa Prioritária
 document_id: PRJ-003
-version: 0.9.0
+version: 0.10.0
 status: Planejado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -14,24 +14,25 @@ related_documents:
 
 A próxima etapa prioritária do desenvolvimento é:
 
-- **Executar a Etapa 3, Ciclo 3: equivalência entre vínculos vigentes e perfis de acesso.**
+- **Executar a Etapa 3, Ciclo 4: adoção controlada do perfil de acesso como contexto operacional.**
 
 ## Objetivo
 
-Criar uma camada segura de leitura e comparação que prove a equivalência entre `clinic_memberships` e os novos perfis, funções, unidades e permissões antes de qualquer troca da autoridade operacional.
+Introduzir o identificador do perfil no contexto ativo e na seleção server-side, mantendo a ponte com o vínculo vigente, auditoria e retorno seguro enquanto a nova autoridade é validada em produção.
 
 ## Dependências
 
-- catálogo, matriz e cálculo de permissões efetivas aplicados e validados;
-- `clinic_memberships` e `user_active_contexts` preservados como autoridade durante a comparação;
-- discrepâncias tratadas como bloqueio, nunca corrigidas silenciosamente pelo navegador;
-- nenhuma mudança visual definitiva, menu derivado de permissão ou troca do contexto ativo neste ciclo.
+- portão de equivalência do Ciclo 3 aplicado e validado;
+- adoção permitida somente para snapshots com `equivalence_ready = true`;
+- `source_membership_id` preservado para compatibilidade, rastreabilidade e retorno seguro;
+- nenhuma autorização baseada apenas em cookie, estado do navegador ou item oculto de menu;
+- mudança visual definitiva e profissionais permanecem fora deste ciclo.
 
 ## Critérios de conclusão
 
-- função segura para listar somente os perfis ativos da própria conta, com clínica, unidade, função e permissões efetivas;
-- comparação rastreável entre cada vínculo vigente e seu perfil originado, cobrindo função, unidade e estado;
-- resposta explícita para divergência ou perfil indisponível, sem fallback permissivo;
-- testes para zero, um e múltiplos vínculos, isolamento entre contas, inativação e manipulação de identificadores;
-- contrato de leitura server-side preparado sem alterar a navegação atual;
-- critérios documentados para o futuro portão de adoção do novo contexto.
+- contexto ativo passa a referenciar perfil validado e vínculo de origem durante a transição;
+- seleção e troca de perfil são executadas no servidor, com auditoria e cookie `HttpOnly` apenas auxiliar;
+- todo Login concluído passa pela resolução de perfis, incluindo o caso de uma única opção, conforme DEC-011;
+- divergência, perfil inativo ou identificador manipulado falham de forma fechada, sem regressar automaticamente ao vínculo permissivo;
+- testes cobrem zero, um e múltiplos perfis, troca, revogação, isolamento, repetição e rollback lógico;
+- Login, onboarding e rotas protegidas continuam funcionais durante a adoção gradual.

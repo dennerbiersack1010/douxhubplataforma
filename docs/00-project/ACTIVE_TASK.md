@@ -306,6 +306,22 @@ O Ciclo 1 foi publicado no commit `38ee817` e validado no domínio. A próxima a
 
 Executar o Ciclo 3 da Etapa 3: camada de leitura e testes de equivalência entre `clinic_memberships` e os novos perfis, sem trocar ainda `user_active_contexts`, rotas, menus ou autorização vigente.
 
+## Etapa 3 — ciclo 3: leitura segura e portão de equivalência
+
+### Resultado
+
+- comparação segura e rastreável de cada vínculo com usuário da clínica, função, perfil, unidade, escopo e estados;
+- listagem limitada aos perfis ativos e válidos da conta autenticada, com permissões efetivas;
+- snapshot agregado com `equivalence_ready`, perfis disponíveis e divergências explícitas;
+- endpoint `GET /api/access-profiles` sem cache, com falha fechada para ausência de sessão, indisponibilidade ou divergência;
+- migração aplicada no Supabase oficial e contrato `008_access_profile_equivalence_gate.sql` aprovado com `access_profile_equivalence_gate_ok` e rollback integral;
+- ESLint, TypeScript e build de produção aprovados;
+- `clinic_memberships`, `user_active_contexts`, Login, rotas e menus preservados.
+
+### Próxima ação exata
+
+Executar o Ciclo 4 da Etapa 3: adoção controlada do perfil validado no contexto ativo, preservando o vínculo de origem, auditoria e retorno seguro durante a transição.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

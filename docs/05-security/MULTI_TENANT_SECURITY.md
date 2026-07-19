@@ -1,7 +1,7 @@
 ---
 title: Segurança Multiempresa e Permissões Iniciais
 document_id: SEC-001
-version: 0.9.0
+version: 0.10.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -97,6 +97,10 @@ A seleção de perfil ainda deverá adotar a nova entidade e validar permissões
 ## Fundação de permissões da Etapa 3
 
 `permission_catalog`, `clinic_role_permissions` e `access_profile_permission_overrides` preservam catálogo global estável e fronteiras por clínica e perfil. Usuários autenticados possuem somente leitura. O cálculo efetivo aceita apenas perfil ativo da própria conta, valida clínica, função, unidade e atribuições e aplica negação explícita antes de concessões. O teste `007_clinic_permissions_foundation.sql` aprovou isolamento, escopos, conflito e ausência de escrita direta.
+
+## Portão de equivalência da Etapa 3
+
+As funções do Ciclo 3 derivam a conta exclusivamente de `auth.uid()` e não aceitam identificador de usuário do navegador. Cada vínculo é comparado com usuário da clínica, função, perfil, unidade, escopo e estados. Qualquer divergência torna o snapshot indisponível para adoção e a API responde de forma fechada. O teste `008_access_profile_equivalence_gate.sql` aprovou isolamento entre contas, inativação, manipulação de identificadores e rollback integral.
 
 - modo suporte e perfis globais do DouxHub Control;
 - arquitetura local-first, sincronização, conflitos e proteção do banco local;

@@ -170,16 +170,26 @@ Atualização do Ciclo 4:
 - `douxhub.space` aprovou o Login e a proteção anônima de `/configuracoes/equipe`.
 - Próximo ciclo: leitura e equivalência dos novos perfis; não migrar `user_active_contexts`, rotas ou menus antes do portão documentado.
 
+### Etapa 3, Ciclo 3
+
+- `20260719210000_access_profile_equivalence_gate.sql` foi aplicada no Supabase oficial.
+- As funções seguras listam perfis próprios disponíveis, com permissões efetivas, e comparam cada vínculo legado com sua estrutura sincronizada.
+- `GET /api/access-profiles` responde sem cache e bloqueia divergências com `409`, sem fallback permissivo.
+- `008_access_profile_equivalence_gate.sql` foi aprovado com `access_profile_equivalence_gate_ok` e rollback integral.
+- ESLint, TypeScript e build foram aprovados; a rota `/api/access-profiles` compila como dinâmica.
+- `clinic_memberships` e `user_active_contexts` permanecem como autoridade operacional.
+- Próximo ciclo: adoção controlada do perfil no contexto ativo, mantendo vínculo de origem, auditoria e caminho seguro de retorno.
+
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---
 
 ## Próxima ação para a IA que continuar
 
-1. Ler `PERMISSIONS.md` e `ROLES_AND_PERMISSIONS.md`.
-2. Projetar o catálogo e a matriz de permissões da Etapa 3, Ciclo 2.
-3. Criar testes de negação prevalente, isolamento e escopo antes da API.
-4. Preservar `clinic_memberships` e o contexto atual como autoridade.
+1. Ler `ACCESS_PROFILES.md`, `FLOWS.md` e `NEXT_STEP.md`.
+2. Projetar a adoção dual do perfil no contexto ativo sem remover o vínculo de origem.
+3. Criar testes de seleção, troca, revogação, isolamento, repetição e rollback lógico antes da interface.
+4. Exigir `equivalence_ready` e falhar de forma fechada diante de qualquer divergência.
 5. Manter visual definitivo, profissionais e módulos de negócio fora do ciclo.
 
 ---

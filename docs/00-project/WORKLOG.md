@@ -5,6 +5,22 @@ last_updated: 2026-07-19
 
 ---
 
+## 2026-07-19 — Sessão: Etapa 3, Ciclo 3
+
+| Ação | Resultado |
+|---|---|
+| Comparação vínculo/perfil | Função, unidade, escopo, estados e fronteira da clínica verificados |
+| Leitura de perfis disponíveis | Somente conta autenticada, estruturas ativas e permissões efetivas |
+| Portão de equivalência | Snapshot explícito e falha fechada diante de divergência |
+| API preparatória | `GET /api/access-profiles`, sem cache e sem mudança de navegação |
+| Migração no Supabase | Aplicada no projeto oficial pelo SQL Editor |
+| Teste `008_access_profile_equivalence_gate.sql` | Aprovado com `access_profile_equivalence_gate_ok` e rollback integral |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript e build | Aprovados; nova rota dinâmica incluída |
+| Autoridade operacional | `clinic_memberships` e `user_active_contexts` preservados |
+
+Próxima ação: Etapa 3, Ciclo 4, adoção controlada do perfil no contexto ativo com ponte, auditoria e retorno seguro.
+
 ## 2026-07-19 — Sessão: Etapa 3, Ciclo 2
 
 | Ação | Resultado |

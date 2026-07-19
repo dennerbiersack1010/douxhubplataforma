@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.18.0
+version: 0.19.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,6 +15,15 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 19/07/2026
+
+### Etapa 3 — Ciclo 3
+
+- Adicionada comparação rastreável entre cada vínculo vigente e seu usuário, função, perfil, unidade, escopo e estados sincronizados.
+- Adicionada listagem segura dos perfis disponíveis da própria conta com permissões efetivas.
+- Adicionado snapshot fail-closed para o portão de adoção, com códigos explícitos de divergência.
+- Adicionado `GET /api/access-profiles`, sem cache, sem entrada de identificador de usuário e sem alteração da navegação atual.
+- Migração aplicada no Supabase oficial e contrato `008_access_profile_equivalence_gate.sql` aprovado com `access_profile_equivalence_gate_ok` e rollback integral.
+- ESLint, TypeScript e build de produção aprovados; `clinic_memberships` e `user_active_contexts` permaneceram como autoridade.
 
 ### Etapa 3 — Ciclo 2
 

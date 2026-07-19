@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.21.0
+version: 0.22.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -12,6 +12,17 @@ related_documents:
 ---
 
 # Estado Atual (Current State)
+
+## Etapa 3 — Ciclo 3: leitura segura e portão de equivalência (Validada em 19/07/2026)
+
+- A migração `20260719210000_access_profile_equivalence_gate.sql` adicionou comparação rastreável entre cada `clinic_membership` e o perfil, função, unidade, escopo e estados sincronizados.
+- `get_access_profile_equivalence()` identifica divergências com códigos explícitos e não corrige nem aceita inconsistências silenciosamente.
+- `list_available_access_profiles()` retorna somente perfis ativos, estruturalmente válidos e pertencentes à conta autenticada, incluindo permissões efetivas.
+- `get_access_profile_transition_snapshot()` consolida contagens, perfis disponíveis, divergências e o indicador `equivalence_ready`.
+- `GET /api/access-profiles` expõe o snapshot sem cache: responde `401` sem sessão, `409` quando existe divergência e `200` somente quando a conta está equivalente.
+- O contrato `008_access_profile_equivalence_gate.sql` retornou `access_profile_equivalence_gate_ok`, cobrindo zero, um e múltiplos perfis, isolamento, inativação e manipulação de identificadores, com rollback integral.
+- ESLint, TypeScript e build de produção foram aprovados; a compilação inclui a nova rota dinâmica `/api/access-profiles`.
+- `clinic_memberships` e `user_active_contexts` continuam sendo a autoridade operacional; Login, rotas, menus e seleção de contexto não foram alterados.
 
 ## Etapa 3 — Ciclo 2: catálogo e matriz de permissões (Validada em 19/07/2026)
 
