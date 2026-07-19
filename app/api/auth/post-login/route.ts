@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { ACTIVE_MEMBERSHIP_COOKIE } from '@/lib/clinic-context'
+import { ACTIVE_ACCESS_PROFILE_COOKIE, ACTIVE_MEMBERSHIP_COOKIE } from '@/lib/clinic-context'
 
 type PostLoginResolution = {
   redirect_to: string
@@ -22,8 +22,15 @@ export async function POST() {
   try {
     const { data, error } = await supabase.rpc('resolve_post_login_context')
     if (error) {
-      if (error.message.includes('authentication_required')) {
+      if (
+        error.code === '42501' ||
+        error.message.includes('authentication_required') ||
+        error.message.includes('permission denied')
+      ) {
         return postLoginResponse({ error: 'unauthorized' }, 401, startedAt)
+      }
+      if (error.message.includes('access_profile_equivalence_failed')) {
+        return postLoginResponse({ error: 'access_profile_equivalence_failed' }, 409, startedAt)
       }
       throw error
     }
@@ -33,7 +40,7 @@ export async function POST() {
 
     const response = postLoginResponse({
       redirectTo: resolution.redirect_to,
-      activeMembershipCount: resolution.active_membership_count,
+      activeProfileCount: resolution.active_membership_count,
     }, 200, startedAt)
 
     if (resolution.membership_id) {
@@ -47,6 +54,7 @@ export async function POST() {
     } else {
       response.cookies.delete(ACTIVE_MEMBERSHIP_COOKIE)
     }
+    response.cookies.delete(ACTIVE_ACCESS_PROFILE_COOKIE)
     return response
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)

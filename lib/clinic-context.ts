@@ -1,6 +1,23 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 
 export const ACTIVE_MEMBERSHIP_COOKIE = 'douxhub_active_membership'
+export const ACTIVE_ACCESS_PROFILE_COOKIE = 'douxhub_active_access_profile'
+
+export interface AccessProfileOption {
+  access_profile_id: string
+  source_membership_id: string | null
+  clinic_id: string
+  clinic_name: string
+  clinic_slug: string
+  unit_id: string | null
+  unit_name: string | null
+  role_key: string
+  role_name: string
+  profile_name: string
+  profile_scope: 'clinic' | 'unit'
+  legacy_equivalent: boolean
+  permissions: Array<{ key: string; scope: 'own' | 'unit' | 'clinic' }>
+}
 
 export interface MembershipOption {
   id: string
@@ -90,4 +107,26 @@ export async function activateMembership(supabase: SupabaseClient, membershipId:
   const context = Array.isArray(data) ? data[0] : data
   if (!context) throw new Error('invalid_active_context')
   return context
+}
+
+export async function activateAccessProfile(
+  supabase: SupabaseClient,
+  accessProfileId: string
+) {
+  const { data, error } = await supabase.rpc('set_active_access_profile_context', {
+    p_access_profile_id: accessProfileId,
+  })
+
+  if (error) throw error
+  const context = Array.isArray(data) ? data[0] : data
+  if (!context?.access_profile_id || !context?.membership_id) {
+    throw new Error('invalid_active_access_profile_context')
+  }
+  return context as {
+    access_profile_id: string
+    membership_id: string
+    clinic_id: string
+    unit_id: string | null
+    role_key: string
+  }
 }

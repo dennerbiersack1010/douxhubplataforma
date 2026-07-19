@@ -183,17 +183,29 @@ Atualização do Ciclo 4:
 - Produção aprovada: API anônima `401` sem cache, Login disponível e rota de equipe redirecionada para autenticação.
 - Próximo ciclo: adoção controlada do perfil no contexto ativo, mantendo vínculo de origem, auditoria e caminho seguro de retorno.
 
+### Etapa 3, Ciclo 4
+
+- `20260719220000_active_access_profile_context.sql` foi aplicada no Supabase oficial.
+- `user_active_contexts` exige perfil validado e preserva o vínculo de origem.
+- `set_active_access_profile_context()` executa seleção e troca auditadas; o contrato legado delega à mesma validação.
+- O pós-login sempre direciona perfis disponíveis para `/selecionar-perfil`, inclusive no caso único.
+- A interface técnica lista perfis equivalentes e grava cookies auxiliares de perfil e vínculo.
+- Mudanças relevantes no vínculo removem o contexto ativo.
+- `009_active_access_profile_context.sql` foi aprovado com `active_access_profile_context_ok` e rollback integral.
+- ESLint, TypeScript e build foram aprovados.
+- Próximo ciclo: autorização central pelo perfil ativo, começando pelas operações administrativas da clínica.
+
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---
 
 ## Próxima ação para a IA que continuar
 
-1. Ler `ACCESS_PROFILES.md`, `FLOWS.md` e `NEXT_STEP.md`.
-2. Projetar a adoção dual do perfil no contexto ativo sem remover o vínculo de origem.
-3. Criar testes de seleção, troca, revogação, isolamento, repetição e rollback lógico antes da interface.
-4. Exigir `equivalence_ready` e falhar de forma fechada diante de qualquer divergência.
-5. Manter visual definitivo, profissionais e módulos de negócio fora do ciclo.
+1. Ler `PERMISSIONS.md`, `ROLES_AND_PERMISSIONS.md` e `NEXT_STEP.md`.
+2. Projetar o helper central que valida contexto, perfil e permissão efetiva.
+3. Criar testes de proprietária, administradora, colaborador, negação, isolamento e contexto obsoleto.
+4. Aplicar o helper primeiro às operações de administração da clínica sem enfraquecer RLS.
+5. Manter menus definitivos, profissionais e módulos de negócio fora do ciclo.
 
 ---
 

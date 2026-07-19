@@ -1,7 +1,7 @@
 ---
 title: Fluxos de Acesso às Clínicas
 document_id: MOD-CLINIC-002
-version: 0.3.0
+version: 0.4.0
 status: Implementado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,11 +15,11 @@ related_documents:
 
 ## Pós-login
 
-1. O servidor consulta vínculos ativos do usuário autenticado.
+1. O servidor valida a equivalência e consulta perfis ativos do usuário autenticado.
 2. Sem vínculo e sem histórico de vínculo, encaminha para `/configurar-clinica`.
 3. Sem vínculo ativo, mas com vínculo inativo, encaminha para `/sem-clinica`.
-4. Com um vínculo ativo, grava o contexto seguro e encaminha para `/dashboard`.
-5. Com mais de um vínculo ativo, encaminha para `/selecionar-perfil`.
+4. Com um ou mais perfis ativos, limpa o contexto anterior e encaminha para `/selecionar-perfil`.
+5. A seleção validada grava perfil e vínculo de origem e encaminha para `/dashboard`.
 
 ## Primeira clínica
 
@@ -44,10 +44,10 @@ related_documents:
 
 ## Troca de contexto
 
-A seleção usa uma operação server-side sujeita ao RLS, atualiza `user_active_contexts`, registra auditoria, renova o cookie `HttpOnly` e encaminha para `/dashboard`.
+A seleção usa uma operação server-side sujeita ao RLS, valida equivalência, atualiza `user_active_contexts` com perfil e vínculo de origem, registra auditoria, renova cookies `HttpOnly` auxiliares e encaminha para `/dashboard`.
 
 ## Fluxo-alvo de perfil
 
 Após a evolução planejada, todo novo Login concluído seguirá para “Quem está acessando?”. O servidor listará somente perfis ativos da conta, validará função, unidade e permissões na seleção e registrará o perfil ativo. Esse fluxo está definido, mas ainda não implementado; o comportamento atual de seleção automática para vínculo único permanece em produção.
 
-O Ciclo 3 implementou a primeira metade server-side: listagem segura e portão de equivalência sem alterar a navegação. O Ciclo 4 deverá persistir o perfil validado no contexto, manter a ponte com o vínculo de origem e auditar seleção e troca.
+O Ciclo 4 concluiu a adoção controlada do perfil no contexto. A próxima evolução aplicará as permissões efetivas nas operações protegidas antes de derivar menus e Home definitivos.

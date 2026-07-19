@@ -1,7 +1,7 @@
 ---
 title: Acesso e Administração Inicial de Clínicas
 document_id: MOD-CLINIC-001
-version: 0.5.0
+version: 0.6.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -52,3 +52,5 @@ Funções globais são copiadas como modelos pertencentes a cada clínica sem cr
 O Ciclo 2 adicionou `permission_catalog`, `clinic_role_permissions` e `access_profile_permission_overrides`, além do cálculo seguro de permissões efetivas. A aplicação ainda não usa essa matriz para autorizar rotas ou montar menus; profissionais e adoção do novo contexto ficam para ciclos posteriores.
 
 O Ciclo 3 adicionou a leitura server-side preparatória e o portão de equivalência. A API retorna apenas perfis próprios e falha de forma fechada diante de qualquer divergência. Nenhuma navegação ou autoridade operacional foi trocada.
+
+O Ciclo 4 adotou `access_profile_id` no contexto ativo, preservou o vínculo de origem e tornou a seleção explícita em todo pós-login com perfis disponíveis. A matriz ainda não autoriza todas as APIs da aplicação; essa migração começa no ciclo seguinte.

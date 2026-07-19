@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import type { MembershipOption } from '@/lib/clinic-context'
+import type { AccessProfileOption } from '@/lib/clinic-context'
 
 export default function SelecionarPerfilPage() {
   const router = useRouter()
-  const [memberships, setMemberships] = useState<MembershipOption[]>([])
+  const [profiles, setProfiles] = useState<AccessProfileOption[]>([])
   const [loading, setLoading] = useState(true)
   const [selecting, setSelecting] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -14,27 +14,28 @@ export default function SelecionarPerfilPage() {
   useEffect(() => {
     let active = true
 
-    async function loadMemberships() {
+    async function loadProfiles() {
       try {
-        const response = await fetch('/api/context/active', { cache: 'no-store' })
+        const response = await fetch('/api/access-profiles', { cache: 'no-store' })
         if (!response.ok) throw new Error('context_unavailable')
         const data = await response.json() as {
-          memberships: MembershipOption[]
-          emptyRedirectTo?: string | null
+          snapshot: {
+            legacy_membership_count: number
+            profiles: AccessProfileOption[]
+          }
         }
         if (!active) return
 
-        if (data.memberships.length === 0) {
-          router.replace(data.emptyRedirectTo || '/sem-clinica')
+        const selectableProfiles = data.snapshot.profiles.filter(
+          (profile) => profile.legacy_equivalent && profile.source_membership_id
+        )
+
+        if (selectableProfiles.length === 0) {
+          router.replace(data.snapshot.legacy_membership_count === 0 ? '/configurar-clinica' : '/sem-clinica')
           return
         }
 
-        if (data.memberships.length === 1) {
-          await selectMembership(data.memberships[0].id)
-          return
-        }
-
-        setMemberships(data.memberships)
+        setProfiles(selectableProfiles)
       } catch {
         if (active) setError('Não foi possível carregar os perfis disponíveis.')
       } finally {
@@ -42,22 +43,20 @@ export default function SelecionarPerfilPage() {
       }
     }
 
-    void loadMemberships()
+    void loadProfiles()
     return () => { active = false }
-    // selectMembership intentionally uses stable browser APIs during initial load.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
-  async function selectMembership(membershipId: string) {
+  async function selectProfile(accessProfileId: string) {
     if (selecting) return
-    setSelecting(membershipId)
+    setSelecting(accessProfileId)
     setError(null)
 
     try {
       const response = await fetch('/api/context/active', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ membershipId }),
+        body: JSON.stringify({ accessProfileId }),
       })
       if (!response.ok) throw new Error('invalid_context')
 
@@ -90,22 +89,22 @@ export default function SelecionarPerfilPage() {
       {error && <div className="p-3 rounded border border-red-900/60 bg-red-950/30 text-red-300 text-sm">{error}</div>}
 
       {loading ? (
-        <p className="text-sm text-zinc-400">Carregando vínculos...</p>
+        <p className="text-sm text-zinc-400">Carregando perfis...</p>
       ) : (
         <div className="space-y-3">
-          {memberships.map((membership) => (
+          {profiles.map((profile) => (
             <button
-              key={membership.id}
+              key={profile.access_profile_id}
               type="button"
-              onClick={() => selectMembership(membership.id)}
+              onClick={() => selectProfile(profile.access_profile_id)}
               disabled={Boolean(selecting)}
               className="w-full text-left p-4 rounded-lg border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 transition-colors"
             >
-              <span className="block text-sm font-semibold text-zinc-100">{membership.clinicName}</span>
+              <span className="block text-sm font-semibold text-zinc-100">{profile.clinic_name}</span>
               <span className="block text-xs text-zinc-400 mt-1">
-                {membership.roleName}{membership.unitName ? ` · ${membership.unitName}` : ''}
+                {profile.role_name}{profile.unit_name ? ` · ${profile.unit_name}` : ''}
               </span>
-              {selecting === membership.id && (
+              {selecting === profile.access_profile_id && (
                 <span className="block text-xs text-zinc-500 mt-2">Selecionando...</span>
               )}
             </button>

@@ -1,7 +1,7 @@
 ---
 title: Testes do Acesso às Clínicas
 document_id: MOD-CLINIC-007
-version: 0.4.0
+version: 0.5.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -20,6 +20,7 @@ related_documents:
 - `006_clinic_access_profiles_foundation.sql`: aprovado com `clinic_access_profiles_foundation_ok` e rollback integral.
 - `007_clinic_permissions_foundation.sql`: aprovado com `clinic_permissions_foundation_ok` e rollback integral.
 - `008_access_profile_equivalence_gate.sql`: aprovado com `access_profile_equivalence_gate_ok` e rollback integral.
+- `009_active_access_profile_context.sql`: aprovado com `active_access_profile_context_ok` e rollback integral.
 
 A suíte funcional cobre usuário sem clínica, uma clínica, múltiplas clínicas, primeira clínica e unidade, proprietário, administrador convidando colaborador, convites válido, expirado, revogado, duplicado e reutilizado, destinatário incorreto, alteração de função, desativação e reativação, proteção do proprietário, restrições do administrador, bloqueio do colaborador, isolamento de leitura e escrita entre clínicas, contexto ativo e auditoria.
 
@@ -28,6 +29,8 @@ O contrato da Etapa 3 confirma cinco tabelas com RLS, ausência de escrita diret
 O contrato do Ciclo 2 confirma catálogo e escopos válidos, matriz inicial, funções futuras sem concessões, ausência de escrita direta, isolamento entre clínicas, cálculo restrito ao próprio perfil, concessão personalizada, negação prevalente e recusa de escopo incompatível.
 
 O contrato do Ciclo 3 confirma conta sem perfil, múltiplos vínculos e perfis, permissões efetivas, isolamento entre contas, divergência de estado, propagação de inativação e recusa de manipulação de clínica ou função.
+
+O contrato do Ciclo 4 confirma preenchimento do contexto legado, resolução pós-login para zero, um e múltiplos perfis, repetição idempotente, troca auditada, isolamento entre contas e invalidação do contexto após revogação.
 
 ## Aplicação
 

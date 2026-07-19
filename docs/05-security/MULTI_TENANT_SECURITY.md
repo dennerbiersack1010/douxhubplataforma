@@ -1,7 +1,7 @@
 ---
 title: Segurança Multiempresa e Permissões Iniciais
 document_id: SEC-001
-version: 0.10.0
+version: 0.11.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -101,6 +101,10 @@ A seleção de perfil ainda deverá adotar a nova entidade e validar permissões
 ## Portão de equivalência da Etapa 3
 
 As funções do Ciclo 3 derivam a conta exclusivamente de `auth.uid()` e não aceitam identificador de usuário do navegador. Cada vínculo é comparado com usuário da clínica, função, perfil, unidade, escopo e estados. Qualquer divergência torna o snapshot indisponível para adoção e a API responde de forma fechada. O teste `008_access_profile_equivalence_gate.sql` aprovou isolamento entre contas, inativação, manipulação de identificadores e rollback integral.
+
+## Contexto ativo por perfil
+
+O Ciclo 4 exige perfil e vínculo de origem no mesmo contexto server-side. A função de seleção deriva a conta de `auth.uid()`, valida o portão completo e recusa perfis de outra conta ou inativos. Cookies são apenas auxiliares de roteamento. Mudanças relevantes no vínculo removem o contexto ativo. O teste `009_active_access_profile_context.sql` aprovou seleção, troca, auditoria, isolamento e revogação.
 
 - modo suporte e perfis globais do DouxHub Control;
 - arquitetura local-first, sincronização, conflitos e proteção do banco local;

@@ -324,6 +324,23 @@ Executar o Ciclo 3 da Etapa 3: camada de leitura e testes de equivalência entre
 
 Executar o Ciclo 4 da Etapa 3: adoção controlada do perfil validado no contexto ativo, preservando o vínculo de origem, auditoria e retorno seguro durante a transição.
 
+## Etapa 3 — ciclo 4: adoção controlada do perfil no contexto
+
+### Resultado
+
+- `access_profile_id` obrigatório e vínculo de origem persistidos no contexto ativo;
+- preenchimento retrocompatível dos contextos existentes e validação estrutural dos novos;
+- seleção e troca de perfil server-side com auditoria e falha fechada;
+- pós-login direcionado à seleção para uma ou múltiplas opções;
+- interface técnica consumindo perfis equivalentes, sem seleção automática;
+- invalidação do contexto após mudança de estado, função ou unidade do vínculo;
+- migração aplicada no Supabase oficial e teste `009_active_access_profile_context.sql` aprovado com `active_access_profile_context_ok`;
+- ESLint, TypeScript e build de produção aprovados.
+
+### Próxima ação exata
+
+Executar o Ciclo 5 da Etapa 3: contrato central de autorização pelo perfil ativo e aplicação inicial das permissões efetivas às operações de administração da clínica.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

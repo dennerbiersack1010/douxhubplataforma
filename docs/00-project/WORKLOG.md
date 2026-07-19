@@ -5,6 +5,22 @@ last_updated: 2026-07-19
 
 ---
 
+## 2026-07-19 — Sessão: Etapa 3, Ciclo 4
+
+| Ação | Resultado |
+|---|---|
+| Contexto ativo | Perfil validado e vínculo de origem persistidos juntos |
+| Retrocompatibilidade | Contextos antigos preenchidos; contrato legado delega à seleção nova |
+| Pós-login | Seleção obrigatória para uma ou múltiplas opções |
+| Seleção técnica | Perfis equivalentes, cookies auxiliares e auditoria |
+| Revogação | Mudança de estado, função ou unidade invalida o contexto |
+| Migração no Supabase | Aplicada no projeto oficial pelo SQL Editor |
+| Teste `009_active_access_profile_context.sql` | Aprovado com `active_access_profile_context_ok` e rollback integral |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript e build | Aprovados; 36 rotas/páginas e Proxy ativo |
+
+Próxima ação: Etapa 3, Ciclo 5, autorização central server-side pelo perfil ativo e aplicação inicial na administração da clínica.
+
 ## 2026-07-19 — Sessão: Etapa 3, Ciclo 3
 
 | Ação | Resultado |

@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.19.0
+version: 0.20.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,6 +15,17 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 19/07/2026
+
+### Etapa 3 — Ciclo 4
+
+- Adicionado `access_profile_id` obrigatório ao contexto ativo, com vínculo de origem preservado.
+- Adicionada seleção segura, auditada e fail-closed por perfil, com ponte compatível para o contrato legado.
+- Pós-login alterado para exigir seleção de perfil sempre que houver opção disponível, inclusive uma única.
+- Interface técnica passou a listar perfis equivalentes e enviar somente o identificador do perfil.
+- Adicionado cookie `HttpOnly` auxiliar do perfil; logout e novo pós-login removem contexto anterior.
+- Mudanças de estado, função ou unidade do vínculo passaram a invalidar o contexto ativo.
+- Migração aplicada no Supabase oficial e contrato `009_active_access_profile_context.sql` aprovado com `active_access_profile_context_ok` e rollback integral.
+- ESLint, TypeScript e build de produção aprovados.
 
 ### Etapa 3 — Ciclo 3
 

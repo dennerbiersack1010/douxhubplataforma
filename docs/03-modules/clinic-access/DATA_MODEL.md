@@ -1,7 +1,7 @@
 ---
 title: Modelo de Dados de Acesso às Clínicas
 document_id: MOD-CLINIC-003
-version: 0.5.0
+version: 0.6.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -22,7 +22,7 @@ related_documents:
 - `clinic_memberships`: vínculo único entre usuário e clínica, unidade opcional, função, status, entrada, autor do convite, último acesso e datas.
 - `roles`: catálogo das funções iniciais e das funções futuras inativas.
 - `clinic_invitations`: destinatário, clínica, unidade opcional, função, estado, hash único do token, validade, autores do convite e aceite e datas.
-- `user_active_contexts`: contexto server-side selecionado por usuário.
+- `user_active_contexts`: contexto server-side selecionado por usuário, com perfil validado e vínculo de origem durante a transição.
 - `audit_logs`: clínica, unidade, ator, usuário afetado, ação, entidade, metadados, IP, agente do navegador e data.
 - `clinic_users`: relação única entre conta e clínica, com estado e origem rastreável no vínculo legado.
 - `clinic_roles`: cópias por clínica dos modelos globais de função, sem criação de pessoas fictícias.
@@ -56,7 +56,8 @@ Todas as tabelas expostas possuem RLS. Consultas são limitadas ao próprio usu�
 - `20260719190000_clinic_access_profiles_foundation.sql`: tabelas aditivas, funções por clínica, sincronização dos vínculos atuais, RLS e leitura segura.
 - `20260719200000_clinic_permissions_foundation.sql`: catálogo, matriz por função, exceções por perfil, cálculo efetivo e RLS.
 - `20260719210000_access_profile_equivalence_gate.sql`: leitura de perfis disponíveis, comparação rastreável e snapshot fail-closed para o portão de adoção.
+- `20260719220000_active_access_profile_context.sql`: perfil obrigatório no contexto ativo, seleção auditada, ponte compatível e invalidação após mudança do vínculo.
 
 ## Modelo-alvo definido
 
-Usuários da clínica, funções, atribuições, múltiplas unidades, perfis, permissões efetivas, exceções e equivalência possuem fundação persistida. A API preparatória de leitura existe, mas não altera contexto. Profissionais, APIs administrativas e adoção pelas rotas permanecem planejados. As tabelas atuais não foram substituídas.
+Usuários da clínica, funções, atribuições, múltiplas unidades, perfis, permissões efetivas, exceções, equivalência e contexto por perfil possuem fundação persistida. A seleção já adota o perfil; profissionais e aplicação gradual das permissões nas APIs permanecem planejados. As tabelas atuais não foram removidas.

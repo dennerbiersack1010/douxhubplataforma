@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import {
+  ACTIVE_ACCESS_PROFILE_COOKIE,
   ACTIVE_MEMBERSHIP_COOKIE,
-  activateMembership,
+  activateAccessProfile,
   listActiveMemberships,
   resolveNoActiveMembershipRedirect,
 } from '@/lib/clinic-context'
@@ -28,15 +29,23 @@ export async function POST(request: NextRequest) {
   const { data: { user }, error } = await supabase.auth.getUser()
   if (error || !user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
 
-  const body = await request.json().catch(() => null) as { membershipId?: unknown } | null
-  if (!body || typeof body.membershipId !== 'string') {
-    return NextResponse.json({ error: 'invalid_membership' }, { status: 400 })
+  const body = await request.json().catch(() => null) as { accessProfileId?: unknown } | null
+  if (!body || typeof body.accessProfileId !== 'string') {
+    return NextResponse.json({ error: 'invalid_access_profile' }, { status: 400 })
   }
 
   try {
-    await activateMembership(supabase, body.membershipId)
+    const context = await activateAccessProfile(supabase, body.accessProfileId)
     const response = NextResponse.json({ redirectTo: '/dashboard' })
-    response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, body.membershipId, {
+    response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+    response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, context.membership_id, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 60 * 12,
+    })
+    response.cookies.set(ACTIVE_ACCESS_PROFILE_COOKIE, context.access_profile_id, {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',

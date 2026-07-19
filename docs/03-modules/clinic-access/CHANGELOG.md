@@ -1,7 +1,7 @@
 ---
 title: Alterações do Módulo de Acesso às Clínicas
 document_id: MOD-CLINIC-008
-version: 0.5.0
+version: 0.6.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -11,6 +11,21 @@ related_documents:
 ---
 
 # Alterações do Módulo de Acesso às Clínicas
+
+## [0.6.0] - 19/07/2026
+
+### Implementado
+
+- perfil obrigatório no contexto ativo com vínculo de origem preservado;
+- seleção e troca server-side auditadas;
+- seleção explícita após todo Login com perfil disponível;
+- invalidação do contexto após mudança relevante no vínculo;
+- cookie `HttpOnly` auxiliar do perfil e compatibilidade controlada com o contrato legado.
+
+### Validado
+
+- contrato `009_active_access_profile_context.sql` aprovado com rollback integral;
+- zero, um e múltiplos perfis, repetição, troca, auditoria, isolamento e revogação.
 
 ## [0.5.0] - 19/07/2026
 

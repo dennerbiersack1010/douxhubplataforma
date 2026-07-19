@@ -1,7 +1,7 @@
 ---
 title: Regras de Negócio do Acesso às Clínicas
 document_id: MOD-CLINIC-006
-version: 0.3.0
+version: 0.4.0
 status: Implementado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -34,3 +34,6 @@ related_documents:
 16. A evolução do vínculo atual é aditiva e retrocompatível; a fundação, as permissões e o portão de equivalência já estão implementados, mas a autoridade operacional ainda não foi migrada.
 17. Uma divergência entre vínculo vigente e perfil novo bloqueia a adoção; não existe fallback permissivo nem correção silenciosa no navegador.
 18. A leitura preparatória retorna apenas perfis ativos e estruturalmente válidos da conta autenticada.
+19. O contexto ativo referencia obrigatoriamente um perfil validado e mantém o vínculo de origem enquanto durar a transição.
+20. Todo pós-login com perfil disponível exige seleção explícita, inclusive quando existe uma única opção.
+21. Mudança de estado, função ou unidade do vínculo invalida o contexto e exige nova seleção.

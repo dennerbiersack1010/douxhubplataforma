@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.22.0
+version: 0.23.0
 status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -12,6 +12,18 @@ related_documents:
 ---
 
 # Estado Atual (Current State)
+
+## Etapa 3 — Ciclo 4: adoção controlada do perfil no contexto (Validada em 19/07/2026)
+
+- A migração `20260719220000_active_access_profile_context.sql` adicionou `access_profile_id` obrigatório a `user_active_contexts`, preservando `membership_id` como ponte rastreável.
+- Contextos existentes foram preenchidos pelo perfil originado do vínculo; novos contextos são validados por conta, clínica, função, unidade, estados ativos e equivalência.
+- `set_active_access_profile_context()` seleciona somente perfil próprio disponível e equivalente, atualiza o vínculo e o perfil, e registra `context.profile_switched` na auditoria.
+- O contrato legado `set_active_clinic_context()` passou a delegar à seleção de perfil validada, sem fallback permissivo.
+- O pós-login limpa o contexto anterior e direciona todo usuário com perfil disponível para `/selecionar-perfil`, inclusive quando existe uma única opção, conforme DEC-011.
+- A interface técnica lista os perfis do portão de equivalência e envia somente `accessProfileId`; o servidor grava cookies `HttpOnly` de perfil e vínculo como auxiliares.
+- Mudança de estado, função ou unidade do vínculo invalida o contexto ativo e exige nova seleção.
+- O contrato `009_active_access_profile_context.sql` retornou `active_access_profile_context_ok`, cobrindo zero, um e múltiplos perfis, repetição, troca, isolamento, auditoria, revogação e rollback integral.
+- ESLint, TypeScript e build de produção foram aprovados; permanecem somente quatro avisos preexistentes sobre imagens públicas.
 
 ## Etapa 3 — Ciclo 3: leitura segura e portão de equivalência (Validada em 19/07/2026)
 
