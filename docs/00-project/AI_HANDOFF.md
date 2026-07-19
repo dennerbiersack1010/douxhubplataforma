@@ -156,6 +156,9 @@ Atualização do Ciclo 4:
 - `20260719190000_clinic_access_profiles_foundation.sql` foi aplicada no Supabase oficial.
 - Cinco tabelas novas representam usuários, funções, atribuições, unidades e perfis sem substituir `clinic_memberships`.
 - O teste `006_clinic_access_profiles_foundation.sql` foi aprovado com rollback.
+- Commits: `4cb08f4` (Login) e `38ee817` (Etapa 3), enviados para `origin/main`.
+- Deployment: `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf`, `READY`, produção, alias `douxhub.space`.
+- Login autenticado medido em 3,81 s no caminho frio e 1,26 s após logout; fixture removida integralmente.
 - Próximo ciclo: catálogo e matriz de permissões; não migrar seleção de perfil antes do portão de equivalência.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
@@ -164,9 +167,9 @@ O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. 
 
 ## Próxima ação para a IA que continuar
 
-1. Confirmar o fechamento operacional e a medição publicada do Login.
-2. Ler `PERMISSIONS.md` e `ROLES_AND_PERMISSIONS.md`.
-3. Projetar o catálogo e a matriz de permissões da Etapa 3, Ciclo 2.
+1. Ler `PERMISSIONS.md` e `ROLES_AND_PERMISSIONS.md`.
+2. Projetar o catálogo e a matriz de permissões da Etapa 3, Ciclo 2.
+3. Criar testes de negação prevalente, isolamento e escopo antes da API.
 4. Preservar `clinic_memberships` e o contexto atual como autoridade.
 5. Manter visual definitivo, profissionais e módulos de negócio fora do ciclo.
 

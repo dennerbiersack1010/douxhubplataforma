@@ -18,7 +18,11 @@ last_updated: 2026-07-19
 | Dados artificiais | Desfeitos pelos `rollback` dos contratos |
 | ESLint | 0 erros; 4 avisos preexistentes |
 | TypeScript e build | Aprovados; 35 rotas/páginas e Proxy ativo |
-| GitHub, Vercel e teste autenticado publicado | Pendentes do fechamento operacional |
+| GitHub | `4cb08f4` e `38ee817` enviados para `origin/main` |
+| Vercel | `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf`, produção, `READY` |
+| Login autenticado no domínio | 3,81 s na primeira execução válida; 1,26 s após logout completo |
+| Destino | `/dashboard` confirmado nas duas execuções |
+| Fixture de desempenho | Conta, clínica, vínculo, perfis e auditorias removidos integralmente |
 
 Próxima ação após a publicação: Etapa 3, Ciclo 2, catálogo e matriz de permissões.
 

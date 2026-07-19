@@ -21,7 +21,9 @@ related_documents:
 - Proxy e layouts usam `getClaims()` verificado, recomendado pelo Supabase para proteção server-side e potencialmente atendido por chaves em cache.
 - O cliente executa somente `router.replace`; o indicador permanece até a navegação começar.
 - A migração `20260719180000_optimize_post_login_resolution.sql` foi aplicada e `005_post_login_resolution.sql` retornou `post_login_resolution_ok` no projeto oficial.
-- Build, TypeScript e ESLint foram aprovados; a medição autenticada no domínio será registrada após a publicação.
+- Build, TypeScript e ESLint foram aprovados.
+- Os commits `4cb08f4` e `38ee817` foram publicados no deployment `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf`, estado `READY`, target `production`, com alias `douxhub.space`.
+- Uma conta técnica temporária com vínculo único confirmou o caminho completo até `/dashboard`: 3,81 segundos na primeira execução válida e 1,26 segundo após logout completo. A conta, a clínica e todos os registros associados foram removidos integralmente após a medição.
 
 ## Etapa 3 — Ciclo 1: fundação de usuários, funções e perfis (Validada em 19/07/2026)
 
@@ -32,6 +34,7 @@ related_documents:
 - Chaves estrangeiras compostas e RLS preservam a fronteira da clínica; `authenticated` possui leitura, sem escrita direta nas tabelas novas.
 - `clinic_memberships` continua sendo o contrato vigente da aplicação e do contexto ativo; não houve migração de leitura nem remoção.
 - O contrato oficial retornou `clinic_access_profiles_foundation_ok` com rollback dos dados fictícios.
+- A fundação aditiva está no commit `38ee817` e foi publicada no mesmo deployment de produção `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf`.
 - Catálogo de permissões, matriz de função, exceções de perfil, profissionais e adoção do novo contexto permanecem para ciclos posteriores.
 
 ## Identidade global — favicon oficial (19/07/2026)

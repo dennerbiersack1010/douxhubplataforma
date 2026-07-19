@@ -48,7 +48,14 @@ related_documents:
 - Proxy e layouts migrados de `getUser()` remoto para `getClaims()` verificado;
 - `Server-Timing` adicionado à API para medição no ambiente publicado.
 
-A medição autenticada no domínio oficial será registrada após o deployment desta alteração.
+A medição autenticada foi executada em `douxhub.space` com uma conta técnica temporária e vínculo único:
+
+- primeira execução válida até `/dashboard`: 3,81 segundos;
+- segunda execução após logout completo: 1,26 segundo;
+- destino e conteúdo do Dashboard confirmados nas duas execuções;
+- conta, clínica, vínculo, perfis e auditorias temporários removidos após o teste.
+
+Tentativas anteriores com uma fixture criada diretamente no schema Auth foram descartadas porque ainda não continham toda a identidade interna exigida pelo Supabase; elas não mediram o produto e não entram nos resultados.
 
 ## Pendentes de validação remota
 

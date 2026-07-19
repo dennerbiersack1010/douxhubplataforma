@@ -275,7 +275,7 @@ O ciclo foi publicado no commit `feefa06` e no deployment `dpl_DVEs9VDxi2Tb4vhii
 - Resolução consolidada em `resolve_post_login_context()` e protegida por `auth.uid()`.
 - `getClaims()` adotado no Proxy e nos layouts; `getUser()` permanece disponível apenas quando dados atuais da conta forem realmente necessários.
 - Contrato aprovado no Supabase oficial com `post_login_resolution_ok`.
-- Publicação e medição autenticada no domínio ainda pendentes neste checkpoint.
+- Publicado no commit `4cb08f4` e no deployment `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf` (`READY`). Medições válidas até o Dashboard: 3,81 s e 1,26 s. Fixture removida integralmente.
 
 ## Etapa 3 — ciclo 1: fundação aditiva de acesso
 
@@ -289,7 +289,7 @@ O ciclo foi publicado no commit `feefa06` e no deployment `dpl_DVEs9VDxi2Tb4vhii
 
 ### Próxima ação exata
 
-Publicar e medir o Login no domínio oficial. Depois iniciar o Ciclo 2 da Etapa 3: catálogo de permissões, matriz por função e exceções de perfil, ainda sem migrar a seleção de contexto.
+O Ciclo 1 foi publicado no commit `38ee817` e validado no domínio. A próxima ação é iniciar o Ciclo 2 da Etapa 3: catálogo de permissões, matriz por função e exceções de perfil, ainda sem migrar a seleção de contexto.
 
 ---
 

@@ -23,6 +23,7 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Proxy e layouts passaram a usar `getClaims()` verificado.
 - Adicionados resposta sem cache e `Server-Timing` ao endpoint.
 - Contrato `005_post_login_resolution.sql` aprovado com `post_login_resolution_ok`.
+- Publicado no deployment `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf` (`READY`); Login completo medido em 3,81 segundos no caminho frio e 1,26 segundo após logout.
 
 ### Etapa 3 — Ciclo 1
 
@@ -32,6 +33,7 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Múltiplas funções e unidades passaram a ser representáveis sem alterar a aplicação vigente.
 - Adicionadas RLS, chaves estrangeiras compostas e somente leitura para `authenticated`.
 - Contrato `006_clinic_access_profiles_foundation.sql` aprovado com `clinic_access_profiles_foundation_ok`.
+- Fundação publicada no mesmo deployment de produção; dados de medição e contratos foram integralmente removidos ou revertidos.
 
 ### Identidade global — favicon
 
