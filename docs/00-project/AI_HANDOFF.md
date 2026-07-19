@@ -178,6 +178,9 @@ Atualização do Ciclo 4:
 - `008_access_profile_equivalence_gate.sql` foi aprovado com `access_profile_equivalence_gate_ok` e rollback integral.
 - ESLint, TypeScript e build foram aprovados; a rota `/api/access-profiles` compila como dinâmica.
 - `clinic_memberships` e `user_active_contexts` permanecem como autoridade operacional.
+- Commits `cd84447` e `18b0767` enviados para `origin/main`.
+- Deployment `dpl_8CKaEoSvJbCzGBxESKTYchoWFhU3`, `READY`, produção, aliases `douxhub.space` e `douxhubplataforma.vercel.app`.
+- Produção aprovada: API anônima `401` sem cache, Login disponível e rota de equipe redirecionada para autenticação.
 - Próximo ciclo: adoção controlada do perfil no contexto ativo, mantendo vínculo de origem, auditoria e caminho seguro de retorno.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.

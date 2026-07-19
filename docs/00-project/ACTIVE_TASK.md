@@ -317,6 +317,8 @@ Executar o Ciclo 3 da Etapa 3: camada de leitura e testes de equivalência entre
 - migração aplicada no Supabase oficial e contrato `008_access_profile_equivalence_gate.sql` aprovado com `access_profile_equivalence_gate_ok` e rollback integral;
 - ESLint, TypeScript e build de produção aprovados;
 - `clinic_memberships`, `user_active_contexts`, Login, rotas e menus preservados.
+- commits `cd84447` e `18b0767` enviados para `origin/main`;
+- deployment `dpl_8CKaEoSvJbCzGBxESKTYchoWFhU3` em produção, `READY`, com domínio e proteção anônima aprovados.
 
 ### Próxima ação exata
 

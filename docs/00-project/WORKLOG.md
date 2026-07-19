@@ -19,6 +19,9 @@ last_updated: 2026-07-19
 | ESLint | 0 erros; 4 avisos preexistentes |
 | TypeScript e build | Aprovados; nova rota dinâmica incluída |
 | Autoridade operacional | `clinic_memberships` e `user_active_contexts` preservados |
+| GitHub | Commits `cd84447` e `18b0767` enviados para `origin/main` |
+| Vercel | `dpl_8CKaEoSvJbCzGBxESKTYchoWFhU3`, produção, `READY` |
+| Domínio oficial | API anônima `401` sem cache; Login e proteção da equipe aprovados |
 
 Próxima ação: Etapa 3, Ciclo 4, adoção controlada do perfil no contexto ativo com ponte, auditoria e retorno seguro.
 

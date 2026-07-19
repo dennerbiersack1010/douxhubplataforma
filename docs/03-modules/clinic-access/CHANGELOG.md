@@ -27,6 +27,7 @@ related_documents:
 - contrato `008_access_profile_equivalence_gate.sql` aprovado com rollback integral;
 - zero, um e múltiplos perfis, isolamento, inativação e manipulação de identificadores;
 - autoridade de `clinic_memberships` e `user_active_contexts` preservada.
+- produção `READY` no deployment `dpl_8CKaEoSvJbCzGBxESKTYchoWFhU3`, com API anônima `401` sem cache.
 
 ## [0.4.0] - 19/07/2026
 

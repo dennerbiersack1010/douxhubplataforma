@@ -23,6 +23,8 @@ related_documents:
 - O contrato `008_access_profile_equivalence_gate.sql` retornou `access_profile_equivalence_gate_ok`, cobrindo zero, um e múltiplos perfis, isolamento, inativação e manipulação de identificadores, com rollback integral.
 - ESLint, TypeScript e build de produção foram aprovados; a compilação inclui a nova rota dinâmica `/api/access-profiles`.
 - `clinic_memberships` e `user_active_contexts` continuam sendo a autoridade operacional; Login, rotas, menus e seleção de contexto não foram alterados.
+- Os commits `cd84447` e `18b0767` foram enviados para `origin/main` e publicados no deployment `dpl_8CKaEoSvJbCzGBxESKTYchoWFhU3`, estado `READY`, target `production`.
+- Os aliases `douxhub.space` e `douxhubplataforma.vercel.app` apontam para a entrega. A API respondeu `401 Unauthorized` sem sessão e sem cache; o Login carregou e `/configuracoes/equipe` redirecionou para `/login?next=%2Fconfiguracoes%2Fequipe`.
 
 ## Etapa 3 — Ciclo 2: catálogo e matriz de permissões (Validada em 19/07/2026)
 

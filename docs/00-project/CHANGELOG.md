@@ -25,6 +25,8 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Ajustado o mapeamento da recusa PostgreSQL `42501` para `401 Unauthorized` quando o visitante não possui sessão.
 - Migração aplicada no Supabase oficial e contrato `008_access_profile_equivalence_gate.sql` aprovado com `access_profile_equivalence_gate_ok` e rollback integral.
 - ESLint, TypeScript e build de produção aprovados; `clinic_memberships` e `user_active_contexts` permaneceram como autoridade.
+- Commits `cd84447` e `18b0767` enviados para `origin/main` e publicados no deployment `dpl_8CKaEoSvJbCzGBxESKTYchoWFhU3`, estado `READY`.
+- Domínio oficial aprovado para Login, proteção da rota de equipe e resposta anônima `401` sem cache da nova API.
 
 ### Etapa 3 — Ciclo 2
 
