@@ -54,7 +54,7 @@ Próxima ação: implementar schemas e API server-side do rascunho antes da inte
 | Build | Aprovado; 35 rotas/páginas e Proxy ativo |
 | Teste PostgreSQL | Pendente por ausência de conexão/CLI |
 
-Próxima ação: interface técnica guiada e retomável, preservando a exigência de referência antes do visual definitivo.
+Próxima ação: aplicar a migração no Supabase oficial e aprovar o teste SQL. A interface técnica guiada só poderá consumir a API depois desse portão.
 
 ## 2026-07-17 — Sessão: Configuração SMTP e correção de segurança de rotas
 

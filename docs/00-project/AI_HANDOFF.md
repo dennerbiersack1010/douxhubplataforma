@@ -123,7 +123,9 @@ Atualização do Ciclo 2:
 - Schemas e API foram implementados em `lib/clinic-onboarding.ts` e `app/api/clinic-onboarding/route.ts`.
 - A nova rota passou no build e ainda não é consumida pela interface.
 - A migração continua pendente no Supabase; não testar a API em produção antes de aplicá-la.
-- Próximo ciclo: interface técnica guiada, retomada e confirmação de cancelamento; conclusão transacional fica para ciclo separado.
+- Portão obrigatório: aplicar a migração oficial e executar o teste SQL antes de conectar a interface.
+- O ambiente atual não possui CLI ou credenciais de banco; não improvisar aplicação por chave pública.
+- Após aprovação do banco: interface técnica guiada, retomada e confirmação de cancelamento; conclusão transacional fica para ciclo separado.
 
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 

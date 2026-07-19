@@ -220,7 +220,11 @@ A primeira tentativa isolada do TypeScript não conseguiu gravar `tsconfig.tsbui
 
 ### Próxima ação exata
 
-Ciclo 3 da Etapa 2: substituir o formulário curto por uma interface técnica guiada que consuma a API, retome o progresso e confirme cancelamento, sem implementar ainda o visual definitivo ou a conclusão transacional.
+Portão de validação antes do Ciclo 3: aplicar `20260718120000_clinic_onboarding_progress.sql` no Supabase oficial e executar `003_clinic_onboarding_progress.sql`. Somente após resultado aprovado, substituir o formulário curto por uma interface técnica guiada que consuma a API, retome o progresso e confirme cancelamento.
+
+### Bloqueio operacional atual
+
+Esta cópia não possui Supabase CLI, PostgreSQL local, credencial de gestão ou conexão de banco. A migração não pode ser aplicada com segurança neste ambiente. A API nova permanece sem consumidor e o onboarding atual continua preservado.
 
 ---
 
