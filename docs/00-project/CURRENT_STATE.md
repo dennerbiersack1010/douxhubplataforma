@@ -18,6 +18,8 @@ related_documents:
 - O favicon padrão anterior foi substituído pelo ícone oficial fornecido pela DouxHub.
 - O arquivo original foi preservado em `app/icon.png`, usando a convenção nativa de metadados do Next.js para gerar o ícone exibido em abas, favoritos e atalhos compatíveis.
 - A alteração é exclusivamente de identidade global e não modifica Login, onboarding, rotas ou regras de negócio.
+- Commit `48e614b` enviado para `origin/main` e publicado no deployment `dpl_5tRmT5teWrEyYmi7hRBiw2dikA4w`, estado `READY`, target `production`.
+- Em `douxhub.space/login`, o documento publica um único favicon apontando para `/icon.png`; o ativo respondeu `200 OK`, `Content-Type: image/png` e 50.801 bytes.
 
 ## Etapa 2 — Ciclo 4: conclusão transacional do onboarding (Validado em 19/07/2026)
 

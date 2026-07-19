@@ -13,7 +13,9 @@ last_updated: 2026-07-19
 | Inclusão em `app/icon.png` | Concluída |
 | Remoção do favicon padrão anterior | Concluída; recuperável pelo histórico Git |
 | Impacto funcional | Nenhum; alteração restrita à identidade global |
-| GitHub, Vercel e domínio | Pendentes do fechamento desta alteração |
+| GitHub | Commit `48e614b` enviado para `origin/main` |
+| Vercel | Deployment `dpl_5tRmT5teWrEyYmi7hRBiw2dikA4w`, produção, `READY` |
+| Domínio oficial | Um favicon publicado; PNG respondeu `200 OK`, `image/png`, 50.801 bytes |
 
 Próxima ação: validar o build, publicar e conferir o favicon no domínio oficial antes de iniciar a Etapa 3.
 

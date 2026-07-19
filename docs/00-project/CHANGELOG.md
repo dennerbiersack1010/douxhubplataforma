@@ -21,6 +21,8 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Substituído o favicon padrão pelo ícone oficial da DouxHub em `app/icon.png`.
 - Removido o ativo anterior `app/favicon.ico` para impedir concorrência entre ícones nos navegadores.
 - Preservadas todas as rotas, interfaces e regras funcionais existentes.
+- Publicado pelo commit `48e614b` no deployment `dpl_5tRmT5teWrEyYmi7hRBiw2dikA4w`, estado `READY`.
+- Conferido no domínio oficial: um único link de favicon e ativo PNG respondendo `200 OK` com 50.801 bytes.
 
 ### Onboarding — conclusão transacional
 
