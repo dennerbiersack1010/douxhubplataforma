@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.10.0
+version: 0.11.0
 status: Em desenvolvimento
 last_updated: 2026-07-18
 owner: DouxHub
@@ -15,6 +15,15 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 18/07/2026
+
+### Onboarding — persistência
+
+- Adicionada migração aditiva para rascunho e progresso retomável do onboarding.
+- Adicionadas funções seguras para iniciar/retomar, salvar etapas ordenadas e cancelar sem apagar histórico.
+- Adicionada RLS de leitura exclusiva do proprietário e removida escrita direta para usuários autenticados.
+- Adicionado teste transacional de contrato, idempotência, isolamento e cancelamento.
+- Criada documentação específica do módulo em `docs/03-modules/clinic-onboarding/`.
+- Aplicação e execução no Supabase de produção permanecem pendentes e não foram registradas como validadas.
 
 ### Documentação
 

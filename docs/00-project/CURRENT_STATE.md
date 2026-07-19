@@ -1,7 +1,7 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.13.0
+version: 0.14.0
 status: Implementado
 last_updated: 2026-07-18
 owner: DouxHub
@@ -216,3 +216,16 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - Documentos específicos foram criados em `docs/03-modules/clinic-access/` para o modelo conceitual, usuários, profissionais, funções e permissões, perfis de acesso, unidades e vínculos.
 - A validação documental, o ESLint, o TypeScript e o build de produção foram aprovados; o lint manteve quatro avisos preexistentes sobre imagens.
 - Estado: **Definido documentalmente; ainda não implementado no banco ou na aplicação.**
+
+## Onboarding guiado — fundação de persistência (Implementada no repositório — 18/07/2026)
+
+- Criada a migração aditiva `20260718120000_clinic_onboarding_progress.sql`.
+- A tabela `clinic_onboarding_progress` preserva rascunhos das cinco etapas de dados e prepara a sexta etapa de conclusão.
+- Funções `start_or_resume_clinic_onboarding`, `save_clinic_onboarding_step` e `cancel_clinic_onboarding` usam `auth.uid()`, `security definer` e `search_path` explícito.
+- RLS limita leitura ao próprio usuário e não há concessão de escrita direta para `authenticated`.
+- Ordem das etapas, consistência de conclusão/cancelamento, tamanho do payload, revisão e rascunho ativo único possuem restrições.
+- Criado `003_clinic_onboarding_progress.sql` para testar contrato, idempotência, persistência, ordem, isolamento e cancelamento com rollback.
+- Documentação do módulo criada em `docs/03-modules/clinic-onboarding/`.
+- Validação da aplicação: integridade documental aprovada, TypeScript aprovado, ESLint sem erros e build aprovado com 34 páginas.
+- Estado remoto: **migração e teste ainda não aplicados nem executados no Supabase de produção**.
+- Interface, API validada por etapa e conclusão transacional ainda não implementadas.

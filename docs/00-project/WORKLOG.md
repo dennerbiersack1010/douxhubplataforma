@@ -23,6 +23,23 @@ last_updated: 2026-07-18
 
 Próxima ação: projetar a persistência e a migração aditiva do onboarding guiado antes de alterar a interface.
 
+### Etapa 2 — ciclo 1: persistência do onboarding
+
+| Ação | Resultado |
+|---|---|
+| Definição do rascunho e progresso por usuário | Concluída |
+| Migração aditiva e RLS | Implementadas no repositório |
+| Funções seguras de iniciar, salvar e cancelar | Implementadas no repositório |
+| Teste transacional `003_clinic_onboarding_progress.sql` | Criado; execução PostgreSQL pendente |
+| Documentação específica | Criada |
+| Integridade documental | Aprovada |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript | Aprovado |
+| Build de produção | Aprovado; 34 páginas e Proxy ativo |
+| Aplicação no Supabase de produção | Não executada neste ciclo |
+
+Próxima ação: implementar schemas e API server-side do rascunho antes da interface e da conclusão transacional.
+
 ## 2026-07-17 — Sessão: Configuração SMTP e correção de segurança de rotas
 
 ### SMTP / Resend

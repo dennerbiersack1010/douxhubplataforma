@@ -127,6 +127,60 @@ Executar primeiro uma etapa exclusivamente documental para definir o modelo conc
 - Testes funcionais, de sessão e RLS: não reaplicáveis neste ciclo exclusivamente documental; o comportamento executável não foi alterado.
 - Último erro: a primeira execução do build não pôde gravar `.next/trace-build` por restrição do ambiente local; a mesma execução autorizada foi concluída com sucesso. Não é erro do produto.
 
+## Etapa 2 — ciclo 1: persistência do onboarding
+
+### Problema isolado
+
+O onboarding atual mantém os dados somente no formulário e cria a clínica no envio final. Se a proprietária abandonar ou atualizar a página, não existe rascunho, progresso retomável ou controle de ordem das etapas.
+
+### Unidade lógica deste ciclo
+
+- documentar o contrato de persistência;
+- criar uma tabela aditiva de progresso por conta;
+- permitir iniciar/retomar, salvar uma etapa e cancelar o rascunho por funções seguras;
+- aplicar RLS para leitura exclusiva do próprio usuário;
+- impedir escrita direta nas colunas do rascunho;
+- criar teste transacional de contrato e isolamento.
+
+### Fora deste ciclo
+
+- interface guiada;
+- conclusão transacional da clínica;
+- alteração de `create_initial_clinic`;
+- funções padrão por clínica;
+- deploy ou aplicação da migração no Supabase de produção.
+
+### Próxima ação exata do ciclo
+
+Criar a migração `20260718120000_clinic_onboarding_progress.sql`, o teste `003_clinic_onboarding_progress.sql` e a documentação do módulo de onboarding; em seguida validar documentação, lint, TypeScript e build antes do checkpoint.
+
+### Resultado do ciclo
+
+- Migração aditiva de progresso criada.
+- Início e retomada idempotentes implementados em função segura.
+- Salvamento ordenado das etapas 1 a 5 implementado.
+- Cancelamento preservando histórico implementado.
+- RLS de leitura exclusiva e bloqueio de escrita direta configurados.
+- Teste transacional de contrato, ordem, cancelamento e isolamento criado.
+- Documentação específica criada em `docs/03-modules/clinic-onboarding/`.
+- Aplicação no Supabase de produção: pendente.
+
+### Último teste executado
+
+`npm run build`
+
+### Resultado do último teste
+
+Build aprovado com 34 páginas e Proxy ativo. TypeScript aprovado. ESLint sem erros e com quatro avisos preexistentes sobre `<img>`.
+
+### Último erro encontrado
+
+Não há erro de aplicação. O teste SQL não foi executado porque a cópia oficial não possui Supabase CLI, PostgreSQL local ou configuração de conexão remota. Esse limite está documentado e impede marcar o contrato como validado no banco.
+
+### Próxima ação exata
+
+Criar o ciclo 2 da Etapa 2: schemas Zod e API server-side para iniciar/retomar, consultar, salvar e cancelar o rascunho, sem implementar ainda a conclusão transacional ou o visual definitivo.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

@@ -109,6 +109,15 @@ Testes SQL em: `supabase/tests/`
 - A próxima etapa é o onboarding guiado. Antes da interface, definir persistência de progresso, idempotência, migração aditiva e RLS.
 - Não refazer Login, callback, sessão, Resend ou SMTP sem erro reproduzido.
 
+### Etapa 2 — estado do onboarding
+
+- Ciclo 1 implementou no repositório a persistência retomável em `clinic_onboarding_progress`.
+- Migração: `20260718120000_clinic_onboarding_progress.sql`.
+- Teste: `003_clinic_onboarding_progress.sql`.
+- A migração ainda não foi aplicada e o teste ainda não foi executado no Supabase de produção.
+- Não existe API por etapa, interface guiada ou conclusão transacional nova.
+- Próximo ciclo: schemas Zod e API server-side para o rascunho; validar novamente antes de criar telas.
+
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---
