@@ -1,9 +1,9 @@
 ---
 title: Decisões Permanentes do Projeto
 document_id: PRJ-004
-version: 0.3.0
+version: 0.4.0
 status: Definido
-last_updated: 2026-07-16
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - PROJECT.md
@@ -77,3 +77,35 @@ As seguintes diretrizes e decisões arquiteturais e operacionais foram estabelec
 **Decisão:** A documentação versionada em `docs/` é a fonte oficial da DouxHub. Toda tarefa deve atualizar os documentos afetados, usar metadados e status padronizados e preservar histórico, decisões e referências aprovadas.
 
 **Consequências:** Código e documentação passam a ser conferidos em conjunto. Uma tarefa não é considerada finalizada enquanto o estado real não estiver documentado. Nenhum PDF será gerado nesta etapa.
+
+## DEC-009 — Separação entre conta, usuário da clínica e profissional
+
+**Contexto:** Uma pessoa pode acessar a plataforma sem realizar procedimentos, realizar procedimentos sem possuir conta ou acumular responsabilidades diferentes na mesma clínica.
+
+**Decisão:** Conta autenticada, usuário da clínica e profissional são entidades independentes. A associação entre profissional e usuário da clínica é opcional e nunca concede acesso automaticamente.
+
+**Consequências:** A modelagem deve evitar duplicidade de pessoas, permitir profissionais sem conta e preservar históricos quando o acesso for suspenso.
+
+## DEC-010 — Funções e permissões pertencem ao contexto da clínica
+
+**Contexto:** Um catálogo global fixo não representa personalizações, múltiplas responsabilidades ou restrições específicas de cada clínica.
+
+**Decisão:** A plataforma fornece modelos de função, e cada clínica mantém suas funções e permissões efetivas. Autorizações críticas são verificadas na interface, no servidor e no banco.
+
+**Consequências:** Funções padrão não criam contas fictícias; permissões usam chaves estáveis e escopos; uma negação explícita prevalece sobre concessões personalizadas.
+
+## DEC-011 — Perfil de acesso é o contexto operacional selecionável
+
+**Contexto:** Um único vínculo não representa adequadamente pessoas com várias funções ou unidades.
+
+**Decisão:** O perfil de acesso combina usuário da clínica, clínica, função, unidade ou escopo de clínica e permissões efetivas. Todo novo Login concluído passa por “Quem está acessando?”, mesmo com uma única opção.
+
+**Consequências:** O contexto ativo deve referenciar um perfil validado, a troca de perfil deve ser auditada e identificadores enviados pelo navegador nunca concedem acesso por si mesmos.
+
+## DEC-012 — Evolução incremental e retrocompatível do modelo multiempresa
+
+**Contexto:** A base atual está aplicada e validada em produção; substituições destrutivas podem quebrar autenticação, convites, RLS e contextos existentes.
+
+**Decisão:** A reestruturação do modelo será aditiva, idempotente e testada. Tabelas e colunas atuais permanecem durante o preenchimento e a validação das novas estruturas.
+
+**Consequências:** Cada vínculo existente deve ser convertido de forma rastreável; a aplicação só migra a leitura após testes de equivalência, isolamento e recuperação; remoções ficam fora da primeira migração.

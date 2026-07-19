@@ -1,9 +1,9 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.9.0
+version: 0.10.0
 status: Em desenvolvimento
-last_updated: 2026-07-17
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - CURRENT_STATE.md
@@ -13,6 +13,23 @@ related_documents:
 # Registro de Alterações (Changelog)
 
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
+
+## [Unreleased] - 18/07/2026
+
+### Documentação
+
+- Registrada a tarefa de reestruturação da fundação da plataforma, preservando integralmente o histórico de autenticação.
+- Definida a separação entre conta, pessoa, usuário da clínica, função, perfil de acesso e profissional.
+- Definidas múltiplas funções, unidades e perfis por usuário da clínica e profissionais com ou sem conta.
+- Definido o modelo de funções próprias por clínica, permissões por recurso, ação e escopo e negação explícita prioritária.
+- Definida a seleção obrigatória de perfil após novos logins e a validação server-side do contexto.
+- Definida a transição aditiva e retrocompatível a partir de `clinic_memberships`, sem migração ou alteração de código nesta etapa.
+- Adicionadas as decisões permanentes DEC-009 a DEC-012.
+
+### Estado
+
+- Alteração exclusivamente documental; banco, RLS, autenticação, Login e deploy permanecem inalterados.
+- Integridade documental, TypeScript e build aprovados; ESLint sem erros e com quatro avisos preexistentes.
 
 ## [Unreleased] - 17/07/2026
 

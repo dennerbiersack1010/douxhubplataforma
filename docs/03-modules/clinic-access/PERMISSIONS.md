@@ -1,7 +1,7 @@
 ---
 title: Permissões Iniciais das Clínicas
 document_id: MOD-CLINIC-004
-version: 0.1.0
+version: 0.2.0
 status: Implementado
 last_updated: 2026-07-16
 owner: DouxHub
@@ -9,6 +9,7 @@ related_documents:
   - MODULE.md
   - BUSINESS_RULES.md
   - ../../05-security/MULTI_TENANT_SECURITY.md
+  - ROLES_AND_PERMISSIONS.md
 ---
 
 # Permissões Iniciais das Clínicas
@@ -26,3 +27,7 @@ related_documents:
 | Trocar o próprio contexto ativo | Sim | Sim | Sim |
 
 As funções `receptionist`, `professional`, `commercial`, `financial` e `stock_manager` estão preparadas, mas inativas e não atribuíveis. `platform_owner`, `platform_admin` e `platform_support` não existem neste módulo.
+
+## Modelo-alvo
+
+Foi definido um modelo de funções próprias por clínica, derivadas de modelos padrão, com permissões por recurso, ação e escopo. A matriz acima continua descrevendo somente o comportamento implementado. O modelo-alvo está documentado em `ROLES_AND_PERMISSIONS.md` e ainda não foi aplicado ao banco.

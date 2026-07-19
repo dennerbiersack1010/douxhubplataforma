@@ -98,17 +98,34 @@ Executar primeiro uma etapa exclusivamente documental para definir o modelo conc
 
 ## Próxima ação exata
 
-1. Atualizar a documentação do modelo multiempresa existente sem apagar o histórico validado.
-2. Criar ou ampliar documentos específicos de usuários da clínica, profissionais, funções, permissões, vínculos, unidades e seleção de contexto.
-3. Registrar as decisões arquiteturais permanentes necessárias em `DECISIONS.md` com nova numeração.
-4. Atualizar `WORKLOG.md`, `CURRENT_STATE.md`, `CHANGELOG.md` e, quando a prioridade documental estiver concluída, `NEXT_STEP.md`.
-5. Validar coerência documental antes de propor qualquer migração.
+1. Projetar o contrato de persistência do onboarding guiado e retomável.
+2. Definir uma migração aditiva para progresso, dados da proprietária, clínica, unidade e funcionamento básico.
+3. Especificar idempotência, RLS, retomada, abandono e compatibilidade com `create_initial_clinic`.
+4. Criar testes de contrato antes de alterar a interface.
 
 ## Checkpoint de origem
 
 - Estado inicial desta tarefa: `3853a06` — `docs: update ACTIVE_TASK after auth fixes and production deploy`.
 - Resultado do `git pull origin main`: branch já estava atualizada.
 - Código alterado neste checkpoint: nenhum.
+
+## Resultado da Etapa 1
+
+- Modelo conceitual definido e documentado.
+- Conta, usuário da clínica e profissional separados.
+- Funções por clínica, permissões e perfis de acesso definidos.
+- Múltiplas funções e unidades previstas sem destruir o modelo atual.
+- Decisões DEC-009 a DEC-012 registradas.
+- Migrações e código: ainda não iniciados.
+
+## Validação da Etapa 1
+
+- Integridade documental: aprovada, sem identificadores duplicados ou status fora do padrão.
+- ESLint: 0 erros e 4 avisos preexistentes sobre `<img>` nas telas públicas.
+- TypeScript: aprovado com `tsc --noEmit`.
+- Build de produção: aprovado com 34 páginas e Proxy ativo.
+- Testes funcionais, de sessão e RLS: não reaplicáveis neste ciclo exclusivamente documental; o comportamento executável não foi alterado.
+- Último erro: a primeira execução do build não pôde gravar `.next/trace-build` por restrição do ambiente local; a mesma execução autorizada foi concluída com sucesso. Não é erro do produto.
 
 ---
 

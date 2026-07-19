@@ -1,7 +1,7 @@
 ---
 title: Alterações do Módulo de Acesso às Clínicas
 document_id: MOD-CLINIC-008
-version: 0.1.0
+version: 0.2.0
 status: Implementado
 last_updated: 2026-07-16
 owner: DouxHub
@@ -11,6 +11,21 @@ related_documents:
 ---
 
 # Alterações do Módulo de Acesso às Clínicas
+
+## [0.2.0] - 18/07/2026
+
+### Definido
+
+- separação entre conta, usuário da clínica, função, perfil de acesso e profissional;
+- múltiplas funções, unidades e perfis por usuário da clínica;
+- profissionais com ou sem conta;
+- funções próprias por clínica e permissões por recurso, ação e escopo;
+- seleção de perfil como contexto validado e auditado;
+- transição aditiva a partir dos vínculos existentes.
+
+### Implementação
+
+Nenhum código ou banco foi alterado nesta versão documental.
 
 ## [0.1.0] - 16/07/2026
 

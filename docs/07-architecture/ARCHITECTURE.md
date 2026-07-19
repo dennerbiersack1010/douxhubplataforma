@@ -1,9 +1,9 @@
 ---
 title: Arquitetura da Plataforma
 document_id: ARC-001
-version: 0.1.0
+version: 0.2.0
 status: Em desenvolvimento
-last_updated: 2026-07-16
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - ../00-project/PROJECT.md
@@ -17,7 +17,9 @@ related_documents:
 
 A aplicação web usa Next.js com App Router e TypeScript. A interface é distribuída pela Vercel. Supabase fornece a base preparada para autenticação e PostgreSQL. Rotas públicas e autenticadas são separadas, e o proxy renova ou valida sessões antes do acesso às áreas restritas.
 
-O modelo multiempresa está versionado em migração SQL e usa Row Level Security (RLS), funções seguras, vínculos por clínica e contexto ativo persistido no servidor. A aplicação remota da migração permanece pendente enquanto o ambiente Supabase configurado estiver indisponível.
+O modelo multiempresa está versionado em migração SQL e usa Row Level Security (RLS), funções seguras, vínculos por clínica e contexto ativo persistido no servidor. As migrações existentes foram aplicadas e validadas no Supabase de produção.
+
+O modelo-alvo de identidade e acesso separa conta, usuário da clínica, função, permissão, perfil de acesso e profissional. Essa evolução está definida documentalmente e será implementada de forma aditiva e retrocompatível; ainda não existe no banco.
 
 ## Arquitetura planejada
 

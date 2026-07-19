@@ -1,9 +1,9 @@
 ---
 title: Segurança Multiempresa e Permissões Iniciais
 document_id: SEC-001
-version: 0.6.0
+version: 0.7.0
 status: Implementado
-last_updated: 2026-07-17
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - ../03-modules/authentication/MODULE.md
@@ -89,6 +89,8 @@ Todas as 8 tabelas do schema `public` possuem Row Level Security habilitado. Pol
 - Isolamento multiclínica garantido pelas condições das políticas (filtragem por `user_id` e `clinic_id`).
 
 ## Cobertura futura não implementada
+
+O modelo conceitual definido em 18/07/2026 exige que perfis de acesso, atribuições de função, associações de unidade e profissionais preservem a fronteira de `clinic_id`. A seleção de perfil deverá validar propriedade, estado, função e unidade no servidor e no RLS. Permissões de interface nunca substituirão essas verificações. Essa cobertura está definida e ainda não implementada.
 
 - modo suporte e perfis globais do DouxHub Control;
 - arquitetura local-first, sincronização, conflitos e proteção do banco local;

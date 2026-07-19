@@ -1,9 +1,9 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.12.0
+version: 0.13.0
 status: Implementado
-last_updated: 2026-07-17
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - PROJECT.md
@@ -204,3 +204,15 @@ Todas as 8 tabelas do schema `public` possuem RLS habilitado. Políticas verific
 - 33 páginas geradas com sucesso.
 - `ƒ Proxy (Middleware)` confirmado ativo no output do build.
 
+## Reestruturação conceitual da plataforma (Definida — 18/07/2026)
+
+- O projeto oficial, a branch `main`, o vínculo da Vercel, o domínio de produção e o Project Ref do Supabase foram reconfirmados antes da tarefa.
+- A base implementada permanece composta por `user_profiles`, `clinics`, `clinic_units`, `roles`, `clinic_memberships`, `clinic_invitations`, `user_active_contexts` e `audit_logs`.
+- Foi definido documentalmente o modelo-alvo que separa conta, pessoa, usuário da clínica, função, permissão, perfil de acesso e profissional.
+- Foram definidas cardinalidades para múltiplas funções, unidades e perfis por usuário da clínica, além de profissionais com ou sem conta.
+- Funções padrão serão modelos copiados para cada clínica; sua existência não cria usuários, senhas ou contas fictícias.
+- Todo novo Login concluído deverá, em etapa futura, passar pela seleção de perfil, inclusive quando houver apenas uma opção.
+- A migração futura será aditiva e retrocompatível. Nenhuma tabela, função, RLS ou fluxo de autenticação foi alterado nesta definição.
+- Documentos específicos foram criados em `docs/03-modules/clinic-access/` para o modelo conceitual, usuários, profissionais, funções e permissões, perfis de acesso, unidades e vínculos.
+- A validação documental, o ESLint, o TypeScript e o build de produção foram aprovados; o lint manteve quatro avisos preexistentes sobre imagens.
+- Estado: **Definido documentalmente; ainda não implementado no banco ou na aplicação.**

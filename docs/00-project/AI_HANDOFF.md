@@ -1,7 +1,7 @@
 # AI Handoff
 
 document_id: HANDOFF-001
-last_updated: 2026-07-17
+last_updated: 2026-07-18
 purpose: Permitir que outra IA continue o trabalho sem depender desta conversa.
 
 ---
@@ -100,22 +100,26 @@ Testes SQL em: `supabase/tests/`
 
 ## Estado atual da tarefa
 
-O usuário reportou que o login está "bugado". Correções de middleware e layout foram aplicadas nesta sessão, mas:
+### Reestruturação da fundação iniciada em 18/07/2026
 
-- **O bug específico não foi reproduzido com detalhamento** (sem stack trace, sem mensagem exata).
-- **Deploy pendente** — as correções desta sessão ainda não chegaram à Vercel.
-- Os commits de debug anteriores (outra IA) mostram que o problema estava provavelmente no fluxo post-login → membership resolution → redirect.
+- O projeto oficial está sincronizado em `main`; a pasta antiga conflitante não deve ser usada.
+- O checkpoint inicial da reestruturação foi enviado no commit `3a64785`.
+- A Etapa 1 definiu documentalmente conta, usuário da clínica, função, permissão, perfil de acesso, profissional, unidades e vínculos.
+- O modelo atual de `clinic_memberships` permanece implementado e em produção; o modelo novo ainda não possui migração nem código.
+- A próxima etapa é o onboarding guiado. Antes da interface, definir persistência de progresso, idempotência, migração aditiva e RLS.
+- Não refazer Login, callback, sessão, Resend ou SMTP sem erro reproduzido.
+
+O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---
 
 ## Próxima ação para a IA que continuar
 
-1. Confirmar que os arquivos desta sessão estão em `origin/main`.
-2. Aguardar deploy da Vercel (automático após push).
-3. **Pedir ao usuário a mensagem exata do erro de login** que ele vê.
-4. Reproduzir em desenvolvimento com `npm run dev`.
-5. Verificar logs do Supabase Auth em produção para identificar o ponto de falha.
-6. Seguir o fluxo: signInWithPassword → post-login → redirect → middleware → cookie.
+1. Ler os documentos do modelo conceitual em `docs/03-modules/clinic-access/`.
+2. Projetar o contrato de persistência do onboarding guiado e retomável.
+3. Definir migração aditiva, idempotência, RLS e compatibilidade com `create_initial_clinic`.
+4. Criar testes de contrato antes de alterar a interface.
+5. Preservar o Login e o fluxo de sessão existentes.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Fluxos de Acesso às Clínicas
 document_id: MOD-CLINIC-002
-version: 0.1.0
+version: 0.2.0
 status: Implementado
 last_updated: 2026-07-16
 owner: DouxHub
@@ -45,3 +45,7 @@ related_documents:
 ## Troca de contexto
 
 A seleção usa uma operação server-side sujeita ao RLS, atualiza `user_active_contexts`, registra auditoria, renova o cookie `HttpOnly` e encaminha para `/dashboard`.
+
+## Fluxo-alvo de perfil
+
+Após a evolução planejada, todo novo Login concluído seguirá para “Quem está acessando?”. O servidor listará somente perfis ativos da conta, validará função, unidade e permissões na seleção e registrará o perfil ativo. Esse fluxo está definido, mas ainda não implementado; o comportamento atual de seleção automática para vínculo único permanece em produção.

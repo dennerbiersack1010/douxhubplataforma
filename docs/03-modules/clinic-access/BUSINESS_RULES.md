@@ -1,7 +1,7 @@
 ---
 title: Regras de Negócio do Acesso às Clínicas
 document_id: MOD-CLINIC-006
-version: 0.1.0
+version: 0.2.0
 status: Implementado
 last_updated: 2026-07-16
 owner: DouxHub
@@ -23,3 +23,12 @@ related_documents:
 8. O vínculo é criado ou reativado somente durante o aceite validado do convite.
 9. O contexto ativo deve corresponder a um vínculo ativo do próprio usuário e é persistido no servidor.
 10. O campo de plano da clínica é apenas preparatório; cobrança e gestão de assinatura não estão implementadas.
+
+## Regras definidas para a evolução
+
+11. Conta, usuário da clínica, função, perfil de acesso e profissional são entidades independentes.
+12. Um usuário da clínica pode possuir várias funções, unidades e perfis autorizados.
+13. Profissional pode existir sem conta; a associação com usuário da clínica não concede acesso automaticamente.
+14. Funções padrão são modelos da clínica e não criam usuários ou senhas fictícias.
+15. Todo novo Login concluído deverá passar pela seleção de perfil quando o novo modelo estiver implementado.
+16. A evolução do vínculo atual será aditiva e retrocompatível; estas regras ainda não estão implementadas.

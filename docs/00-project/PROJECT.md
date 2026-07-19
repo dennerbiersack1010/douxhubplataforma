@@ -1,9 +1,9 @@
 ---
 title: Visão Geral do Projeto DouxHub
 document_id: PRJ-001
-version: 0.3.0
+version: 0.4.0
 status: Em desenvolvimento
-last_updated: 2026-07-16
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - CURRENT_STATE.md
@@ -36,6 +36,10 @@ A aplicação web é construída com Next.js e distribuída atualmente pela Verc
 ## Visão arquitetural
 
 A base atual utiliza frontend web com rotas públicas e autenticadas, autenticação Supabase, banco PostgreSQL com Row Level Security (RLS) e modelo multiempresa por clínica. Autorizações não devem depender somente do navegador. A arquitetura futura deverá prever sincronização segura entre dados locais e remotos, conflitos e operação offline, sem assumir esses recursos como existentes hoje.
+
+## Modelo operacional de identidade e acesso
+
+A fundação conceitual separa conta autenticada, pessoa, clínica, unidade, usuário da clínica, função, permissão, perfil de acesso e profissional. Uma pessoa pode possuir várias funções e unidades; um profissional pode existir sem conta; e cada contexto selecionável deve ser validado no servidor e no banco. O modelo atual de vínculo único permanece implementado até a conclusão de uma migração incremental e retrocompatível.
 
 ## Módulos Integrados
 

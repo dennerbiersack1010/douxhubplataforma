@@ -1,9 +1,27 @@
 # Work Log
 
 document_id: WORKLOG-001
-last_updated: 2026-07-17
+last_updated: 2026-07-18
 
 ---
+
+## 2026-07-18 — Sessão: reestruturação da fundação
+
+| Ação | Resultado |
+|---|---|
+| Confirmação da pasta oficial, `origin/main`, Vercel, domínio e Supabase | Concluída |
+| Sincronização com `git pull origin main` | Branch já atualizada |
+| Auditoria de rotas, layouts, onboarding, contexto, convites, tabelas e RLS | Concluída |
+| Checkpoint inicial da tarefa | `3a64785`, enviado para `origin/main` |
+| Definição de conta, usuário da clínica, função, permissão, perfil e profissional | Concluída documentalmente |
+| Definição da transição retrocompatível | Concluída documentalmente |
+| Alterações de código ou banco | Nenhuma |
+| Integridade documental | Aprovada |
+| ESLint | 0 erros; 4 avisos preexistentes sobre imagens |
+| TypeScript | Aprovado |
+| Build de produção | Aprovado; 34 páginas e Proxy ativo |
+
+Próxima ação: projetar a persistência e a migração aditiva do onboarding guiado antes de alterar a interface.
 
 ## 2026-07-17 — Sessão: Configuração SMTP e correção de segurança de rotas
 

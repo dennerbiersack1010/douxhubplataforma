@@ -1,7 +1,7 @@
 ---
 title: Modelo de Dados de Acesso às Clínicas
 document_id: MOD-CLINIC-003
-version: 0.1.0
+version: 0.2.0
 status: Implementado
 last_updated: 2026-07-16
 owner: DouxHub
@@ -9,6 +9,7 @@ related_documents:
   - MODULE.md
   - PERMISSIONS.md
   - ../../05-security/MULTI_TENANT_SECURITY.md
+  - CONCEPTUAL_MODEL.md
 ---
 
 # Modelo de Dados de Acesso às Clínicas
@@ -42,3 +43,7 @@ Todas as tabelas expostas possuem RLS. Consultas são limitadas ao próprio usu�
 - `20260716233000_clinic_access_expansion.sql`: primeira clínica, dados adicionais, `clinic_invitations`, regras hierárquicas e auditoria ampliada.
 - `20260716234500_fix_invitation_expiration_ambiguity.sql`: correção de resolução do campo de validade.
 - `20260716235000_fix_invitation_crypto_search_path.sql`: disponibilização segura da extensão criptográfica às funções de convite.
+
+## Modelo-alvo definido
+
+O modelo futuro adicionará, sem substituir imediatamente as tabelas atuais, usuários da clínica, funções por clínica, permissões, atribuições de função, associações com múltiplas unidades, perfis de acesso e profissionais. O contrato, as cardinalidades e a transição estão definidos em `CONCEPTUAL_MODEL.md` e nos documentos especializados relacionados. Nenhuma dessas novas entidades deve ser considerada implementada nesta versão.

@@ -1,7 +1,7 @@
 ---
 title: Acesso e Administração Inicial de Clínicas
 document_id: MOD-CLINIC-001
-version: 0.1.0
+version: 0.2.0
 status: Implementado
 last_updated: 2026-07-16
 owner: DouxHub
@@ -12,6 +12,12 @@ related_documents:
   - STATES.md
   - BUSINESS_RULES.md
   - TESTS.md
+  - CONCEPTUAL_MODEL.md
+  - CLINIC_USERS.md
+  - PROFESSIONALS.md
+  - ROLES_AND_PERMISSIONS.md
+  - ACCESS_PROFILES.md
+  - UNITS_AND_MEMBERSHIPS.md
   - ../../05-security/MULTI_TENANT_SECURITY.md
 ---
 
@@ -36,3 +42,7 @@ As telas `/configurar-clinica`, `/selecionar-perfil`, `/sem-clinica` e `/configu
 ## Status
 
 A lógica, as migrações e os testes de banco estão implementados e validados. A validação visual definitiva e a validação ponta a ponta com links reais de e-mail permanecem pendentes.
+
+## Evolução conceitual definida em 18/07/2026
+
+A próxima versão do módulo separará conta, usuário da clínica, função, perfil de acesso e profissional. Essa evolução está definida nos documentos relacionados e ainda não foi implementada no banco ou na aplicação. O modelo validado atual permanece em operação até uma migração aditiva, retrocompatível e testada.

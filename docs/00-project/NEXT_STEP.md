@@ -1,9 +1,9 @@
 ---
 title: Próxima Etapa Prioritária
 document_id: PRJ-003
-version: 0.3.0
+version: 0.4.0
 status: Planejado
-last_updated: 2026-07-16
+last_updated: 2026-07-18
 owner: DouxHub
 related_documents:
   - CURRENT_STATE.md
@@ -14,21 +14,23 @@ related_documents:
 
 A próxima etapa prioritária do desenvolvimento é:
 
-- **Definir visualmente e implementar a Seleção de Perfil e o layout global autenticado da DouxHub.**
+- **Projetar tecnicamente e implementar de forma incremental o onboarding guiado da proprietária, da clínica e da primeira unidade sobre o modelo conceitual definido.**
 
 ## Objetivo
 
-Aprovar a referência visual da Seleção de Perfil e do layout autenticado antes de substituir as interfaces técnicas temporárias.
+Substituir a criação curta de clínica por um fluxo protegido, retomável e idempotente, preservando o Login, a autenticação e os dados multiempresa já validados.
 
 ## Dependências
 
-- referência visual aprovada pelo usuário;
-- definição dos estados desktop e mobile;
-- preservação da lógica multiempresa e do contexto ativo já implementados.
+- modelo conceitual documentado em `docs/03-modules/clinic-access/`;
+- desenho de persistência do progresso antes da interface;
+- migração aditiva e políticas RLS testadas;
+- referência visual aprovada antes de transformar a interface técnica em visual definitivo.
 
 ## Critérios de conclusão
 
-- tela e layout aprovados visualmente;
-- implementação responsiva concluída;
-- fluxo de seleção validado com uma e múltiplas clínicas;
-- documentação da tela, estado atual e changelog atualizados.
+- progresso salvo e retomado com segurança;
+- clínica e primeira unidade criadas uma única vez;
+- proprietária configurada com função e perfil corretos;
+- isolamento, RLS, refresh e abandono testados;
+- documentação e changelog atualizados sem registrar planejamento como implementação.
