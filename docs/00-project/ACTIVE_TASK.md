@@ -1,10 +1,118 @@
 # Active Task
 
-document_id: TASK-001
+document_id: TASK-002
 last_updated: 2026-07-18
-status: Em investigação
+status: Em desenvolvimento
 
 ---
+
+# Reestruturação da fundação da plataforma
+
+## Objetivo
+
+Reestruturar a fundação conceitual da DouxHub antes da construção dos módulos de negócio, separando conta autenticada, clínica, unidade, usuário da clínica, função, perfil de acesso, profissional e vínculo. A experiência futura será organizada por perfis, jornadas, trilhas e cards operacionais, sem tratar a DouxHub como um dashboard administrativo genérico.
+
+## Estado encontrado
+
+- Repositório oficial confirmado em `https://github.com/dennerbiersack1010/douxhubplataforma`.
+- Branch oficial `main`, sincronizada com `origin/main` no início desta tarefa.
+- Projeto Vercel oficial `douxhubplataforma`, domínio `douxhub.space` e vínculo local com o Project ID oficial confirmados.
+- Projeto Supabase oficial confirmado pelo Project Ref documentado e pela variável pública local correspondente, sem registrar valores secretos neste documento.
+- Login, callback de autenticação, persistência de sessão, cadastro, recuperação de senha, Resend e SMTP estão corrigidos e em produção; não devem ser refeitos sem erro comprovado.
+- A interface interna, a seleção de perfil e a administração da clínica são técnicas e temporárias.
+- Nenhum módulo de negócio está implementado; as rotas internas atuais são placeholders conscientes.
+
+## Estrutura atual
+
+- `auth.users` representa a conta autenticada.
+- `user_profiles` mantém dados pessoais básicos da conta.
+- `clinics` representa a empresa contratante.
+- `clinic_units` representa uma unidade pertencente à clínica.
+- `roles` contém funções globais pré-semeadas.
+- `clinic_memberships` vincula uma conta a uma clínica, uma unidade opcional e uma única função.
+- `clinic_invitations` controla convites por e-mail com hash de token, validade e aceite.
+- `user_active_contexts` e o cookie HttpOnly de contexto registram o vínculo ativo.
+- `audit_logs` registra ações sensíveis de clínica, unidade, vínculo, convite e contexto.
+- A criação inicial usa a função transacional `create_initial_clinic`.
+- A autorização existente combina validação server-side, funções PostgreSQL e Row Level Security (RLS).
+
+## Problemas estruturais
+
+1. `clinic_memberships` possui unicidade por `(user_id, clinic_id)` e armazena somente um `role_id` e um `unit_id`; isso não representa múltiplas funções e múltiplas unidades para a mesma pessoa.
+2. Vínculo e perfil de acesso são tratados como a mesma entidade, impedindo contextos distintos dentro da mesma clínica.
+3. Usuário da clínica e profissional ainda não são entidades separadas; não existe profissional sem conta nem configuração própria de agenda e especialidade.
+4. As funções são globais e não possuem uma matriz versionada de permissões, módulos, escopos ou personalizações por clínica.
+5. O onboarding solicita apenas clínica, responsável, e-mail, telefone e primeira unidade; não persiste etapas, progresso ou pendências.
+6. A criação inicial bloqueia qualquer conta que já possua vínculo ativo, o que impede uma proprietária de administrar múltiplas clínicas pelo mesmo usuário.
+7. A seleção de perfil seleciona automaticamente quando existe somente um vínculo e não aparece em todos os novos logins, contrariando a visão definida para “Quem está acessando?”.
+8. O menu lateral é estático, igual para todas as funções e expõe rotas sem considerar permissões antes do clique.
+9. Convites aceitam apenas `clinic_admin` e `clinic_employee`; os papéis operacionais preparados estão inativos e não atribuíveis.
+10. Os estados de convite existentes são `pending`, `accepted`, `expired` e `revoked`; ainda não cobrem enviado, entregue, cancelado e reenviado.
+11. A documentação anterior ainda prioriza o redesenho visual da seleção de perfil, mas a modelagem conceitual agora é dependência obrigatória e deve ocorrer antes do visual.
+
+## Arquivos relacionados
+
+- `supabase/migrations/20260716213000_multi_tenant_clinics.sql`
+- `supabase/migrations/20260716233000_clinic_access_expansion.sql`
+- `supabase/migrations/20260716234500_fix_invitation_expiration_ambiguity.sql`
+- `supabase/migrations/20260716235000_fix_invitation_crypto_search_path.sql`
+- `lib/clinic-context.ts`
+- `lib/supabase/middleware.ts`
+- `app/api/clinic-setup/route.ts`
+- `app/api/clinic-admin/route.ts`
+- `app/api/context/active/route.ts`
+- `app/(context)/configurar-clinica/page.tsx`
+- `app/(context)/selecionar-perfil/page.tsx`
+- `app/(authenticated)/authenticated-shell.tsx`
+- `components/clinic-setup-form.tsx`
+- `components/clinic-admin-panel.tsx`
+- `docs/03-modules/clinic-access/`
+- `docs/05-security/MULTI_TENANT_SECURITY.md`
+
+## Tabelas relacionadas
+
+- `user_profiles`
+- `clinics`
+- `clinic_units`
+- `roles`
+- `clinic_memberships`
+- `clinic_invitations`
+- `user_active_contexts`
+- `audit_logs`
+
+Entidades planejadas que ainda precisam ser definidas documentalmente antes de migrações: modelos de função por clínica, permissões, atribuições de função, perfis de acesso, profissionais, vínculos com múltiplas unidades e progresso do onboarding.
+
+## Riscos
+
+- Quebrar o Login e o fluxo de sessão já corrigidos ao alterar a resolução pós-login.
+- Invalidar vínculos, convites ou contextos ativos existentes durante a evolução do modelo.
+- Criar permissões apenas visuais sem equivalência no servidor e no RLS.
+- Confundir conta, colaborador e profissional e gerar duplicidade de pessoas.
+- Aplicar migrações destrutivas em produção em vez de uma evolução incremental e retrocompatível.
+- Iniciar telas definitivas sem referência visual aprovada, violando `DEC-001` e `DEC-002`.
+- Registrar como implementada uma estrutura ainda apenas planejada.
+
+## Primeira etapa de implementação
+
+Executar primeiro uma etapa exclusivamente documental para definir o modelo conceitual e os contratos entre conta, clínica, unidade, usuário da clínica, função, permissão, perfil de acesso, profissional e vínculo. Essa documentação deve especificar cardinalidades, propriedade dos dados, estados, escopos de autorização, transição segura a partir das tabelas existentes e invariantes de RLS. Nenhuma migração será criada antes dessa definição.
+
+## Próxima ação exata
+
+1. Atualizar a documentação do modelo multiempresa existente sem apagar o histórico validado.
+2. Criar ou ampliar documentos específicos de usuários da clínica, profissionais, funções, permissões, vínculos, unidades e seleção de contexto.
+3. Registrar as decisões arquiteturais permanentes necessárias em `DECISIONS.md` com nova numeração.
+4. Atualizar `WORKLOG.md`, `CURRENT_STATE.md`, `CHANGELOG.md` e, quando a prioridade documental estiver concluída, `NEXT_STEP.md`.
+5. Validar coerência documental antes de propor qualquer migração.
+
+## Checkpoint de origem
+
+- Estado inicial desta tarefa: `3853a06` — `docs: update ACTIVE_TASK after auth fixes and production deploy`.
+- Resultado do `git pull origin main`: branch já estava atualizada.
+- Código alterado neste checkpoint: nenhum.
+
+---
+
+# Histórico preservado — TASK-001: autenticação e e-mails
 
 ## Tarefa atual
 
