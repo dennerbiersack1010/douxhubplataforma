@@ -23,6 +23,7 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Pós-login alterado para exigir seleção de perfil sempre que houver opção disponível, inclusive uma única.
 - Interface técnica passou a listar perfis equivalentes e enviar somente o identificador do perfil.
 - Adicionado cookie `HttpOnly` auxiliar do perfil; logout e novo pós-login removem contexto anterior.
+- Respostas da API de contexto foram padronizadas como privadas e sem cache, inclusive erros anônimos.
 - Mudanças de estado, função ou unidade do vínculo passaram a invalidar o contexto ativo.
 - Migração aplicada no Supabase oficial e contrato `009_active_access_profile_context.sql` aprovado com `active_access_profile_context_ok` e rollback integral.
 - ESLint, TypeScript e build de produção aprovados.

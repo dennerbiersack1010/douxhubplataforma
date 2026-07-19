@@ -21,6 +21,7 @@ related_documents:
 - seleção explícita após todo Login com perfil disponível;
 - invalidação do contexto após mudança relevante no vínculo;
 - cookie `HttpOnly` auxiliar do perfil e compatibilidade controlada com o contrato legado.
+- respostas privadas e sem cache em todos os estados da API de contexto.
 
 ### Validado
 

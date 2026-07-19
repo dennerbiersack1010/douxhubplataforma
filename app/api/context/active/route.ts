@@ -8,36 +8,41 @@ import {
   resolveNoActiveMembershipRedirect,
 } from '@/lib/clinic-context'
 
+function contextJson(body: unknown, status = 200) {
+  const response = NextResponse.json(body, { status })
+  response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+  return response
+}
+
 export async function GET() {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
-  if (error || !user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  if (error || !user) return contextJson({ error: 'unauthorized' }, 401)
 
   try {
     const memberships = await listActiveMemberships(supabase, user.id)
     const emptyRedirectTo = memberships.length === 0
       ? await resolveNoActiveMembershipRedirect(supabase, user.id)
       : null
-    return NextResponse.json({ memberships, emptyRedirectTo })
+    return contextJson({ memberships, emptyRedirectTo })
   } catch {
-    return NextResponse.json({ error: 'context_unavailable' }, { status: 503 })
+    return contextJson({ error: 'context_unavailable' }, 503)
   }
 }
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
-  if (error || !user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  if (error || !user) return contextJson({ error: 'unauthorized' }, 401)
 
   const body = await request.json().catch(() => null) as { accessProfileId?: unknown } | null
   if (!body || typeof body.accessProfileId !== 'string') {
-    return NextResponse.json({ error: 'invalid_access_profile' }, { status: 400 })
+    return contextJson({ error: 'invalid_access_profile' }, 400)
   }
 
   try {
     const context = await activateAccessProfile(supabase, body.accessProfileId)
-    const response = NextResponse.json({ redirectTo: '/dashboard' })
-    response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+    const response = contextJson({ redirectTo: '/dashboard' })
     response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, context.membership_id, {
       httpOnly: true,
       sameSite: 'lax',
@@ -54,6 +59,6 @@ export async function POST(request: NextRequest) {
     })
     return response
   } catch {
-    return NextResponse.json({ error: 'invalid_active_context' }, { status: 403 })
+    return contextJson({ error: 'invalid_active_context' }, 403)
   }
 }

@@ -13,6 +13,7 @@ last_updated: 2026-07-19
 | Retrocompatibilidade | Contextos antigos preenchidos; contrato legado delega à seleção nova |
 | Pós-login | Seleção obrigatória para uma ou múltiplas opções |
 | Seleção técnica | Perfis equivalentes, cookies auxiliares e auditoria |
+| Cache da API de contexto | Todas as respostas marcadas como privadas e sem cache |
 | Revogação | Mudança de estado, função ou unidade invalida o contexto |
 | Migração no Supabase | Aplicada no projeto oficial pelo SQL Editor |
 | Teste `009_active_access_profile_context.sql` | Aprovado com `active_access_profile_context_ok` e rollback integral |
