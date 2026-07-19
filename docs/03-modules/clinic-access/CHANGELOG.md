@@ -20,6 +20,7 @@ related_documents:
 - listagem segura dos perfis ativos e válidos da própria conta;
 - snapshot fail-closed com permissões efetivas e códigos explícitos de divergência;
 - contrato server-side `GET /api/access-profiles` sem mudança de contexto ou navegação.
+- tradução explícita da recusa de execução anônima do banco para `401 Unauthorized`.
 
 ### Validado
 

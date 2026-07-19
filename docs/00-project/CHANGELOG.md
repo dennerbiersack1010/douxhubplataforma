@@ -22,6 +22,7 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Adicionada listagem segura dos perfis disponíveis da própria conta com permissões efetivas.
 - Adicionado snapshot fail-closed para o portão de adoção, com códigos explícitos de divergência.
 - Adicionado `GET /api/access-profiles`, sem cache, sem entrada de identificador de usuário e sem alteração da navegação atual.
+- Ajustado o mapeamento da recusa PostgreSQL `42501` para `401 Unauthorized` quando o visitante não possui sessão.
 - Migração aplicada no Supabase oficial e contrato `008_access_profile_equivalence_gate.sql` aprovado com `access_profile_equivalence_gate_ok` e rollback integral.
 - ESLint, TypeScript e build de produção aprovados; `clinic_memberships` e `user_active_contexts` permaneceram como autoridade.
 

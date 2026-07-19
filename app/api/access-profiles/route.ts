@@ -20,7 +20,11 @@ export async function GET() {
   const { data, error } = await supabase.rpc('get_access_profile_transition_snapshot')
 
   if (error) {
-    if (error.message.includes('authentication_required')) {
+    if (
+      error.code === '42501' ||
+      error.message.includes('authentication_required') ||
+      error.message.includes('permission denied')
+    ) {
       return noStoreJson({ error: 'unauthorized' }, 401)
     }
     return noStoreJson({ error: 'access_profiles_unavailable' }, 503)

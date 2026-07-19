@@ -13,6 +13,7 @@ last_updated: 2026-07-19
 | Leitura de perfis disponíveis | Somente conta autenticada, estruturas ativas e permissões efetivas |
 | Portão de equivalência | Snapshot explícito e falha fechada diante de divergência |
 | API preparatória | `GET /api/access-profiles`, sem cache e sem mudança de navegação |
+| Validação anônima inicial | Recusa segura `42501` identificada e corrigida de `503` para `401` no contrato HTTP |
 | Migração no Supabase | Aplicada no projeto oficial pelo SQL Editor |
 | Teste `008_access_profile_equivalence_gate.sql` | Aprovado com `access_profile_equivalence_gate_ok` e rollback integral |
 | ESLint | 0 erros; 4 avisos preexistentes |
