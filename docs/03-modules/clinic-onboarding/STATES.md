@@ -1,8 +1,8 @@
 ---
 title: Estados do Onboarding
 document_id: MOD-ONBOARD-004
-version: 0.3.0
-status: Implementado
+version: 0.4.0
+status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
@@ -22,7 +22,7 @@ related_documents:
 - **Concluído:** clínica e unidade foram associadas ao rascunho finalizado.
 - **Indisponível:** falha remota não deve ser apresentada como sucesso.
 
-Os estados de persistência, retomada, navegação, erro, preparação e cancelamento possuem interface técnica implementada. O estado `Concluído` continua planejado para a operação transacional de criação da clínica.
+Todos os estados listados possuem implementação. O estado `Concluído` é persistido somente após a criação transacional da clínica, unidade, vínculo, contexto e auditoria.
 
 ## Estados da interface
 
@@ -31,6 +31,8 @@ Os estados de persistência, retomada, navegação, erro, preparação e cancela
 - **Etapa revisável:** etapa já alcançada pode ser aberta e salva novamente.
 - **Salvando:** bloqueia navegação, novo envio e cancelamento concorrente.
 - **Preparado:** etapa 6 informa o limite do ciclo e oferece revisão.
+- **Concluindo:** bloqueia nova ação enquanto a operação transacional está em curso.
+- **Concluído:** recebe o contexto ativo e segue para `/dashboard`.
 - **Confirmação de cancelamento:** exige voltar ou confirmar explicitamente.
 - **Rascunho cancelado:** informa preservação do histórico e oferece novo início.
 
@@ -40,4 +42,5 @@ Os estados de persistência, retomada, navegação, erro, preparação e cancela
 - **Não disponível para a conta:** vínculo ativo recebe `409`.
 - **Dados inválidos:** envelope inválido recebe `400`; campos da etapa recebem `422` com caminhos e códigos seguros.
 - **Fora de ordem:** recebe `409` sem alterar o rascunho.
+- **Não preparado:** conclusão antes das cinco etapas recebe `409`.
 - **Indisponível:** dependência de banco ausente ou falha operacional recebe `503`.

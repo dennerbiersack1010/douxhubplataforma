@@ -1,8 +1,8 @@
 ---
 title: Fluxos do Onboarding
 document_id: MOD-ONBOARD-003
-version: 0.3.0
-status: Em desenvolvimento
+version: 0.4.0
+status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
@@ -45,8 +45,16 @@ Após o cancelamento, a tela não reutiliza o registro cancelado e oferece uma a
 
 ## Preparar conclusão
 
-Ao salvar a quinta etapa, `current_step` avança para 6. A tela informa que os dados estão preparados e permite revisar as etapas anteriores. Nenhuma clínica, unidade, função ou vínculo é criado nesse estado.
+Ao salvar a quinta etapa, `current_step` avança para 6. A tela informa que os dados estão preparados e permite revisar as etapas anteriores. Nenhuma clínica, unidade, função ou vínculo é criado antes da ação explícita de conclusão.
 
 ## Concluir
 
-Planejado para ciclo posterior. A conclusão deverá validar todas as etapas, criar clínica e unidade uma única vez, configurar a proprietária, funções e perfil inicial, registrar auditoria e marcar o mesmo rascunho como `completed` na mesma transação quando possível.
+1. A interface envia o identificador do rascunho por `PUT`.
+2. A API valida a sessão e chama `complete_clinic_onboarding`.
+3. A função bloqueia o rascunho, confirma propriedade, estado e cinco etapas completas.
+4. Clínica, unidade, perfil pessoal, vínculo `clinic_owner`, contexto e auditoria são criados na mesma transação.
+5. O rascunho recebe os identificadores criados, `completed_at` e estado `completed`.
+6. A API grava o cookie HttpOnly do vínculo e direciona para `/dashboard`.
+7. Repetir a operação devolve os mesmos identificadores e não cria novos registros.
+
+Contas diferentes não podem concluir o rascunho, e um rascunho incompleto recebe conflito sem alteração de dados.

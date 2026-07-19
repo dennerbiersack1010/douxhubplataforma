@@ -3,9 +3,11 @@ import { createClient } from '@/lib/supabase/server'
 import {
   isOnboardingStep,
   onboardingCancelRequestSchema,
+  onboardingCompleteRequestSchema,
   onboardingSaveRequestSchema,
   validateOnboardingStep,
 } from '@/lib/clinic-onboarding'
+import { ACTIVE_MEMBERSHIP_COOKIE } from '@/lib/clinic-context'
 
 type OnboardingProgressRow = {
   id: string
@@ -21,6 +23,12 @@ type OnboardingProgressRow = {
   revision: number
   started_at: string
   updated_at: string
+}
+
+type OnboardingCompletionRow = {
+  clinic_id: string
+  unit_id: string
+  membership_id: string
 }
 
 function noStoreJson(body: unknown, init?: ResponseInit) {
@@ -55,10 +63,12 @@ function firstProgress(data: unknown) {
   return row ? row as OnboardingProgressRow : null
 }
 
-async function onboardingContext() {
+async function onboardingContext(options?: { allowActiveMembership?: boolean }) {
   const supabase = await createClient()
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (userError || !user) return { error: 'unauthorized' as const, status: 401 as const }
+
+  if (options?.allowActiveMembership) return { supabase, user }
 
   const { count, error: membershipError } = await supabase
     .from('clinic_memberships')
@@ -74,6 +84,9 @@ async function onboardingContext() {
 function rpcError(message: string) {
   if (message.includes('onboarding_progress_not_found')) return noStoreJson({ error: 'onboarding_progress_not_found' }, { status: 404 })
   if (message.includes('onboarding_step_out_of_order')) return noStoreJson({ error: 'onboarding_step_out_of_order' }, { status: 409 })
+  if (message.includes('onboarding_not_ready')) return noStoreJson({ error: 'onboarding_not_ready' }, { status: 409 })
+  if (message.includes('active_membership_already_exists')) return noStoreJson({ error: 'onboarding_not_available' }, { status: 409 })
+  if (message.includes('onboarding_data')) return noStoreJson({ error: 'invalid_onboarding_step_data' }, { status: 422 })
   if (message.includes('invalid_onboarding')) return noStoreJson({ error: 'invalid_onboarding_request' }, { status: 400 })
   return noStoreJson({ error: 'onboarding_unavailable' }, { status: 503 })
 }
@@ -149,4 +162,37 @@ export async function DELETE(request: NextRequest) {
   const progress = firstProgress(data)
   if (error || !progress) return rpcError(error?.message ?? 'onboarding_unavailable')
   return noStoreJson({ progress: serializeProgress(progress) })
+}
+
+export async function PUT(request: NextRequest) {
+  const context = await onboardingContext({ allowActiveMembership: true })
+  if ('error' in context) return noStoreJson({ error: context.error }, { status: context.status })
+
+  const body = await request.json().catch(() => null)
+  const requestResult = onboardingCompleteRequestSchema.safeParse(body)
+  if (!requestResult.success) return noStoreJson({ error: 'invalid_onboarding_request' }, { status: 400 })
+
+  const { data, error } = await context.supabase.rpc('complete_clinic_onboarding', {
+    p_progress_id: requestResult.data.progressId,
+  })
+
+  const completion = firstProgress(data) as unknown as OnboardingCompletionRow | null
+  if (error || !completion?.membership_id) return rpcError(error?.message ?? 'onboarding_unavailable')
+
+  const response = noStoreJson({
+    completion: {
+      clinicId: completion.clinic_id,
+      unitId: completion.unit_id,
+      membershipId: completion.membership_id,
+    },
+    redirectTo: '/dashboard',
+  })
+  response.cookies.set(ACTIVE_MEMBERSHIP_COOKIE, completion.membership_id, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: 60 * 60 * 12,
+  })
+  return response
 }

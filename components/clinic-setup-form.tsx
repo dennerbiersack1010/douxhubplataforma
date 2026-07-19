@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from 'react'
+import { useRouter } from 'next/navigation'
 
 type StepNumber = 1 | 2 | 3 | 4 | 5
 type VisibleStep = StepNumber | 6
@@ -117,6 +118,7 @@ async function readResponse(response: Response) {
 }
 
 export default function ClinicSetupForm({ defaultEmail }: { defaultEmail: string }) {
+  const router = useRouter()
   const [progress, setProgress] = useState<OnboardingProgress | null>(null)
   const [activeStep, setActiveStep] = useState<VisibleStep>(1)
   const [loading, setLoading] = useState(true)
@@ -221,6 +223,27 @@ export default function ClinicSetupForm({ defaultEmail }: { defaultEmail: string
     }
   }
 
+  async function completeProgress() {
+    if (!progress || saving) return
+    setSaving(true)
+    setError(null)
+    setMessage(null)
+
+    try {
+      const response = await fetch('/api/clinic-onboarding', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ progressId: progress.id }),
+      })
+      const body = await readResponse(response) as ApiErrorBody & { redirectTo?: string }
+      router.replace(body.redirectTo ?? '/dashboard')
+      router.refresh()
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : 'Não foi possível concluir o onboarding.')
+      setSaving(false)
+    }
+  }
+
   if (loading) {
     return <TechnicalPanel title="Preparando onboarding"><p className="text-sm text-zinc-400">Carregando seu progresso salvo…</p></TechnicalPanel>
   }
@@ -301,7 +324,7 @@ export default function ClinicSetupForm({ defaultEmail }: { defaultEmail: string
         {activeStep === 3 && <UnitStep data={progress.steps.unit} saving={saving} onSave={(payload) => void saveStep(3, payload)} />}
         {activeStep === 4 && <OperationStep data={progress.steps.operation} saving={saving} onSave={(payload) => void saveStep(4, payload)} />}
         {activeStep === 5 && <TeamStep data={progress.steps.team} saving={saving} onSave={(payload) => void saveStep(5, payload)} />}
-        {activeStep === 6 && <PreparationStep onReview={(step) => setActiveStep(step)} />}
+        {activeStep === 6 && <PreparationStep saving={saving} onComplete={() => void completeProgress()} onReview={(step) => setActiveStep(step)} />}
       </div>
 
       <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
@@ -469,12 +492,13 @@ function TeamStep({ data, saving, onSave }: StepProps) {
   )
 }
 
-function PreparationStep({ onReview }: { onReview: (step: StepNumber) => void }) {
+function PreparationStep({ saving, onComplete, onReview }: { saving: boolean; onComplete: () => void; onReview: (step: StepNumber) => void }) {
   return (
     <div className="space-y-4">
       <div><p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Etapa 6</p><h2 className="mt-1 text-lg font-semibold text-zinc-100">Dados preparados</h2></div>
-      <div className="rounded border border-blue-900/60 bg-blue-950/30 p-4 text-sm text-blue-200">As cinco etapas foram salvas. A criação transacional da clínica e da primeira unidade será implementada e validada em um ciclo separado.</div>
-      <p className="text-sm text-zinc-400">Você pode revisar qualquer etapa salva sem perder o progresso.</p>
+      <div className="rounded border border-blue-900/60 bg-blue-950/30 p-4 text-sm text-blue-200">As cinco etapas foram salvas. A próxima ação criará a clínica, a primeira unidade e seu vínculo de proprietária em uma única operação.</div>
+      <p className="text-sm text-zinc-400">Revise os dados ou conclua a configuração. Repetir a conclusão não criará registros duplicados.</p>
+      <button type="button" disabled={saving} onClick={onComplete} className={primaryButtonClass}>{saving ? 'Concluindo configuração…' : 'Criar clínica e entrar'}</button>
       <div className="flex flex-wrap gap-2">{([1, 2, 3, 4, 5] as StepNumber[]).map((step) => <button key={step} type="button" onClick={() => onReview(step)} className={secondaryButtonClass}>Revisar etapa {step}</button>)}</div>
     </div>
   )

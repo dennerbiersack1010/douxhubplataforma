@@ -1,7 +1,7 @@
 ---
 title: Próxima Etapa Prioritária
 document_id: PRJ-003
-version: 0.6.0
+version: 0.7.0
 status: Planejado
 last_updated: 2026-07-19
 owner: DouxHub
@@ -14,26 +14,25 @@ related_documents:
 
 A próxima etapa prioritária do desenvolvimento é:
 
-- **Projetar e implementar o Ciclo 4 do onboarding: conclusão transacional e idempotente da primeira clínica e unidade.**
+- **Iniciar a Etapa 3, Ciclo 1: fundação aditiva de usuários da clínica, funções atribuíveis e perfis de acesso.**
 
 ## Objetivo
 
-Transformar o rascunho completo em clínica, primeira unidade, vínculo de proprietária, função, contexto e auditoria uma única vez, preservando o Login e os dados multiempresa já validados.
+Evoluir o modelo atual, em que `clinic_memberships` concentra vínculo, unidade e uma única função, para a fundação documental já definida de usuários da clínica, múltiplas atribuições de função e perfis de acesso, sem quebrar vínculos existentes.
 
 ## Dependências
 
-- modelo conceitual documentado em `docs/03-modules/clinic-access/`;
-- persistência, migração aditiva e políticas RLS validadas no Supabase oficial;
-- API autenticada `/api/clinic-onboarding` e schemas das cinco etapas implementados;
-- interface técnica guiada, retomada e cancelamento confirmado implementados;
-- contrato específico de conclusão definido antes da alteração do banco;
-- referência visual aprovada antes de transformar a interface técnica em visual definitivo.
+- onboarding guiado concluído e validado no Supabase oficial;
+- modelo conceitual de conta, usuário da clínica, função, permissão, perfil e profissional documentado em `docs/03-modules/clinic-access/`;
+- transição obrigatoriamente aditiva e retrocompatível com `clinic_memberships`;
+- contrato e testes definidos antes de alterar interface ou autorização em produção;
+- nenhuma mudança visual definitiva sem referência aprovada.
 
 ## Critérios de conclusão
 
-- clínica e primeira unidade criadas uma única vez;
-- proprietária configurada com função e perfil corretos;
-- rascunho marcado como concluído na mesma operação ou com compensação documentada;
-- contexto ativo e auditoria criados sem duplicidade;
-- isolamento, RLS, refresh e abandono testados;
-- documentação e changelog atualizados sem registrar planejamento como implementação.
+- migração aditiva sem remover nem reinterpretar vínculos existentes;
+- entidades e cardinalidades do modelo conceitual representadas no banco;
+- retrocompatibilidade do Login, contexto ativo e onboarding comprovada;
+- RLS e funções seguras cobrindo isolamento, múltiplas funções e unidades;
+- testes transacionais de migração, compatibilidade e isolamento aprovados;
+- nenhuma interface definitiva ou módulo de negócio criado neste ciclo.

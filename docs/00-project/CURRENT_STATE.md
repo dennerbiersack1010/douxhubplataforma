@@ -1,8 +1,8 @@
 ---
 title: Estado Atual da DouxHub
 document_id: PRJ-002
-version: 0.17.0
-status: Implementado
+version: 0.18.0
+status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
@@ -12,6 +12,17 @@ related_documents:
 ---
 
 # Estado Atual (Current State)
+
+## Etapa 2 — Ciclo 4: conclusão transacional do onboarding (Validado em 19/07/2026)
+
+- A função `complete_clinic_onboarding` transforma um rascunho pronto em clínica, primeira unidade, perfil pessoal, vínculo `clinic_owner`, contexto ativo e auditoria na mesma transação.
+- A conclusão grava os identificadores no rascunho, muda o estado para `completed` e é idempotente: repetir a operação devolve os mesmos registros.
+- `PUT /api/clinic-onboarding` expõe a operação de forma autenticada, grava o cookie HttpOnly do vínculo e direciona para `/dashboard`.
+- A etapa 6 da interface técnica oferece revisão e a ação “Criar clínica e entrar”.
+- A migração `20260719120000_complete_clinic_onboarding.sql` foi aplicada no Supabase oficial pelo SQL Editor.
+- O contrato `004_clinic_onboarding_completion.sql` foi aprovado com `clinic_onboarding_completion_ok`, incluindo atomicidade, auditoria, repetição, isolamento entre contas, recusa de rascunho incompleto e rollback dos dados fictícios.
+- ESLint, TypeScript e build de produção foram aprovados; o lint mantém somente quatro avisos preexistentes sobre imagens públicas.
+- A publicação desta entrega no domínio oficial ainda será registrada após o checkpoint no GitHub.
 
 ## Etapa 1: Fundação Técnica e Estrutura Inicial (Implementada em 16/07/2026)
 

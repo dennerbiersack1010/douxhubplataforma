@@ -254,6 +254,21 @@ Na primeira execução remota, o teste chamou `save_clinic_onboarding_step` com 
 
 Iniciar o Ciclo 4 da Etapa 2: definir e testar a conclusão transacional e idempotente que cria clínica, primeira unidade, vínculo de proprietária, função, contexto e auditoria, e marca o rascunho como concluído sem duplicidade.
 
+## Etapa 2 — ciclo 4: conclusão transacional e idempotente
+
+### Resultado
+
+- Conclusão transacional implementada e aplicada no Supabase oficial.
+- Clínica, primeira unidade, perfil pessoal, vínculo `clinic_owner`, contexto e auditoria são criados em uma única operação.
+- Repetição devolve os mesmos identificadores sem duplicar registros.
+- API e etapa 6 da interface foram conectadas à conclusão e ao Dashboard.
+- Teste oficial aprovado com `clinic_onboarding_completion_ok` após correção de uma referência ambígua encontrada pela primeira execução.
+- ESLint, TypeScript e build aprovados.
+
+### Próxima ação exata
+
+Publicar este ciclo no GitHub e na Vercel, verificar `douxhub.space` e então iniciar a Etapa 3, Ciclo 1: migração aditiva e testes para usuários da clínica, atribuições de função e perfis de acesso.
+
 ---
 
 # Histórico preservado — TASK-001: autenticação e e-mails

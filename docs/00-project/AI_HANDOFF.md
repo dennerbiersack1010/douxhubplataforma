@@ -138,17 +138,25 @@ Atualização do Ciclo 3:
 - O build passou com 35 rotas/páginas; não houve teste manual autenticado.
 - A conclusão transacional continua fora da interface e é a próxima unidade lógica.
 
+Atualização do Ciclo 4:
+
+- `20260719120000_complete_clinic_onboarding.sql` implementa a conclusão transacional e idempotente.
+- `PUT /api/clinic-onboarding` e a etapa 6 da interface concluem o fluxo, ativam o vínculo e seguem para `/dashboard`.
+- A migração foi aplicada no Supabase oficial pelo SQL Editor; não inserir histórico artificial da CLI.
+- `004_clinic_onboarding_completion.sql` foi aprovado com `clinic_onboarding_completion_ok` após corrigir uma referência ambígua detectada na primeira execução.
+- O próximo ciclo começa somente após o fechamento de GitHub, Vercel e domínio desta entrega.
+
 O problema anterior de Login foi resolvido pelos commits `db4642b` e `50663a5`. O callback passou a propagar cookies de sessão e o middleware deixou de redirecionar a API de pós-login para HTML. O commit `50663a5` foi publicado em produção; esse fluxo é histórico concluído e não é a tarefa ativa.
 
 ---
 
 ## Próxima ação para a IA que continuar
 
-1. Ler `docs/03-modules/clinic-onboarding/` e preservar os contratos validados.
-2. Definir o contrato da conclusão transacional antes de alterar banco ou API.
-3. Garantir idempotência para clínica, unidade, vínculo, contexto e auditoria.
-4. Criar teste SQL de conclusão, repetição e isolamento.
-5. Manter o visual definitivo e mudanças no Login fora do ciclo.
+1. Confirmar o fechamento operacional do Ciclo 4 no GitHub, Vercel e domínio oficial.
+2. Ler o modelo conceitual em `docs/03-modules/clinic-access/`.
+3. Projetar a migração aditiva de usuários da clínica, atribuições de função e perfis de acesso.
+4. Criar primeiro os testes de compatibilidade, RLS e isolamento.
+5. Manter Login, onboarding concluído, visual definitivo e módulos de negócio fora do ciclo.
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: API do Rascunho de Onboarding
 document_id: MOD-ONBOARD-006
-version: 0.2.0
-status: Implementado
+version: 0.3.0
+status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
@@ -18,7 +18,7 @@ related_documents:
 
 `/api/clinic-onboarding`
 
-Todas as operações exigem sessão válida, recusam contas com vínculo ativo e retornam `Cache-Control: private, no-store`.
+Todas as operações exigem sessão válida e retornam `Cache-Control: private, no-store`. As operações de rascunho recusam contas com vínculo ativo; a conclusão permite repetição somente para devolver o resultado já concluído sem duplicidade.
 
 | Método | Operação |
 |---|---|
@@ -26,6 +26,7 @@ Todas as operações exigem sessão válida, recusam contas com vínculo ativo e
 | `POST` | Inicia ou retoma idempotentemente o rascunho. |
 | `PATCH` | Valida e salva uma etapa entre 1 e 5. |
 | `DELETE` | Cancela o rascunho próprio, preservando histórico. |
+| `PUT` | Conclui o rascunho pronto, cria o contexto inicial e devolve o destino autenticado. |
 
 ## Validação
 
@@ -48,13 +49,14 @@ O e-mail da proprietária vem da sessão autenticada e não é aceito como autor
 - `invalid_onboarding_step_data`;
 - `onboarding_progress_not_found`;
 - `onboarding_step_out_of_order`.
+- `onboarding_not_ready`.
 
 Detalhes internos do banco e valores de variáveis não são devolvidos ao cliente.
 
 ## Consumidor atual
 
-A interface técnica de `/configurar-clinica` consome os quatro métodos. O carregamento tenta `GET` antes de `POST`, cada formulário usa `PATCH` e o cancelamento confirmado usa `DELETE`.
+A interface técnica de `/configurar-clinica` consome os cinco métodos. O carregamento tenta `GET` antes de `POST`, cada formulário usa `PATCH`, o cancelamento confirmado usa `DELETE` e a etapa 6 usa `PUT`.
 
 ## Dependência de implantação
 
-A migração `20260718120000_clinic_onboarding_progress.sql` foi aplicada e validada no Supabase oficial. A interface ainda deve preservar o tratamento de indisponibilidade para falhas operacionais.
+As migrações `20260718120000_clinic_onboarding_progress.sql` e `20260719120000_complete_clinic_onboarding.sql` foram aplicadas e validadas no Supabase oficial. A interface preserva o tratamento de indisponibilidade para falhas operacionais.

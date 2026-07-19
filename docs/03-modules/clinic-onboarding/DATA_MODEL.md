@@ -1,9 +1,9 @@
 ---
 title: Modelo de Dados do Onboarding
 document_id: MOD-ONBOARD-002
-version: 0.1.0
-status: Implementado
-last_updated: 2026-07-18
+version: 0.2.0
+status: Validado
+last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
   - MODULE.md
@@ -28,7 +28,7 @@ Tabela aditiva de rascunhos pertencentes à conta autenticada.
 | `unit_data` | Dados provisórios da primeira unidade. |
 | `operation_data` | Horários, políticas e funcionamento. |
 | `team_data` | Escolha de preparar equipe agora ou depois. |
-| `created_clinic_id`, `created_unit_id` | Resultado futuro da conclusão transacional. |
+| `created_clinic_id`, `created_unit_id` | Resultado persistido da conclusão transacional. |
 | `schema_version`, `revision` | Evolução do formato e controle de atualização. |
 | datas | Início, atualização, conclusão e cancelamento. |
 
@@ -48,6 +48,10 @@ Os blocos JSON devem ser objetos e possuem limite de tamanho na função de grav
 - `start_or_resume_clinic_onboarding()`;
 - `save_clinic_onboarding_step(uuid, smallint, jsonb)`;
 - `cancel_clinic_onboarding(uuid)`.
+- `complete_clinic_onboarding(uuid)`.
 
 Todas usam `security definer`, `search_path` explícito e `auth.uid()` como autoridade.
 
+## Resultado da conclusão
+
+A conclusão reutiliza o modelo multiempresa existente e cria registros em `clinics`, `clinic_units`, `user_profiles`, `clinic_memberships`, `user_active_contexts` e `audit_logs`. Os dados ainda não normalizados do onboarding permanecem preservados nos blocos JSON e, quando necessários à operação atual, também são copiados para `settings` da clínica e da unidade.

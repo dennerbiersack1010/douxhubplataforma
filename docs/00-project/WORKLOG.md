@@ -5,6 +5,24 @@ last_updated: 2026-07-19
 
 ---
 
+## 2026-07-19 — Sessão: Etapa 2, Ciclo 4 do onboarding
+
+| Ação | Resultado |
+|---|---|
+| Função transacional e idempotente de conclusão | Implementada |
+| Integração `PUT` na API e etapa 6 da interface | Implementada |
+| Migração aplicada no Supabase oficial | Concluída |
+| Primeira execução do teste | Detectou referência ambígua no caminho idempotente; transação revertida |
+| Correção da consulta com alias explícito | Concluída e reaplicada |
+| Teste `004_clinic_onboarding_completion.sql` | Aprovado com `clinic_onboarding_completion_ok` |
+| Dados artificiais | Desfeitos pelo `rollback` do contrato |
+| ESLint | 0 erros; 4 avisos preexistentes |
+| TypeScript | Aprovado |
+| Build de produção | Aprovado; 35 rotas/páginas e Proxy ativo |
+| GitHub e Vercel | Pendentes do fechamento operacional deste ciclo |
+
+Próxima etapa após a publicação: Etapa 3, Ciclo 1, fundação aditiva de usuários da clínica, funções e perfis de acesso.
+
 ## 2026-07-19 — Sessão: validação remota da persistência do onboarding
 
 | Ação | Resultado |

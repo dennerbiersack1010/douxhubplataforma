@@ -1,7 +1,7 @@
 ---
 title: Registro Geral de Alterações
 document_id: PRJ-005
-version: 0.14.0
+version: 0.15.0
 status: Em desenvolvimento
 last_updated: 2026-07-19
 owner: DouxHub
@@ -15,6 +15,17 @@ related_documents:
 Todas as alterações significativas no projeto DouxHub serão registradas neste documento.
 
 ## [Unreleased] - 19/07/2026
+
+### Onboarding — conclusão transacional
+
+- Adicionada `complete_clinic_onboarding` para criar clínica, unidade, perfil, vínculo de proprietária, contexto e auditoria na mesma transação.
+- A conclusão é idempotente e devolve os mesmos identificadores quando repetida.
+- Adicionado `PUT /api/clinic-onboarding`, cookie HttpOnly de contexto e redirecionamento para `/dashboard`.
+- A etapa 6 da interface técnica recebeu a ação explícita “Criar clínica e entrar”.
+- Adicionado `004_clinic_onboarding_completion.sql` para atomicidade, repetição, isolamento e rascunho incompleto.
+- A primeira execução detectou referência ambígua no caminho idempotente; a consulta foi qualificada, reaplicada e aprovada.
+- Migração aplicada no Supabase oficial e teste aprovado com `clinic_onboarding_completion_ok`; dados artificiais foram desfeitos por `rollback`.
+- TypeScript, ESLint e build de produção aprovados com 35 rotas/páginas.
 
 ### Onboarding — persistência
 

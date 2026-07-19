@@ -142,3 +142,6 @@ export const onboardingCancelRequestSchema = zod.object({
   progressId: zod.string().uuid(),
 }).strict()
 
+export const onboardingCompleteRequestSchema = zod.object({
+  progressId: zod.string().uuid(),
+}).strict()

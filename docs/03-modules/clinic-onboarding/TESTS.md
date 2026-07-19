@@ -1,8 +1,8 @@
 ---
 title: Testes do Onboarding
 document_id: MOD-ONBOARD-005
-version: 0.4.0
-status: Em desenvolvimento
+version: 0.5.0
+status: Validado
 last_updated: 2026-07-19
 owner: DouxHub
 related_documents:
@@ -43,13 +43,27 @@ Os schemas foram exercitados localmente com casos válidos para as cinco etapas 
 - risco de bloqueio pelo modo estrito do React identificado na revisão e removido antes do checkpoint;
 - teste manual autenticado, refresh real e chamadas da interface contra produção permanecem pendentes.
 
+## Validação do Ciclo 4
+
+`supabase/tests/004_clinic_onboarding_completion.sql` foi executado no Supabase oficial em 19/07/2026 e retornou `clinic_onboarding_completion_ok`. O contrato confirmou:
+
+- criação atômica da clínica, primeira unidade, perfil pessoal, vínculo de proprietária e contexto ativo;
+- persistência dos identificadores e da conclusão no mesmo rascunho;
+- registros de auditoria da clínica, unidade e conclusão;
+- repetição idempotente com os mesmos identificadores e sem duplicidade;
+- recusa de conclusão por outra conta;
+- recusa de rascunho incompleto;
+- rollback integral dos usuários e dados artificiais.
+
+A primeira execução revelou uma referência ambígua no caminho idempotente da função. A consulta foi qualificada com o alias do vínculo, a migração corrigida foi reaplicada e o contrato passou na execução seguinte.
+
+ESLint, TypeScript e build de produção foram aprovados com 35 rotas/páginas; permanecem somente quatro avisos preexistentes sobre `<img>`.
+
 ## Testes futuros
 
 - schemas server-side de cada tela;
 - refresh e retomada em todas as etapas;
 - dupla submissão e concorrência;
-- conclusão idempotente;
-- tentativa de acesso por outra conta ou clínica;
 - sessão anônima;
 - cancelamento confirmado;
 - fluxo completo no domínio publicado.
