@@ -25,6 +25,8 @@ related_documents:
 - O contrato `007_clinic_permissions_foundation.sql` retornou `clinic_permissions_foundation_ok`, incluindo isolamento, escopo, concessão, negação prevalente e rollback integral.
 - ESLint, TypeScript e build de produção foram aprovados; permanecem somente quatro avisos preexistentes sobre imagens públicas.
 - `clinic_memberships`, `user_active_contexts`, rotas e menus continuam sendo a autoridade operacional vigente até um portão posterior de equivalência.
+- O commit funcional `2f0389f` foi enviado para `origin/main` e publicado no deployment `dpl_4SBuYeu6W7M3NxF7gNqLVvL5kCz2`, estado `READY`, target `production`.
+- Os aliases `douxhub.space` e `douxhubplataforma.vercel.app` apontam para a entrega; o Login respondeu normalmente e `/configuracoes/equipe` redirecionou visitante anônimo para `/login?next=%2Fconfiguracoes%2Fequipe`.
 
 ## Otimização do Login (Validada no Supabase em 19/07/2026)
 

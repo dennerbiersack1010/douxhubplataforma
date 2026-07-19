@@ -25,6 +25,8 @@ Todas as alterações significativas no projeto DouxHub serão registradas neste
 - Adicionadas RLS e leitura sem escrita direta para as três tabelas novas.
 - Migração aplicada no Supabase oficial e contrato `007_clinic_permissions_foundation.sql` aprovado com `clinic_permissions_foundation_ok` e rollback integral.
 - ESLint, TypeScript e build aprovados; `clinic_memberships` e o contexto atual permaneceram inalterados.
+- Commit funcional `2f0389f` enviado para `origin/main` e publicado no deployment `dpl_4SBuYeu6W7M3NxF7gNqLVvL5kCz2`, estado `READY`.
+- Domínio oficial aprovado para carregamento do Login e redirecionamento anônimo da rota protegida de equipe.
 
 ### Login — redução do caminho crítico
 

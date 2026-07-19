@@ -19,7 +19,7 @@ A aplicação web é publicada na Vercel e utiliza um projeto Supabase dedicado 
 
 O endereço próprio `douxhub.space` está associado ao projeto da plataforma. O DNS é administrado pela Hostinger. `auth.douxhub.space` está verificado no Resend e o SMTP personalizado está ativo no Supabase.
 
-O auto-deploy do GitHub não é considerado confiável no estado atual. Após cada push funcional, a publicação deve ser executada manualmente no projeto Vercel vinculado, acompanhada até `READY`, e os aliases e testes do domínio devem ser registrados. A entrega mais recente, com desempenho do Login e Etapa 3 — Ciclo 1, foi publicada no deployment `dpl_A2fbaG7Nyyaw4BzRLq7tP6CYoVdf`.
+O auto-deploy do GitHub não é considerado confiável no estado atual. Após cada push funcional, a publicação deve ser executada manualmente no projeto Vercel vinculado, acompanhada até `READY`, e os aliases e testes do domínio devem ser registrados. A entrega mais recente, com a Etapa 3 — Ciclo 2, foi publicada no deployment `dpl_4SBuYeu6W7M3NxF7gNqLVvL5kCz2`.
 
 ## Rotina mínima de publicação
 

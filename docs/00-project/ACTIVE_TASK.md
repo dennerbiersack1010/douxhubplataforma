@@ -300,6 +300,7 @@ O Ciclo 1 foi publicado no commit `38ee817` e validado no domínio. A próxima a
 - concessões e negações personalizáveis por perfil implementadas;
 - cálculo efetivo restrito ao próprio perfil ativo e com negação prevalente;
 - RLS, ausência de escrita direta, isolamento e rollback validados com `clinic_permissions_foundation_ok`.
+- commit `2f0389f` publicado no deployment `dpl_4SBuYeu6W7M3NxF7gNqLVvL5kCz2` (`READY`) e domínio oficial conferido.
 
 ### Próxima ação exata
 

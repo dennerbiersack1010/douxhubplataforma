@@ -18,6 +18,9 @@ last_updated: 2026-07-19
 | ESLint | 0 erros; 4 avisos preexistentes |
 | TypeScript e build | Aprovados; 35 rotas/páginas e Proxy ativo |
 | Autoridade operacional | `clinic_memberships` e `user_active_contexts` preservados |
+| GitHub | Commit `2f0389f` enviado para `origin/main` |
+| Vercel | `dpl_4SBuYeu6W7M3NxF7gNqLVvL5kCz2`, produção, `READY` |
+| Domínio oficial | Login aprovado; equipe protegida redirecionou visitante anônimo |
 
 Próxima ação: Etapa 3, Ciclo 3, equivalência entre vínculos vigentes e os novos perfis antes de qualquer migração de contexto.
 
